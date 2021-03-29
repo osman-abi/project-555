@@ -1,0 +1,207 @@
+
+========================== REGISTER VIEW ========================
+class TeacherRegisterView(generics.GenericAPIView):
+    serializer_class = TeacherRegisterSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": StudentSerializer(user).data,
+            "message": _("User Created Successfully."),
+        })
+
+
+===================== LOGIN VIEW ===========================
+class LoginAPIView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+======================= LOGOUT VIEW =====================
+class LogoutAPIView(generics.GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+------------------------------------------------------------------
+
+================ REGISTER =================
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        max_length=68, min_length=6, write_only=True)
+
+    default_error_messages = {
+        'username': 'The username should only contain alphanumeric characters'}
+
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'password','phone_number','address']
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        username = attrs.get('username', '')
+
+        if not username.isalnum():
+            raise serializers.ValidationError(
+                self.default_error_messages)
+        return attrs
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
+
+
+================= LOGIN ===================
+class LoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=255, min_length=3)
+    password = serializers.CharField(
+        max_length=68, min_length=6, write_only=True)
+    username = serializers.CharField(
+        max_length=255, min_length=3, read_only=True)
+
+    tokens = serializers.SerializerMethodField()
+
+    def get_tokens(self, obj):
+        user = User.objects.get(email=obj['email'])
+
+        return {
+            'refresh': user.tokens()['refresh'],
+            'access': user.tokens()['access']
+        }
+
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'username', 'tokens']
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        password = attrs.get('password', '')
+        filtered_user_by_email = User.objects.filter(email=email)
+        user = auth.authenticate(email=email, password=password)
+
+        if filtered_user_by_email.exists() and filtered_user_by_email[0].auth_provider != 'email':
+            raise AuthenticationFailed(
+                detail='Please continue your login using ' + filtered_user_by_email[0].auth_provider)
+
+        if not user:
+            raise AuthenticationFailed('Invalid credentials, try again')
+        if not user.is_active:
+            raise AuthenticationFailed('Account disabled, contact admin')
+        if not user.is_verified:
+            raise AuthenticationFailed('Email is not verified')
+
+        return {
+            'email': user.email,
+            'username': user.username,
+            'tokens': user.tokens
+        }
+
+        return super().validate(attrs)
+
+
+=============== LOGOUT =====================
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    default_error_message = {
+        'bad_token': ('Token is expired or invalid')
+    }
+
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        return attrs
+
+    def save(self, **kwargs):
+
+        try:
+            RefreshToken(self.token).blacklist()
+
+        except TokenError:
+            raise ValidationError
+------------------------------------------------------------
+URLS PY :
+
+
+from django.urls import path
+from rest_framework_simplejwt import views as jwt_views
+from .views import LogoutAPIView, LoginAPIView
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
+
+
+urlpatterns = [
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('login/', LoginAPIView.as_view(), name="login"),
+    path('logout/', LogoutAPIView.as_view(), name="logout"),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+]
+
+
+--------------------------------------------------------------
+SETTINGS PY :
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser'
+    )
+}
+
+
+
+
+AUTH_USER_MODEL = 'account.User'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+INSTALLED_APPS = [
+    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework.authtoken',
+
+
+
+
+=========================================================================
+class TeacherSerializer(serializers.ModelSerializer):
+    from  apps.course.api.serializers import CourseSerializer
+
+        courses = CourseSerializer(many=True,read_only=True)
+            class Meta:
+                    model = Teacher
+                            fields = ('email', 'first_name','last_name','avatar','courses')
+  
+  ]
+
+
+
+
+class TeacherListView(mixins.ListModelMixin, generics.GenericAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
