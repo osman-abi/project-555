@@ -12,13 +12,13 @@ services:
       - media:/backend/media #after static folder create - fill static_files volume
     ports:
       - "8000:8000"
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend/gui
-      dockerfile: Dockerfile
-    volumes:
-      - build_folder:/frontend #"build" folder fills builder_folder
+#   frontend:
+#     container_name: frontend
+#     build:
+#       context: ./Frontend
+#       dockerfile: Dockerfile
+#     volumes:
+#       - build_folder:/frontend #"build" folder fills builder_folder
   nginx:
     image: nginx:latest
     build:
@@ -33,10 +33,10 @@ services:
       - static_files:/var/www/backend/static_files
       - media:/var/www/backend/media
     depends_on:
-      #      - frontend
+#       - frontend
       - backend
 volumes:
   pgdata:
   static_files:
-  #  build_folder:
+#   build_folder:
   media:
