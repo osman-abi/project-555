@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /backend
 WORKDIR /backend
-COPY src /backend
+COPY . /backend
 
 RUN pip install virtualenvwrapper
 RUN python3 -m venv /venv
