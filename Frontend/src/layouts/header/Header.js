@@ -508,7 +508,7 @@ class Header extends React.Component {
                                                                 </li>
                                                                  <li className="ciya-tools-action ciya-tools-wishlist"> <Link to="/wishlist"><i className="glyph-icon pgsicon-ecommerce-like" /> <span className="wishlist ciyashop-wishlist-count"> {this.ReadWishListItems() == null ? 0 : this.ReadWishListItems().length} </span> </Link></li>
                                                                  
-                                                                 <li className="ciya-tools-action ciya-tools-search"><Link to={searchName} ><i className="glyph-icon pgsicon-ecommerce-magnifying-glass"  /></Link></li>
+                                                                 <li className="ciya-tools-action ciya-tools-search"><Link to='/sidebar-without-lazyload' ><i className="glyph-icon pgsicon-ecommerce-magnifying-glass"  /></Link></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -600,7 +600,7 @@ class Header extends React.Component {
                                                             <input type="text" class="form-control" onChange={this.handleFirstname} value={firstname} placeholder="Ad daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
-                                                            <label>SoyAd</label>
+                                                            <label>Soyad</label>
                                                             <input type="text" class="form-control" onChange={this.handleLastname} value={lastname} placeholder="Soyad daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
@@ -609,15 +609,15 @@ class Header extends React.Component {
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Şifrə </label>
-                                                            <input type="text" class="form-control" onChange={this.handlePassword} value={password} placeholder="Şifrənizi daxil edin"></input>
+                                                            <input type="password" class="form-control" onChange={this.handlePassword} value={password} placeholder="Ən azı 6 simvol daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Şifrə (Təkrar) </label>
-                                                            <input type="text" class="form-control"  placeholder="Şifrənizi yeniden daxil edin"></input>
+                                                            <input type="password" class="form-control"  placeholder="Şifrənizi yeniden daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Tel:</label>
-                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrınizi daxil edin"></input>
+                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrənizi daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Ünvan:</label>
