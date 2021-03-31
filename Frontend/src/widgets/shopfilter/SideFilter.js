@@ -14,11 +14,11 @@ class SideFilter extends Component {
 
     constructor(props) {
         super(props);
-        console.log('props =>', props)
+        // console.log('props =>', props)
         this.state = {
             SearchValue: '',
-            // priceplace: [this.props.prices.min, this.props.prices.max],
-            // setfistprice: [this.props.prices.min, this.props.prices.max],
+            priceplace: [this.props.prices.min, this.props.prices.max],
+            setfistprice: [this.props.prices.min, this.props.prices.max],
             sidebarmenu: false,
         }
         this.showfilter = this.showfilter.bind(this);
@@ -36,6 +36,7 @@ class SideFilter extends Component {
         this.props.searchValue('');
         this.props.getProducts();
         this.props.getFilterCategory();
+        // console.log('==>',this.props.prices)
     }
     showfilter() {
         this.setState(prevState => ({
@@ -81,7 +82,7 @@ class SideFilter extends Component {
             SearchValue: SearchText.target.value
         })
         this.props.searchValue(SearchText.target.value);
-        console.log(SearchText)
+        // console.log(SearchText)
     }
 
     onChangePricePlace = values => {
@@ -149,28 +150,28 @@ class SideFilter extends Component {
         })
     }
 
-    // toolformatter = value => {
-    //     var maximumval = this.props.prices.max / 5;
-    //     if (value === 0) {
-    //         value = "0";
-    //     }
-    //     else if (value > 0 && value <= 20) {
-    //         value = value * (maximumval * 1) / 20;
-    //     }
-    //     else if (value > 20 && value <= 40) {
-    //         value = value * (maximumval * 2) / 40;
-    //     }
-    //     else if (value > 40 && value <= 60) {
-    //         value = value * (maximumval * 3) / 60;
-    //     }
-    //     else if (value > 60 && value <= 80) {
-    //         value = value * (maximumval * 4) / 80;
-    //     }
-    //     else if (value > 80 && value <= 100) {
-    //         value = value * (maximumval * 5) / 100;
-    //     }
-    //     return this.convertValue(value);
-    // }
+    toolformatter = value => {
+        var maximumval = this.props.prices.max / 5;
+        if (value === 0) {
+            value = "0";
+        }
+        else if (value > 0 && value <= 20) {
+            value = value * (maximumval * 1) / 20;
+        }
+        else if (value > 20 && value <= 40) {
+            value = value * (maximumval * 2) / 40;
+        }
+        else if (value > 40 && value <= 60) {
+            value = value * (maximumval * 3) / 60;
+        }
+        else if (value > 60 && value <= 80) {
+            value = value * (maximumval * 4) / 80;
+        }
+        else if (value > 80 && value <= 100) {
+            value = value * (maximumval * 5) / 100;
+        }
+        return this.convertValue(value);
+    }
 
     clearprice(pricesval) {
         var value = {
@@ -198,17 +199,22 @@ class SideFilter extends Component {
         this.props.sizeValue(sizes);
     }
     render() {
-
-        // var max = this.props.prices.max;
-        // var maxdivide = max / 5;
-        // const marks = {
-        //     0: 0,
-        //     20: ((maxdivide * 1).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
-        //     40: ((maxdivide * 2).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
-        //     60: ((maxdivide * 3).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
-        //     80: ((maxdivide * 4).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
-        //     100: max.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
-        // };
+        var { products } = this.props
+        var price = []
+        for (const i of products) {
+            price.push(i)
+        }
+        var max = Math.max.apply(Math, price)
+        var maxdivide = max / 5;
+        const marks = {
+            0: 0,
+            20: ((maxdivide * 1).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
+            40: ((maxdivide * 2).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
+            60: ((maxdivide * 3).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
+            80: ((maxdivide * 4).toLocaleString(navigator.language, { minimumFractionDigits: 0 })),
+            100: max.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+        };
+        // console.log('max',max)
         
         const categoryFilterValues = this.props.filters.category;
         
@@ -318,7 +324,9 @@ class SideFilter extends Component {
 
 const mapDispatchToProps = state => ({
     categorys: uniqueCategory(state.user.products),
-    filter_categories:state.user.filter_category,
+    filter_categories: state.user.filter_category,
+    prices: uniqueMinMaxPrice(state.user.products),
+    products:state.user.products,
     filters: state.filters
 })
 export default connect(

@@ -215,7 +215,7 @@ class Productadd extends Component{
                                                                             <img src={require(`../../../assets/images/${pictureimage}`)}  className="img-fluid" />
                                                                         </a>
                                                                         <div className="d-flex justify-content-center image-content align-items-center">
-                                                                            <ImageUploader
+                                                                             <ImageUploader
                                                                                 buttonText=""
                                                                                 withIcon={false}
                                                                                 withPreview={true}

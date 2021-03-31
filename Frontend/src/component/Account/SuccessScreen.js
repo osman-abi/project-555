@@ -160,7 +160,7 @@ const date = new Date();
                         {this.state.CartItems.map((CartItem, index) => (
                           <tr className="ordered-item">
                             <td className="ordered-image">
-                              <img alt="img 01"  src={require(`../../assets/images/${CartItem.ProductImage}`)}    className="img-fluid" />
+                              {/* <img alt="img 01"  src={require(`../../assets/images/${CartItem.ProductImage}`)}    className="img-fluid" /> */}
                             </td>
                             <td  className="ordered-name">
                               <h6 className="mb-0">Məhsulun adı</h6>

@@ -5,17 +5,28 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Container, Input, Row } from 'reactstrap';
 import CommonList from '../../api/common';
+import { connect } from "react-redux";
+import { postInvoice } from "../../actions/index";
+import PropTypes from "prop-types";
 
 class CheckOut extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            firstname: "",
+            lastname: "",
+            shipping_address: "",
+            phone: "",
+            email: "",
+            items:[],
             
-            fieldvalue:CommonList[0].profile,
-            errors: {}
         }
         
+    }
+
+    static propTypes = {
+        postInvoice:PropTypes.func.isRequired
     }
 
     componentDidMount() {
@@ -24,6 +35,13 @@ class CheckOut extends Component {
         evt.initEvent('load', false, false);
         window.dispatchEvent(evt);
         window.scrollTo(0, 0)
+        var cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+        for (const i of cart) {
+            items:this.state.items.push(i.ProductID)
+            this.setState({
+                items:this.state.items
+            })
+        }
     }
 
     ReadCartItems() {
@@ -101,14 +119,7 @@ class CheckOut extends Component {
 
 
 
-    onCheckOutSubmit(e){
-        e.preventDefault();
-        if(this.handleValidation()){
-            localStorage.setItem("FinalCheckoutCartItems",localStorage.getItem("LocalCartItems"));
-            localStorage.removeItem("LocalCartItems");
-            this.props.history.push(`/SuccessScreen`)
-        }
-      }
+    
 
 
 
@@ -194,13 +205,59 @@ class CheckOut extends Component {
 
       }
 
-      handleChange(field, e){
-        let fieldvalue=this.state.fieldvalue;
-        fieldvalue[field] = e.target.value;
-        this.setState({fieldvalue});
+    handleFirstName = e => {
+        this.setState({
+              firstname:e.target.value
+          })
       }
 
+    handleLastName = e => {
+        this.setState({
+            lastname:e.target.value
+        })
+    }
+
+    handleEmail = e => {
+        this.setState({
+            email:e.target.value
+        })
+    }
+    
+    handlePhoneNumber = e => {
+        this.setState({
+            phone:e.target.value
+        })
+    }  
+
+    handleAddress = e => {
+        this.setState({
+            shipping_address:e.target.value
+        })
+    }
+
+    onCheckOutSubmit(e) {
+        var amount = parseFloat(parseFloat(this.ReadCartItems().reduce((fr, CartItem) => fr +
+            (CartItem.Qty * CartItem.Rate), 0)) +
+            parseFloat((this.state.TotalShippingCarge != undefined) ?
+            this.state.TotalShippingCarge.toFixed(2) : 0))
+            .toLocaleString(navigator.language, { minimumFractionDigits: 2 })
+        e.preventDefault();
+        const { firstname, lastname, phone, shipping_address, email, items } = this.state
+        console.table(this.state)
+        const invoice = { firstname, lastname, shipping_address, phone, email, items, amount }
+        this.props.postInvoice(invoice);
+
+        if(this.handleValidation()){
+            localStorage.setItem("FinalCheckoutCartItems",localStorage.getItem("LocalCartItems"));
+            localStorage.removeItem("LocalCartItems");
+            this.props.history.push(`/SuccessScreen`)
+        }
+      }
+    
+
+
     render() {
+        const {firstname,lastname,shipping_address,phone,email} = this.state
         return (
 
             <div class="site-content">
@@ -241,20 +298,20 @@ class CheckOut extends Component {
                                             <div class="form-group">
                                                 <label for="billing_first_name" class="">Ad &nbsp;<abbr class="required" title="required">*</abbr>
                                                 </label>
-                                               <Input type="text" class="form-control" name="billing_first_name" id="billing_first_name" placeholder="" value={this.state.fieldvalue.firstname} onChange={this.handleChange.bind(this, "firstname")}/>
-                                               <span className="error">{this.state.errors["firstname"]}</span>
+                                               <Input type="text" class="form-control" name="billing_first_name" id="billing_first_name" placeholder="" value={firstname} onChange={this.handleFirstName}/>
+                                               {/* <span className="error">{this.state.errors["firstname"]}</span> */}
 
                                             </div>
                                             <div class="form-group">
                                                 <label for="billing_last_name" class="">Soyad&nbsp;<abbr class="required" title="required">*</abbr></label>
-                                                <Input type="text" class="form-control " name="billing_last_name" id="billing_last_name" placeholder="" value={this.state.fieldvalue.lastname} onChange={this.handleChange.bind(this, "lastname")}/>
-                                                <span className="error">{this.state.errors["lastname"]}</span>
+                                                <Input type="text" class="form-control " name="billing_last_name" id="billing_last_name" placeholder="" value={lastname} onChange={this.handleLastName}/>
+                                                {/* <span className="error">{this.state.errors["lastname"]}</span> */}
                                             </div>
                                            
                                             <div class="form-group">
                                                 <label for="billing_city" class="">Ünvan&nbsp;<abbr class="required" title="required">*</abbr></label>
-                                                <Input type="text" class="form-control" name="billing_city" id="billing_city" placeholder="" value={this.state.fieldvalue.state}  onChange={this.handleChange.bind(this, "state")} />
-                                                <span className="error">{this.state.errors["state"]}</span>
+                                                <Input type="text" class="form-control" name="billing_city" id="billing_city" placeholder="" value={shipping_address}  onChange={this.handleAddress} />
+                                                {/* <span className="error">{this.state.errors["state"]}</span> */}
                                             </div>
                                             
                                             {/* <div class="form-group">
@@ -265,13 +322,13 @@ class CheckOut extends Component {
                                             
                                             <div class="form-group">
                                                 <label for="billing_phone" class="">Tel:&nbsp;<abbr class="required" title="required">*</abbr></label>
-                                               <Input type="text" class="form-control" name="billing_phone" id="billing_phone" placeholder="" value={this.state.fieldvalue.phone} autocomplete="tel" onChange={this.handleChange.bind(this, "phone")}/>
-                                               <span className="error">{this.state.errors["phone"]}</span>
+                                               <Input type="text" class="form-control" name="billing_phone" id="billing_phone" placeholder="" value={phone} autocomplete="tel" onChange={this.handlePhoneNumber}/>
+                                               {/* <span className="error">{this.state.errors["phone"]}</span> */}
                                             </div>
                                             <div class="form-group">
                                                 <label for="billing_email" class="">Email ünvanı&nbsp;<abbr class="required" title="required">*</abbr></label>
-                                                <Input type="email" class="form-control" name="billing_email" id="billing_email" placeholder="" value={this.state.fieldvalue.email} autocomplete="email username" onChange={this.handleChange.bind(this, "email")}/>
-                                                <span className="error">{this.state.errors["email"]}</span>
+                                                <Input type="email" class="form-control" name="billing_email" id="billing_email" placeholder="" value={email} autocomplete="email username" onChange={this.handleEmail}/>
+                                                {/* <span className="error">{this.state.errors["email"]}</span> */}
                                             </div>
                                         </div>
                                     </div>
@@ -299,7 +356,7 @@ class CheckOut extends Component {
                                                 <td class="product-name">
                                                     {CartItem.ProductName}&nbsp; <strong class="product-quantity">× {CartItem.Qty}</strong> </td>
                                                 <td class="product-total">
-                                                    <span class="woocs_special_price_code"><span class="Price-amount amount"><span class="Price-currencySymbol">$</span>  {(CartItem.Rate * CartItem.Qty).toLocaleString(navigator.language, { minimumFractionDigits: 0 })} </span></span>
+                                                    <span class="woocs_special_price_code"><span class="Price-amount amount"><span class="Price-currencySymbol">AZN</span>  {(CartItem.Rate * CartItem.Qty).toLocaleString(navigator.language, { minimumFractionDigits: 0 })} </span></span>
                                                 </td>
                                                 </tr>
                                         ))}
@@ -343,4 +400,4 @@ class CheckOut extends Component {
             )
     }
 }
-export default CheckOut;
+export default connect(null, { postInvoice })(CheckOut);

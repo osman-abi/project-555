@@ -6,6 +6,9 @@ import { Row, Col, Container } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { ToastContainer,toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { getProducts, getProductImages } from "../actions/index";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import MyProducts from '../api/product.json'
 
@@ -16,7 +19,20 @@ class TopSellingProduct extends Component {
       this.AddToCart = this.AddToCart.bind(this);
       this.AddToWishList = this.AddToWishList.bind(this);
       var AddToCart,AddToWishList
-  }
+   }
+
+   static propTypes = {
+        products: PropTypes.array.isRequired,
+      getProducts: PropTypes.func.isRequired,
+        getProductImages: PropTypes.func.isRequired
+    }
+
+   componentDidMount() {
+      this.props.getProducts();
+      this.props.getProductImages();
+   }
+   
+   
 
   AddToCart(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
    var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
@@ -103,12 +119,13 @@ rating(productrat)
    return rat;
 }
    render() {
+      const {products, images} = this.props
       return (
 
          <Row className="products products-loop grid ciyashop-products-shortcode">
               <ToastContainer autoClose={1000} />
 
-            { MyProducts.map((product, index) =>
+            { products.map((product, index) =>
               (index < 8) ?
 
 
@@ -118,14 +135,25 @@ rating(productrat)
                   <div className="product-inner element-hovered">
                      <div className="product-thumbnail">
                         <div className="product-thumbnail-inner">
-                        <Link to={`/shop/${product.category}/${product.id}`}>
+                                 <Link to={`/shop/${product.category}/${product.id}`}>
                               <div className="product-thumbnail-main">
-                                 <img src={require(`../assets/images/${product.pictures[0]}`)} className="img-fluid" alt="shop" />
+                                    {images.map((all_images, ind) => {
+                                                    return product.images[0] == all_images.id ?
+                                                        <img className="img-fluid" style={{ width: "100%;", height:"auto;"}} key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        :
+                                                        <img className="img-fluid" />
+                                                })}
+                                 {/* <img src={require(`../assets/images/${product.pictures[0]}`)} className="img-fluid" alt="shop" /> */}
 
                               </div>
                               <div className="product-thumbnail-swap">
-                                 <img src={require(`../assets/images/${product.pictures[1]}`)} className="img-fluid" alt="shop" />
-
+                                 {images.map((all_images, ind) => {
+                                                    return product.images[1] == all_images.id ?
+                                                        <img className="img-fluid" key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        :
+                                                        <img className="img-fluid" />
+                                                })}
+                                 {/* <img src={require(`../assets/images/${product.pictures[1]}`)} className="img-fluid" alt="shop" /> */}
                               </div>
                            </Link>
                         </div>
@@ -133,7 +161,7 @@ rating(productrat)
                            <div className="product-actions-inner">
                               <div className="product-action product-action-add-to-cart">
                                  {!this.CheckCardItem(product.id) ?
-                                       <Link onClick={()=>this.AddToCart(product.id,product.name,product.pictures[0],1,product.salePrice,"var")}  className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
+                                       <Link onClick={()=>this.AddToCart(product.id,product.name,product.images[0],1,product.price,"var")}  className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                  :
                                        <Link  to="/ShopingCart"  className="button add_to_cart_button" rel="nofollow">Səbəti göstər</Link>
                                  }
@@ -141,7 +169,7 @@ rating(productrat)
                               </div>
                               <div className="product-action product-action-wishlist">
                                  {!this.CheckWishList(product.id) ?
-                                    <Link onClick={()=>this.AddToWishList(product.id,product.name,product.pictures[0],1,product.salePrice,"var")} className="add_to_wishlist" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top"> Seçilmişlərə əlavə et</Link>
+                                    <Link onClick={()=>this.AddToWishList(product.id,product.name,product.images[0],1,product.price,"var")} className="add_to_wishlist" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top"> Seçilmişlərə əlavə et</Link>
                                  :
                                        <Link to="/wishlist" className="add_to_wishlist_fill" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top">Seçilmişləri göstər</Link>
                                  }
@@ -150,9 +178,7 @@ rating(productrat)
                         </div>
                      </div>
                      <div className="product-info">
-                        <span className="ciyashop-product-category">
-                           {product.category}
-                        </span>
+                        
                         <h3 className="product-name">
                            <Link to={`/shop/${product.category}/${product.id}`}>{product.name} </Link>
                         </h3>
@@ -160,7 +186,7 @@ rating(productrat)
                         <span className="price">
                            <ins>
                               <span className="price-amount amount">
-                                 <span className="currency-symbol"></span>{product.salePrice.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} AZN
+                                 <span className="currency-symbol"></span>{product.price.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} AZN
                               </span>
                            </ins>
                         </span>
@@ -183,5 +209,9 @@ rating(productrat)
    }
 }
 
+const mapStateToProps = state => ({
+   products: state.user.products,
+   images: state.user.images
+})
 
-export default TopSellingProduct
+export default connect(mapStateToProps, { getProducts, getProductImages })(TopSellingProduct);

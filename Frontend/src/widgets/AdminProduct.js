@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { Col, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getProducts, getProductImages } from "../actions/index"
+import { getProducts, getProductImages,deleteProduct } from "../actions/index"
 
 
 class AdminproductList extends Component {
@@ -27,13 +27,14 @@ class AdminproductList extends Component {
 
     static propTypes = {
         images: PropTypes.array.isRequired,
-        getProductImages: PropTypes.func.isRequired
+        getProductImages: PropTypes.func.isRequired,
+        deleteProduct:PropTypes.func.isRequired
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getProductImages();
-        console.log(this.props.images)
+        // console.log(this.props.images)
     }
 
     toggle1() {
@@ -133,7 +134,7 @@ class AdminproductList extends Component {
                              Məhsulu silmək istədiyinizə əminsiniz mi?
                         </ModalBody>
                         <ModalFooter className="justify-content-center pt-4" >
-                            <Link className="action-button"  onClick={(res)=>deleteproduct(this.toggle1())}>Bəli</Link>
+                            <Link className="action-button" to='#' onClick={this.props.deleteProduct.bind(this,product.id)}>Bəli</Link>
                             <Link className="action-button no"  onClick={this.toggle1}>Xeyr</Link>
                         </ModalFooter>
                     </Modal>
@@ -147,4 +148,4 @@ const mapStateToProps = state => ({
     images: state.user.images
 })
 
-export default connect(mapStateToProps, {getProductImages})( AdminproductList);
+export default connect(mapStateToProps, {getProductImages,deleteProduct})( AdminproductList);

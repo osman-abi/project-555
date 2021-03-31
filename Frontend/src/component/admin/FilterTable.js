@@ -13,7 +13,7 @@ export class FilterTable extends Component {
     }
     componentDidMount() {
         this.props.getFilterCategory();
-        console.log('=============', this.props.filter_category)
+        // console.log('=============', this.props.filter_category)
     }
 
     render() {

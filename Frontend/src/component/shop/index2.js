@@ -47,7 +47,7 @@ class ShopPage2 extends Component {
     }
 
     componentDidUpdate() {
-        console.log('=====>',this.props.products)
+        // console.log('=====>',this.props.products)
     }
 
     handleChange = value => {

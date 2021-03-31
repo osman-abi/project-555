@@ -100,12 +100,12 @@ class Header extends React.Component {
           window.addEventListener('scroll', this.handleScroll);
           this.props.getProductImages();
           
-          console.log(this.props.user)
+        //   console.log(this.props.user)
       }
       componentWillUnmount() {
           window.removeEventListener('scroll', this.handleScroll);
           
-          console.log(this.props.user)
+        //   console.log(this.props.user)
       }
 
       handleScroll(event) {
