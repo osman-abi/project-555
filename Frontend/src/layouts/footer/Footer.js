@@ -115,7 +115,7 @@ class Footer extends React.Component {
                                 <h4 className="footer-title title">Ünvan</h4>
                                 <div className="footer-address">
                                 <ul>
-                                    <li><i className="fa fa-map-marker" /><span>1635 Franklin Street Montgomery, Near Sherwood Mall. AL 36104</span></li>
+                                    <li><i className="fa fa-map-marker" /><span>Baki seh., Nerimanov rayonu</span></li>
                                     <li className="pgs-contact-email"><i className="fa fa-envelope-o" /><span>support@ciyashop.com</span></li>
                                     <li><i className="fa fa-phone" /><span>+994 55 201 27 17</span></li>
                                 </ul>

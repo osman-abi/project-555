@@ -34,7 +34,7 @@ class AdminProduct extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getProducts();
-        console.log(this.props.products)
+        // console.log(this.props.products)
     }
     onProductSearch(searchproduct)
     {

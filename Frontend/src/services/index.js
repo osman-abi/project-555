@@ -216,25 +216,16 @@ export const uniqueColors = (products) => {
 
 // Get Min & Max Data in Json
 export const uniqueMinMaxPrice = (products) => {
-    let minimum = 0, maximum = 1000;
+    // console.log('products=>',products)
+    let prices = []
+    let minimum , maximum;
     products.map((product, index) => {
-        let v = product.salePrice;
-        if(v < minimum)
-        {
-            minimum=v;
-        }
-        else
-        {
-            minimum=minimum;
-        }
-        if(v > maximum)
-        {
-            maximum=v;
-        }
-        else
-        {
-            maximum=maximum;
-        }
+        prices.push(product.price)
+        minimum = Math.min.apply(Math, prices)
+        maximum = Math.max.apply(Math, prices)
+        console.log('minimum=>',minimum, 'maximum=>',maximum)
     })
+    console.log('minimum after loop =>',minimum,'maximum after loop =>', maximum)
     return {'min':minimum, 'max':maximum};
+    // console.log('min value => ',minimum,'max value =>',maximum)
 }

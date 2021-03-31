@@ -34,6 +34,27 @@ def product_image_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(methods=['put', 'delete'], request_body=ProductImageSerializer)
+@api_view(['GET', 'PUT', 'DELETE'])
+def product_image_detail(request, pk):
+    product_image = ProductImage.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        serializer = ProductImageSerializer(product_image)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        serializer = ProductImageSerializer(product_image, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    elif request.method == "DELETE":
+        product_image.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 @swagger_auto_schema(methods=['post'], request_body=CoverImageSerializer)
 @api_view(['GET', 'POST'])
 def cover_image_list(request):
@@ -47,6 +68,27 @@ def cover_image_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@swagger_auto_schema(methods=['put', 'delete'], request_body=CoverImageSerializer)
+@api_view(['GET', 'PUT', 'DELETE'])
+def cover_image_detail(request, pk):
+    cover_image = CoverImage.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        serializer = CoverImageSerializer(cover_image)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        serializer = CoverImageSerializer(cover_image, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    elif request.method == "DELETE":
+        cover_image.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @swagger_auto_schema(methods=['post'], request_body=CoverPhotoSerializer)
@@ -77,3 +119,24 @@ def logo_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@swagger_auto_schema(methods=['put', 'delete'], request_body=LogoSerializer)
+@api_view(['GET', 'PUT', 'DELETE'])
+def logo_detail(request, pk):
+    logo = Logo.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        serializer = LogoSerializer(logo)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        serializer = LogoSerializer(logo, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    elif request.method == "DELETE":
+        logo.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

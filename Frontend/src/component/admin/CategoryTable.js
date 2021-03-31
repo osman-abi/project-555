@@ -13,7 +13,7 @@ export class CategoryTable extends Component {
   
     componentDidMount() {
       this.props.getCategory();
-      console.log('=============',this.props.category)
+      // console.log('=============',this.props.category)
     }
 
     render() {

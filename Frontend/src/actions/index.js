@@ -13,18 +13,27 @@ const GET_ABOUT_URL = 'http://127.0.0.1:8000/about/abouts/'
 const POST_ABOUT_URL = 'http://127.0.0.1:8000/about/abouts/'
 
 const POST_MISSION_URL = 'http://127.0.0.1:8000/about/missions/'
+const GET_MISSION_URL = 'http://127.0.0.1:8000/about/missions/'
 
 const POST_OURSHOP_URL = 'http://127.0.0.1:8000/about/shops/'
+const GET_OURSHOP_URL = 'http://127.0.0.1:8000/about/shops/'
 
 const POST_SHOP_ADDRESS_URL = 'http://127.0.0.1:8000/shop/shop_address/'
+const GET_SHOP_ADDRESS_URL = 'http://127.0.0.1:8000/shop/shop_address/'
 
 const POST_WORK_DURATION_URL = 'http://127.0.0.1:8000/shop/work_duration/'
+const GET_WORK_DURATION_URL = 'http://127.0.0.1:8000/shop/work_duration/'
 
 const POST_SUPPORT_URL = 'http://127.0.0.1:8000/shop/tech_support/'
+const GET_SUPPORT_URL = 'http://127.0.0.1:8000/shop/tech_support/'
 
 const POST_COPYRIGHT_URL = 'http://127.0.0.1:8000/shop/copy_right/'
+const GET_COPYRIGHT_URL = 'http://127.0.0.1:8000/shop/copy_right/'
 
 const GET_PRODUCT_IMAGE_URL = 'http://127.0.0.1:8000/images/product_image/'
+
+const POST_INVOICE_URL = 'http://127.0.0.1:8000/invoices/'
+const GET_INVOICE_URL = ''
 
 
 
@@ -63,6 +72,21 @@ export const addProduct = (products) => dispatch => {
         dispatch({
             type: "ADD_PRODUCT",
             payload:data
+        })
+    })
+}
+
+export const deleteProduct = id => dispatch => {
+    fetch(`http://127.0.0.1:8000/products/${id}/`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + ACCESS_TOKEN
+        },
+    }).then(res => res.json()).then(data => {
+        dispatch({
+            type: "DELETE_PRODUCT",
+            payload:id
         })
     })
 }
@@ -166,7 +190,7 @@ export const postAboutContext = (about) => dispatch => {
     })
 };
 
-
+/////////////////////////////////////////////////////////
 export const postMissionContext = (mission) => dispatch => {
     fetch(POST_MISSION_URL, {
         method: "POST",
@@ -182,6 +206,24 @@ export const postMissionContext = (mission) => dispatch => {
         })
     })
 };
+
+
+export const getMissionContext = () => dispatch => {
+    fetch(GET_MISSION_URL, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_MISSION_CONTEXT",
+            payload:data
+        })
+    })
+}
+////////////////////////////////////////////////////////////////////
+
 
 export const postOurShopContext = (ourshop) => dispatch => {
     fetch(POST_OURSHOP_URL, {
@@ -199,6 +241,22 @@ export const postOurShopContext = (ourshop) => dispatch => {
     })
 };
 
+export const getOurShopContext = () => dispatch => {
+    fetch(GET_OURSHOP_URL, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_OURSHOP_CONTEXT",
+            payload:data
+        })
+    })
+}
+
+/////////////////////////////////////////////////////////////////
 
 export const postShopAddress = (shop_address) => dispatch => {
     fetch(POST_SHOP_ADDRESS_URL, {
@@ -216,6 +274,21 @@ export const postShopAddress = (shop_address) => dispatch => {
     })
 };
 
+export const getShopAddress = () => dispatch => {
+    fetch(GET_SHOP_ADDRESS_URL, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_SHOP_ADDRESS",
+            payload:data
+        })
+    })
+}
+//////////////////////////////////////////////////////////////
 
 export const postWorkDuration = (work) => dispatch => {
     fetch(POST_WORK_DURATION_URL, {
@@ -234,6 +307,23 @@ export const postWorkDuration = (work) => dispatch => {
 };
 
 
+export const getWorkDuration = () => dispatch => {
+    fetch(GET_WORK_DURATION_URL, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_WORK_DURATION",
+            payload:data
+        })
+    })
+}
+/////////////////////////////////////////////////////////////////
+
+
 export const postTechniqueSupport = (support) => dispatch => {
     fetch(POST_SUPPORT_URL, {
         method: "POST",
@@ -250,8 +340,25 @@ export const postTechniqueSupport = (support) => dispatch => {
     })
 };
 
+
+export const getTechniqueSupport = () => dispatch => {
+    fetch(GET_SUPPORT_URL, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_TECHNIQUE_SUPPPORT",
+            payload:data
+        })
+    })
+}
+////////////////////////////////////////////////////////////////////////////
+
 export const postCopyRight = (copyright) => dispatch => {
-    fetch(POST_SUPPORT_URL, {
+    fetch(POST_COPYRIGHT_URL, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -266,9 +373,53 @@ export const postCopyRight = (copyright) => dispatch => {
     })
 };
 
+export const getCopyRight = () => dispatch => {
+    fetch(GET_COPYRIGHT_URL, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_COPYRIGHT",
+            payload: data
+        })
+    })
+};
+//////////////////////////////////////////////////////////////////////
+
+export const getInvoice = () => dispatch => {
+    fetch(GET_INVOICE_URL, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_INVOICE",
+            payload:data
+        })
+    })
+}
 
 
-
+export const postInvoice = (invoice) => dispatch => {
+    fetch(POST_INVOICE_URL, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + ACCESS_TOKEN
+        },
+        body: JSON.stringify(invoice)
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "POST_INVOICE",
+            payload: data
+        })
+    })
+};
 
 
 // ========================================== PRODUCT IMAGES ===============================
