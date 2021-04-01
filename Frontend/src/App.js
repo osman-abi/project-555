@@ -46,10 +46,15 @@ import AdminDashboard from './component/admin';
 import SavedCardsadd from './component/Account/SavedCardsadd';
 
 class App extends React.Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props)
+  
+    this.state = {
+      email: "admin@admin.com",
+      password: "admin"
+    }
   }
+  
   // componentWillMount()
   // {
   //   this.props.receiveProducts();
@@ -57,6 +62,22 @@ class App extends React.Component {
   getUrl(pathname) {
       let pathArray = pathname.split('/');
       return `/${pathArray[1]}` === '/ComingSoon'  ? true : `/${pathArray[1]}` === '/Maintenance' ? true :`/${pathArray[1]}` === '/admin-panel'  ? true : false;
+  }
+
+  componentDidMount() {
+    const { email, password } = this.state
+    const data = {email, password}
+    fetch('http://127.0.0.1:8000/registration/token/', {
+      method: 'POST',
+       headers: {
+                'Content-Type': 'application/json'
+            },
+      body:JSON.stringify(data)
+    }).then(res => res.json()).then(data => {
+      // console.log(data)
+      localStorage.setItem("access_token", data.access)
+      localStorage.setItem('refresh_token', data.refresh)
+    })
   }
 
   render() {
@@ -83,15 +104,15 @@ class App extends React.Component {
                     <Route exact path="/index-modern" component={HomePage3} />
                     <Route exact path="/index-home-classic" component={HomePage4} />
                     
-                    <Route exact path="/sidebar-without-lazyload" component={ShopPage2} />
+                    <Route exact path="/magaza" component={ShopPage2} />
                    
                     <Route exact path="/ShopingCart" component={ShopingCart} />
                     <Route exact path="/MyAccount" component={MyAccount} />
                     <Route exact path="/BlogSinglePage" component={BlogSinglePage} />
                     <Route exact path="/BlogFullWidth" component={BlogFullWidth} />
                     <Route exact path="/wishlist" component={WishList} />
-                    <Route exact path="/Aboutus" component={Aboutus} />
-                    <Route exact path="/Contactus" component={Contactus} />
+                    <Route exact path="/haqqimizda" component={Aboutus} />
+                    <Route exact path="/elaqe" component={Contactus} />
                     <Route exact path="/CheckOut" component={CheckOut} />
                     <Route exact path="/Address" component={Address} />
                     <Route exact path="/Account/Addressedit" component={Addressedit} />
@@ -105,7 +126,7 @@ class App extends React.Component {
                     <Route exact path="/Account/SavedCardsadd" component={SavedCardsadd} />
                     <Route exact path="/SuccessScreen" component={SuccessScreen} />
                     <Route exact path="/Reports" component={Reports} />
-                  <Route exact path="/Invoices" component={Invoices} />
+                  <Route exact path="/qaimeler" component={Invoices} />
                   <Route exact path="/Category" component={Category} />
                     <Route path={`/shop/:category/:id`} component={ProductDetail} /> 
                     <Route exact  component={PageNotFound} />

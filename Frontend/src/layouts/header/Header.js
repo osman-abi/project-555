@@ -27,8 +27,8 @@ class Header extends React.Component {
             activeTab: '1',
             isOpen: false,
             collapsed: true,
-            CartHide:true,
-            classset:'',
+            CartHide: true,
+            classset: '',
             getproduct: AllProduct,
             /////////////////////////////
             firstname: "",
@@ -36,7 +36,10 @@ class Header extends React.Component {
             email: "",
             password: "",
             phone: "",
-            address:""
+            address: "",
+            /////////////////////////////
+            admin_email: "admin@admin.com",
+            admin_password: "admin"
         }
         var removeFromCart, removeFromWishList;
         this.toggle = this.toggle.bind(this);
@@ -99,6 +102,8 @@ class Header extends React.Component {
       componentDidMount() {
           window.addEventListener('scroll', this.handleScroll);
           this.props.getProductImages();
+          console.log(this.props.images)
+        //   localStorage.setItem("isSuperuser", 0)
           
         //   console.log(this.props.user)
       }
@@ -228,7 +233,8 @@ class Header extends React.Component {
     };
 
     submitForm = e => {
-        e.preventDefault();
+        e.preventDefault()
+        alert('Qeydiyyatınız uğurla həyata keçirildi')
         const { firstname, lastname, email, password, phone, address } = this.state;
         const data = {
             email: email,
@@ -248,18 +254,63 @@ class Header extends React.Component {
         body: JSON.stringify(data)
     }).then(response => response.json()).then(data => {
         // console.log(data.data)
+
         localStorage.setItem('username', data.data.username)
         localStorage.setItem('email', data.data.email)
         localStorage.setItem('password', data.data.password)
         localStorage.setItem('phone_number', data.data.phone_number)
         localStorage.setItem("lastname", data.data.lastname)
         localStorage.setItem("address", data.data.address)
-        localStorage.setItem("access_token", data.access_token)
-        localStorage.setItem("refresh_token",data.refresh_token)
+        localStorage.setItem("isLOggedIn", 1)
+        if (email == this.state.admin_email && password == this.state.admin_password) {
+            localStorage.setItem("isSuperuser", 1)
+        } else {
+            localStorage.setItem("isSuperuser", 0)
+        }
     })
 
         
     }
+
+    logOut = e => {
+        // e.preventDefault();
+        var access_token = localStorage.getItem("access_token")
+        var refresh_token = localStorage.getItem("refresh_token")
+        var data = {
+            email: localStorage.getItem("email"),
+            password: localStorage.getItem("password"),
+            refresh: refresh_token
+        }
+        fetch('http://127.0.0.1:8000/registration/logout/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + access_token
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+        localStorage.setItem("username", "")
+        localStorage.setItem("email", "")
+        localStorage.setItem("password", "")
+        localStorage.setItem('phone_number', "")
+        localStorage.setItem("lastname", "")
+        localStorage.setItem("address", "")
+        localStorage.setItem("isLOggedIn", 0)
+        localStorage.setItem("isSuperuser",0)
+    }
+
+    onLogIn = e => {
+        localStorage.setItem("isLOggedIn",1)
+        const { email, password } = this.state
+        console.log('email',email,'password',password)
+        if (email == this.state.admin_email && password == this.state.admin_password) {
+            localStorage.setItem('isSuperuser',1)
+        } else {
+            localStorage.setItem('isSuperuser',0)
+        }
+        }
+        
+    
     
     render() {
         let pathnames = document.location.href;
@@ -267,16 +318,20 @@ class Header extends React.Component {
         let pageName = '/'+pathArray[pathArray.length -1];
         var searchName;
         let { firstname, lastname, email, phone, address, password } = this.state
-        let hesab = localStorage.getItem('email')
-        let phone_number = localStorage.getItem('phone_number')
+        let isSuperuser = localStorage.getItem('isSuperuser');
+        const isLoggedIn = localStorage.getItem('isLOggedIn')
+        console.log(typeof isLoggedIn)
         const { images } = this.props
+        if (isSuperuser == '0') {
+            navLinks.length = 4
+        }
         if(pageName== '/topbar-with-load-more')
         {
             searchName="/topbar-with-load-more"
         }
-        else if(pageName== '/sidebar-without-lazyload')
+        else if(pageName== '/magaza')
         {
-            searchName="/sidebar-without-lazyload"
+            searchName="/magaza"
         }
         else if(pageName== '/topbar-without-lazyload')
         {
@@ -309,10 +364,10 @@ class Header extends React.Component {
                                                 <ul>
 
                                                     <li className="topbar_item topbar_item_type-email">
-                                                    <Link to="/Contactus"><i className="fa fa-envelope-o">&nbsp;</i> {hesab} </Link>
+                                                    <Link to="/elaqe"><i className="fa fa-envelope-o">&nbsp;</i>  </Link>
                                                     </li>
                                                     <li className="topbar_item topbar_item_type-phone_number">
-                                                        <Link to="/Contactus"><i className="fa fa-phone">&nbsp;</i>{phone_number}</Link>
+                                                        <Link to="/elaqe"><i className="fa fa-phone">&nbsp;</i> </Link>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -325,11 +380,20 @@ class Header extends React.Component {
                                                     <li className="topbar_item topbar_item_type-topbar_menu">
                                                         <div className="menu-top-bar-menu-container">
                                                             <ul className="top-menu list-inline">
-                                                                <li className="menu-item">
-                                                                    <Link to="/Account/AccountProfile">Mənim hesabım</Link>
+                                                            <li className="menu-item">
+                                                                
+                                                                {/* After login open this */}
+                                                                {
+                                                                    isLoggedIn == '1' ? <Link to="/Account/AccountProfile">Mənim hesabım</Link> : null
+                                                                }
+                                                                    
                                                                 </li>
-                                                                <li>
-                                                                    <Link to="#" onClick={this.toggle} data-toggle="modal" data-target="#"><i className="fa fa-sign-in">&nbsp;</i> Giriş </Link>
+                                                            <li>
+                                                                {
+                                                                    isLoggedIn == '1' ? <Link to="#" onClick={this.logOut} data-toggle="modal" data-target="#"><i className="fa fa-sign-in">&nbsp;</i> Çıxış </Link> 
+                                                                        : <Link to="#" onClick={this.toggle} data-toggle="modal" data-target="#"><i className="fa fa-sign-in">&nbsp;</i> Giriş </Link>
+                                                                    
+                                                                }
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -388,7 +452,8 @@ class Header extends React.Component {
                                                                                 <div class="menu-list-items">
                                                                                      <Navbar light expand="md" class="front_menu" >
                                                                                         <NavbarToggler onClick={this.toggle} />
-                                                                                        <Collapse isOpen={this.state.isOpen} navbar>
+                                                                                    <Collapse isOpen={this.state.isOpen} navbar>
+                                                                                        
                                                                                             {navLinks.map((navLink, index) => (
                                                                                                 <Nav className="ml-auto" navbar>
                                                                                                     {(navLink.type && navLink.type === 'subMenu') ?
@@ -508,7 +573,7 @@ class Header extends React.Component {
                                                                 </li>
                                                                  <li className="ciya-tools-action ciya-tools-wishlist"> <Link to="/wishlist"><i className="glyph-icon pgsicon-ecommerce-like" /> <span className="wishlist ciyashop-wishlist-count"> {this.ReadWishListItems() == null ? 0 : this.ReadWishListItems().length} </span> </Link></li>
                                                                  
-                                                                 <li className="ciya-tools-action ciya-tools-search"><Link to='/sidebar-without-lazyload' ><i className="glyph-icon pgsicon-ecommerce-magnifying-glass"  /></Link></li>
+                                                                 <li className="ciya-tools-action ciya-tools-search"><Link to='/magaza' ><i className="glyph-icon pgsicon-ecommerce-magnifying-glass"  /></Link></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -553,7 +618,7 @@ class Header extends React.Component {
                                     <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-login modal-dialog-centered">
                                         <ModalHeader toggle={this.toggle}>
                                             <h4 className="mb-0">Daxil ol</h4>
-                                        </ModalHeader>
+                                        </ModalHeader>Modal
                                         <ModalBody>
                                             <Nav tabs>
                                                 <NavItem>
@@ -578,11 +643,11 @@ class Header extends React.Component {
                                                 <form onSubmit={ this.onLogIn}>
                                                         <div class="form-group">
                                                             <label>Email ünvanı</label>
-                                                            <input type="text" class="form-control" placeholder="Email ünvanını daxil edin"></input>
+                                                            <input type="text" class="form-control" onChange={this.handleEmail} value={email} placeholder="Email ünvanını daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
                                                             <label> Şifrə </label>
-                                                            <input type="text" class="form-control" placeholder="Şifrənizi daxil edin"></input>
+                                                            <input type="text" class="form-control" onChange={this.handlePassword} value={password} placeholder="Şifrənizi daxil edin"></input>
                                                         </div>
 
                                                         <div class="form-group">
@@ -609,11 +674,11 @@ class Header extends React.Component {
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Şifrə </label>
-                                                            <input type="text" class="form-control" onChange={this.handlePassword} value={password} placeholder="Şifrənizi daxil edin"></input>
+                                                            <input type="password" class="form-control" onChange={this.handlePassword} value={password} placeholder="Şifrənizi daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Şifrə (Təkrar) </label>
-                                                            <input type="text" class="form-control"  placeholder="Şifrənizi yeniden daxil edin"></input>
+                                                            <input type="password" class="form-control"  placeholder="Şifrənizi yeniden daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Tel:</label>
