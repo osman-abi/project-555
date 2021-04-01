@@ -131,11 +131,11 @@ class TopFilter extends Component {
                     <Col>
                         {productlength > 0 ? 
                                 <p className="result-count">
-                                    Göstərilir 1–{productlength} 
+                                    Nəticə 1–{productlength} 
                                 </p>
                             : 
                                 <p className="result-count">
-                                    Showing 0 results of {MyProduct.length}
+                                    Nəticə 0 results of {productlength}
                                 </p>
                             }
                         <div className="gridlist-toggle-wrap">

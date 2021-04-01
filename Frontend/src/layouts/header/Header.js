@@ -665,7 +665,7 @@ class Header extends React.Component {
                                                             <input type="text" class="form-control" onChange={this.handleFirstname} value={firstname} placeholder="Ad daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
-                                                            <label>SoyAd</label>
+                                                            <label>Soyad</label>
                                                             <input type="text" class="form-control" onChange={this.handleLastname} value={lastname} placeholder="Soyad daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
@@ -682,7 +682,7 @@ class Header extends React.Component {
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Tel:</label>
-                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrınizi daxil edin"></input>
+                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrənizi daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Ünvan:</label>

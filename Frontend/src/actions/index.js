@@ -3,8 +3,8 @@ import ProductsList from '../api/product.json';
 const PRODUCT_GET_URL = 'http://127.0.0.1:8000/products/'
 const PRODUCT_POST_URL = 'http://127.0.0.1:8000/products/'
 
-const CATEGORY_GET_URL = 'http://127.0.0.1:8000/category/categories/'
-const CATEGORY_POST_URL = 'http://127.0.0.1:8000/category/categories/'
+const CATEGORY_GET_URL = 'https://127.0.0.1:8000/category/categories/'
+const CATEGORY_POST_URL = 'https://127.0.0.1:8000/category/categories/'
 
 const FILTER_CATEGORY_GET_URL = 'http://127.0.0.1:8000/category/filter/'
 const FILTER_CATEGORY_POST_URL = 'http://127.0.0.1:8000/category/filter/'
