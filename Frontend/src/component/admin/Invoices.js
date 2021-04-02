@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import { Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import invoice from '../../api/invoice.js';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getInvoice } from "../../actions/index";
 
 class Invoices extends Component {
 
@@ -16,13 +19,19 @@ class Invoices extends Component {
         modal1: false,
         dropdownOpen: false,
         isOpen: false,
-        invoices:null,
+        // invoices:invoice,
         searchProduct:'',
         invoiceview:''
       };
 
       this.toggle = this.toggle.bind(this);
       this.toggle1 = this.toggle1.bind(this);
+  }
+  
+
+  static propTypes = {
+        invoices: PropTypes.array.isRequired,
+        getInvoice:PropTypes.func.isRequired
     }
     toggle() {
       this.setState(prevState => ({
@@ -37,6 +46,8 @@ class Invoices extends Component {
 
     componentDidMount() {
       window.scrollTo(0, 0)
+      this.props.getInvoice()
+      
     }
 
     onSearchProduct(searchText){
@@ -109,16 +120,16 @@ class Invoices extends Component {
         {
            sortable: false,
            Header: 'Transaksiya ID',
-           accessor: 'invoiceid'
+           accessor: 'transaction_id'
         },
         {
            minWidth: 160,
            Header: 'Alıcı',
-           accessor: 'buyer',
+           accessor: 'firstname',
         },
         {
            Header: 'Tarix',
-           accessor: 'date',
+           accessor: 'ordered_date',
         },
         // {
         //   Header: 'Status',
@@ -130,7 +141,7 @@ class Invoices extends Component {
         // },
         {
            Header: 'Qiymət',
-           accessor: 'price',
+           accessor: 'amount',
         },
         // {
         //    Header: 'Kreditlə məbləğ',
@@ -151,8 +162,12 @@ class Invoices extends Component {
               )
            },
         }
-     ]
-
+      ]
+      const inv = []
+      const {invoices} = this.props
+      for (const i of invoices) {
+        inv.push(i)
+      }
     return (
       <div>
       <div className="section-ptb">
@@ -170,7 +185,7 @@ class Invoices extends Component {
                 </form>
               </div>
                 <ReactTable className="invoices-table"
-                    
+                    data={inv}
                     columns={columns}
                     minRows={1}
                     defaultPageSize={5}
@@ -282,4 +297,13 @@ class Invoices extends Component {
 
     }
 }
-export default Invoices;
+
+const mapStateToProps = state => ({
+    invoices: state.user.invoice
+})
+
+
+
+export default connect(
+    mapStateToProps, { getInvoice }
+)(Invoices)
