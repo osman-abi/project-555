@@ -16,7 +16,7 @@ class Invoices extends Component {
         modal1: false,
         dropdownOpen: false,
         isOpen: false,
-        invoices:invoice,
+        invoices:null,
         searchProduct:'',
         invoiceview:''
       };
@@ -170,7 +170,7 @@ class Invoices extends Component {
                 </form>
               </div>
                 <ReactTable className="invoices-table"
-                    data={this.state.invoices}
+                    
                     columns={columns}
                     minRows={1}
                     defaultPageSize={5}

@@ -5,6 +5,28 @@ import { postMissionContext,postOurShopContext,postAboutContext,postShopAddress,
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import ImageUploader from 'react-images-upload';
+import Slider from "react-slick";
+
+const productData = {
+    product_gallery: [
+        "product-single.jpg",
+        "product-single.jpg",
+        "product-single.jpg",
+        "product-single.jpg",
+        "product-single.jpg",
+    ]
+}
+
+const productslider = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1
+  };
+
+
 export class AddInformation extends Component {
     constructor(props) {
         super(props)
@@ -390,6 +412,40 @@ export class AddInformation extends Component {
                         </FormGroup>
                     <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Tesdiqle</button>
                     </form>
+                </Container>
+                <br/>
+                <hr />
+                <br />
+                <Container>
+                    <form onSubmit={this.SlideUpload}>
+                <h1 className='text-center'> Slider </h1>
+                <div className="ciyashop-product-thumbnails">
+                                                      
+                                                        <Slider {...productslider} className="ciyashop-product-thumbnails__wrapper">
+                                                            {productData.product_gallery.map((pictureimage,index) =>
+                                                                <div key={index}>
+                                                                    <div className="ciyashop-product-thumbnail__image">
+                                                                        {/* <a href="javascript:void(0)">
+                                                                            <img src={require(`../../assets/images/${pictureimage}`)}  className="img-fluid" />
+                                                                        </a> */}
+                                                                        <div className="d-flex justify-content-center image-content align-items-center">
+                                                                            <ImageUploader
+                                                                                buttonText=""
+                                                                                withIcon={false}
+                                                                                withPreview={true}
+                                                                                fileTypeError={this.state.ErrorMsg}
+                                                                                onChange={this.Uploadimage}
+                                                                                imgExtension={['.jpg', '.jpeg', '.png']}
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            )}
+                                                        </Slider>
+                        </div>
+                        <Input type='submit' class="btn btn-outline-success w-75 mt-3 btn-block" value='Təsdiqlə'/>
+                                                    </form>
                 </Container>
                 
 

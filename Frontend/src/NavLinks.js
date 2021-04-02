@@ -36,7 +36,7 @@ export default [
    },
    {
       "menu_title": "Mağaza",
-      "path": "/sidebar-without-lazyload",
+      "path": "/magaza",
       "mega": false,
       "icon": "party_mode",
       "type": "Menu"
@@ -46,7 +46,7 @@ export default [
    {
       "menu_title": "Haqqımızda",
       "type": "Menu",
-      "path": "/Aboutus",
+      "path": "/haqqimizda",
       "icon": "home",
       // "child_routes": [
       //    {
@@ -84,12 +84,12 @@ export default [
    {
       "menu_title": "Əlaqə",
       "type": "Menu",
-      "path": "/Contactus",
+      "path": "/elaqe",
       "icon": "home"
    },
    {
       "menu_title": "Admin Panel",
-      "path": "/admin-panel/Invoices",
+      "path": "/admin-panel/qaimeler",
       "icon": "perm_identity",
       "child_routes": null
    },

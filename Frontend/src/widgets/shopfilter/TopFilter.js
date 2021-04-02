@@ -135,7 +135,7 @@ class TopFilter extends Component {
                                 </p>
                             : 
                                 <p className="result-count">
-                                    Nəticə 0 results of {productlength}
+                                    Nəticə 0 - {productlength}
                                 </p>
                             }
                         <div className="gridlist-toggle-wrap">

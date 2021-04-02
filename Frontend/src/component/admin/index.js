@@ -56,7 +56,7 @@ class AdminDashboard extends Component {
             <div>
             <AdminHeader />
               {/* <Route path={`${match.url}/Reports`} component={Reports} /> */}
-              <Route path={`${match.url}/Invoices`} component={Invoices} />
+              <Route path={`${match.url}/qaimeler`} component={Invoices} />
               <Route path={`${match.url}/Profile`} component={Profile} />
               <Route path={`${match.url}/Category`} component={Category} />
              <Route path={`${match.url}/FilterCategory`} component={FilterCategory} />

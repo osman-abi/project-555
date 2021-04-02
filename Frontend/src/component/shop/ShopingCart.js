@@ -309,7 +309,7 @@ class ShopingCart extends Component {
                             <div className="wishlist-not-found">
                             <img src={require(`../../assets/images/empty-search.jpg`)} className="img-fluid mb-4" />
                             <h4 className="d-block">Səbətiniz boşdur.</h4>
-                            <a className="btn btn-primary" href="/sidebar-without-lazyload">Mağazaya qayıt</a>
+                            <a className="btn btn-primary" href="/magaza">Mağazaya qayıt</a>
                             </div>
                         }
                     </Container>

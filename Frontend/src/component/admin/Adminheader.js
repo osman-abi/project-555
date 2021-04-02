@@ -95,7 +95,7 @@ class AdminHeader extends Component {
                                 <Link  to="/admin-panel/Reports" className="nav-link" onClick={() => this.Changeclass('report')}><i className="fa fa-line-chart"></i>Reports</Link>
                             </NavItem> */}
                             <NavItem className="invoice">
-                                <Link to="/admin-panel/Invoices" className="nav-link" onClick={() => this.Changeclass('invoice')}><i className="fa fa-inbox"></i>Qaimələr</Link>
+                                <Link to="/admin-panel/qaimeler" className="nav-link" onClick={() => this.Changeclass('invoice')}><i className="fa fa-inbox"></i>Qaimələr</Link>
                                         </NavItem>
                                         {/* <NavItem className="information">
                                 <Link to="/admin-panel/AddInformation" className="nav-link" onClick={() => this.Changeclass('information')}><i className="fa fa-inbox"></i>Məlumatlar</Link>
@@ -128,9 +128,9 @@ class AdminHeader extends Component {
                                     <DropdownItem onClick={() => this.Changeclass('product')} className="nav-link"   tag={Link} to="/admin-panel/product-add"><i className="fa fa-cart-arrow-down"></i>Məhsul əlavə et</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
-                            <NavItem className="profile">
+                            {/* <NavItem className="profile">
                                 <Link to="/admin-panel/Profile" className="nav-link" onClick={() => this.Changeclass('profile')}><i className="fa fa-user-circle-o"></i>Profil</Link>
-                            </NavItem>
+                            </NavItem> */}
                             <NavItem className="backhome">
                                 <Link to="/" className="nav-link" onClick={() => this.Changeclass('backhome')}><i className="fa fa-home"></i>Ana səhifəyə keç</Link>
                                         </NavItem>

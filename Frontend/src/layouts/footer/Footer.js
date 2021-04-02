@@ -4,6 +4,7 @@
 import React from 'react';
 import { Row, Col,Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import logo2 from '../../assets/images/logo2.jpg';
 
 class Footer extends React.Component {
 
@@ -60,7 +61,7 @@ class Footer extends React.Component {
                             <div className="col-lg-3 col-md-6 footer-align-left">
                             <div className="logo-wrapper widget">
                                 <p><Link to="#">
-                                    <img className="img-fluid"  src={require(`../../assets/images/logo.svg`)}   alt="logo" />
+                                    <img className="img-fluid"  src={logo2}   alt="logo" />
                                 </Link></p>
                             </div>
                             <div className="text-content">
@@ -87,9 +88,9 @@ class Footer extends React.Component {
                                 <div className="menu-useful-links-container">
                                 <ul className="menu">
                                     <li className="menu-item active"><Link to="/">Ana səhifə</Link></li>
-                                    <li className="menu-item"><Link to="/Aboutus">Haqqımızda</Link></li>
-                                    <li className="menu-item"><Link to="/sidebar-without-lazyload">Mağaza</Link></li>
-                                    <li className="menu-item"><Link to="/Contactus">Əlaqə</Link></li>
+                                    <li className="menu-item"><Link to="/haqqimizda">Haqqımızda</Link></li>
+                                    <li className="menu-item"><Link to="/magaza">Mağaza</Link></li>
+                                    <li className="menu-item"><Link to="/elaqe">Əlaqə</Link></li>
                                 </ul>
                                 </div>
                             </div>
