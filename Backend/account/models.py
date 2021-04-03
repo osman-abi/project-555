@@ -18,11 +18,11 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, username, email,phone_number,lastname,address, password=None):
         if password is None:
             raise TypeError('Password should not be none')
 
-        user = self.create_user(username, email, password)
+        user = self.create_user(username, email, password,phone_number,lastname,address)
         user.is_superuser = True
         user.is_staff = True
         user.save()
@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False, default=AUTH_PROVIDERS.get('email'))
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username','phone_number','lastname','address']]
 
     objects = UserManager()
 
