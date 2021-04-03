@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False, default=AUTH_PROVIDERS.get('email'))
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username','phone_number','lastname','address']]
+    REQUIRED_FIELDS = ['username','phone_number','lastname','address']
 
     objects = UserManager()
 
