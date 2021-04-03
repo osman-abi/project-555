@@ -36,7 +36,7 @@ class AdminDashboard extends Component {
     }
     else 
     {
-      if(pageName == "Reports" || pageName == "Invoices" || pageName == "Profile" ||  pageName == "Information" || pageName=="AddInformation" || pageName == "Category" || pageName == "FilterCategory" || pageName == "Product" || pageName == "Profileedit" || pageName == "Profileedit" || pageName == "Collaboration" 
+      if(pageName == "Reports" || pageName == "qaimeler" || pageName == "Profile" ||  pageName == "Information" || pageName=="AddInformation" || pageName == "Category" || pageName == "FilterCategory" || pageName == "Product" || pageName == "Profileedit" || pageName == "Profileedit" || pageName == "Collaboration" 
       || pageName == "Settings" || pageName == "product-add" || pageName == "Product-edit" )
         return true;
       else 
@@ -46,7 +46,8 @@ class AdminDashboard extends Component {
  }
 
  render() {
-  const { location } = this.props;
+   const { location } = this.props;
+   console.log(location)
    const { match } = this.props;
    return (
         <Fragment>

@@ -7,7 +7,7 @@ import AboutBanner from '../../widgets/AboutBanner.js';
 import DealOfTheWeek from '../../widgets/DealOfTheWeek.js';
 import EndOfSeason from '../../widgets/EndOfSeason.js';
 // import HomeBanner from '../../widgets/HomeBanner.js';
-import HomeSlider from '../../widgets/HomSlider.js';
+import HomSlider from '../../widgets/HomSlider.js';
 import Instagram from '../../widgets/Instafeed.js';
 import OurLatestPost from '../../widgets/OurLatestPost.js';
 import Subscribe from '../../widgets/Subscribe.js';
@@ -53,7 +53,7 @@ class HomePage extends Component {
    render() {
     return (
          <div>
-            <HomeSlider />
+            <HomSlider />
             <div id="content" className="site-content" tabIndex={-1}>
             <div className="content-wrapper content-wrapper-vc-enabled">
                <div id="primary" className="content-area">
@@ -76,7 +76,7 @@ class HomePage extends Component {
                                     </Row>
                               </Container>
                               <div className="container section-3">
-                                 <AboutBanner />
+                                 {/* <AboutBanner /> */}
                               </div>
                               <Container>
                                     <div className="row section-ptb" style={{marginTop:"-80px"}}>

@@ -74,10 +74,10 @@ class AdminHeader extends Component {
 
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle2} className="profile-dropdown ml-auto">
                         <DropdownToggle caret className="btn-white">
-                        <img className="img-fluid rounded-circle profile-img" src={profile} alt="profile"/>
+                        {/* <img className="img-fluid rounded-circle profile-img" src={profile} alt="profile"/> */}
                         <div className="d-none d-sm-block">
                         <h6 className="mb-0">{Profile.firstname+' '+Profile.lastname}</h6>
-                        <span className="text-dark">{Profile.email}</span>
+                        {/* <span className="text-dark">{Profile.email}</span> */}
                         </div>
                         </DropdownToggle>
                         <DropdownMenu>
@@ -89,7 +89,7 @@ class AdminHeader extends Component {
                     </div>
                     <Navbar light expand="md"  className="bg-white">
                         <NavbarToggler onClick={this.toggle3} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
+                        <Collapse isOpen={this.state.isOpen} className='justify-content-center' navbar>
                             <Nav navbar>
                             {/* <NavItem className="active report">
                                 <Link  to="/admin-panel/Reports" className="nav-link" onClick={() => this.Changeclass('report')}><i className="fa fa-line-chart"></i>Reports</Link>

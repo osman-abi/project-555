@@ -5,6 +5,9 @@ import React from 'react';
 import { Row, Col,Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import logo2 from '../../assets/images/logo2.jpg';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {  getLogo,getShopAddress } from '../../actions/index'
 
 class Footer extends React.Component {
 
@@ -12,9 +15,20 @@ class Footer extends React.Component {
     {
         super(props);
     }
+
+    static propTypes = {
+        shop_address: PropTypes.array.isRequired,
+        getShopAddress:PropTypes.func.isRequired,
+        logos: PropTypes.array.isRequired,
+        getLogo: PropTypes.func.isRequired
+    }
+
+
     componentDidMount()
     {
-        window.addEventListener('scroll',this.Checkscroll);
+        window.addEventListener('scroll', this.Checkscroll);
+        this.props.getLogo();
+        this.props.getShopAddress()
     }
     componentWillUnmount()
     {
@@ -49,6 +63,7 @@ class Footer extends React.Component {
         window.scroll({top: 0, left: 0, behavior: 'smooth' })
     }
     render() {
+        const {logos,shop_address} = this.props
         let backtotop = {display : 'none'}
         return (
         <div>
@@ -61,11 +76,15 @@ class Footer extends React.Component {
                             <div className="col-lg-3 col-md-6 footer-align-left">
                             <div className="logo-wrapper widget">
                                 <p><Link to="#">
-                                    <img className="img-fluid"  src={logo2}   alt="logo" />
+                                    {logos.map((logo, index) => {
+                                                        return(
+                                                        <img key={index} className="img-fluid" src={`http://127.0.0.1:8000${logo.logo_image}`} alt="logo" />
+                                                        )
+                                                    })}
                                 </Link></p>
                             </div>
                             <div className="text-content">
-                                <p className="mb-3 mt-4">CiyaShop is an enchanting and easy to use e-Commerce WP theme that allows you to sell your products in a dynamic way.</p>
+                                <p className="mb-3 mt-4">Khanbuta is an enchanting and easy to use e-Commerce WP theme that allows you to sell your products in a dynamic way.</p>
                                 <p className="mb-4">The theme is packed with everything you need to create a new website.</p>
                             </div>
                             <div className="pgs-social-profiles mt-4">
@@ -115,11 +134,16 @@ class Footer extends React.Component {
                             <div className="pgs-contact-widget widget mt-4 mt-lg-0">
                                 <h4 className="footer-title title">Ünvan</h4>
                                 <div className="footer-address">
-                                <ul>
-                                    <li><i className="fa fa-map-marker" /><span>Baki seh., Nerimanov rayonu</span></li>
-                                    <li className="pgs-contact-email"><i className="fa fa-envelope-o" /><span>support@ciyashop.com</span></li>
-                                    <li><i className="fa fa-phone" /><span>+994 55 201 27 17</span></li>
+                                                    {shop_address.map((shop, index) => {
+                                                        return(
+                                                        <ul key={ index}>
+                                    
+                                                            <li><i className="fa fa-map-marker" /><span>{ shop.address}</span></li>
+                                                            <li className="pgs-contact-email"><i className="fa fa-envelope-o" /><span>{ shop.email_1}</span></li>
+                                                            <li><i className="fa fa-phone" /><span>{ shop.phone_number_1}</span></li>
                                 </ul>
+                                                        )
+                                    })}
                                 </div>
                             </div>
                             <div className="widget pgs-newsletter-widget">
@@ -150,7 +174,7 @@ class Footer extends React.Component {
                         <Container>
                         <div className="row align-items-center justify-content-center">
                             <Col md={6} className="text-center">
-                                 <p> © Copyright 2019 <Link to="#">CiyaShop</Link> All Rights Reserved.</p>
+                                 <p> © Copyright 2019 <Link to="#">Made by</Link> Khanbuta group</p>
                             </Col>
                             {/* <Col md={6}  className="float-right">
                                 <div className="payments text-right">
@@ -174,4 +198,10 @@ class Footer extends React.Component {
         )
     }
 };
-export default Footer;
+
+const mapStateToProps = state => ({
+    logos: state.user.logo,
+    shop_address:state.user.shop_address
+})
+
+export default connect(mapStateToProps,{getLogo,getShopAddress})(Footer);

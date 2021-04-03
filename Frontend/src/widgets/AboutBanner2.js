@@ -20,10 +20,7 @@ export class AboutBanner2 extends Component {
                             <div className="section-title mb-3">
                                 <h2 className="font-bold">Daha ətraflı</h2>
                             </div>
-                            <p>We are Ciya Shop. Our store is more than just another average online retailer. We sell
-                            not only top quality products, but give our customers a positive online shopping
-                            experience. Forget about struggling to do everything at once taking care of the family.
-                </p>
+                            <p></p>
                             <Row className="mt-4 pt-4 mt-sm-5 pt-sm-5 border-top no-gutters">
                                 <Col sm={6} className="pr-2">
                                     <div className="ciyashop_info_box ciyashop_info_box-layout-style_2 ciyashop_info_box-content_alignment-left ciyashop_info_box-with-icon ciyashop_info_box-icon-source-font ciyashop_info_box-icon-style-border ciyashop_info_box-icon-size-sm ciyashop_info_box-icon-shape-round ciyashop_info_box-icon_position-left info_box-step_position-above_title">

@@ -3,8 +3,8 @@ import ProductsList from '../api/product.json';
 const PRODUCT_GET_URL = 'http://127.0.0.1:8000/products/'
 const PRODUCT_POST_URL = 'http://127.0.0.1:8000/products/'
 
-const CATEGORY_GET_URL = 'https://127.0.0.1:8000/category/categories/'
-const CATEGORY_POST_URL = 'https://127.0.0.1:8000/category/categories/'
+const CATEGORY_GET_URL = 'http://127.0.0.1:8000/category/categories/'
+const CATEGORY_POST_URL = 'http://127.0.0.1:8000/category/categories/'
 
 const FILTER_CATEGORY_GET_URL = 'http://127.0.0.1:8000/category/filter/'
 const FILTER_CATEGORY_POST_URL = 'http://127.0.0.1:8000/category/filter/'
@@ -32,10 +32,16 @@ const GET_COPYRIGHT_URL = 'http://127.0.0.1:8000/shop/copy_right/'
 
 const GET_PRODUCT_IMAGE_URL = 'http://127.0.0.1:8000/images/product_image/'
 
+const GET_SLIDE_IMAGE_URL = 'http://127.0.0.1:8000/images/cover_image/'
+
+const GET_SLIDE_PHOTO_URL = 'http://127.0.0.1:8000/images/cover_photo/'
+const POST_SLIDE_PHOTO_URL = 'http://127.0.0.1:8000/images/cover_photo/'
+
 const POST_INVOICE_URL = 'http://127.0.0.1:8000/invoices/'
-const GET_INVOICE_URL = ''
+const GET_INVOICE_URL = 'http://127.0.0.1:8000/invoices/'
 
-
+const GET_LOGO_URL = 'http://127.0.0.1:8000/images/logo/'
+const ADD_LOGO_URL = 'http://127.0.0.1:8000/images/logo/'
 
 // const REGISTRATION_URL = 'http://127.0.0.1:8000/registration/register/'
 // const LOGIN_URL = 'http://127.0.0.1:8000/registration/login/'
@@ -49,7 +55,7 @@ export const getProducts = () => dispatch => {
     fetch(PRODUCT_GET_URL, {
             method: 'GET',
             headers: {
-                'Authorization':'Bearer ' + ACCESS_TOKEN
+                'Authorization':' Bearer '+ ACCESS_TOKEN
             }
         }).then(response => response.json()).then(data => {
             dispatch({
@@ -65,7 +71,7 @@ export const addProduct = (products) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization':'Bearer '+ ACCESS_TOKEN
         },
         body:JSON.stringify(products)
     }).then(response => response.json()).then(data => {
@@ -81,7 +87,7 @@ export const deleteProduct = id => dispatch => {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
         },
     }).then(res => res.json()).then(data => {
         dispatch({
@@ -91,13 +97,60 @@ export const deleteProduct = id => dispatch => {
     })
 }
 
+// ================================================ logo API ========================
+export const getLogo = () => dispatch => {
+    fetch(GET_LOGO_URL, {
+            method: 'GET',
+            headers: {
+                'Authorization':' Bearer '+ ACCESS_TOKEN
+            }
+        }).then(response => response.json()).then(data => {
+            dispatch({
+                type: "GET_LOGO",
+                payload: data
+            })
+        })
+}
+
+export const addLogo = (logo) => dispatch => {
+    fetch(ADD_LOGO_URL, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+ ACCESS_TOKEN
+        },
+        body:logo
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "ADD_PRODUCT",
+            payload:data
+        })
+    })
+}
+
 // =============================================== Category API ===============================================
+
+export const deleteCategory = id => dispatch => {
+    fetch(`http://127.0.0.1:8000/category/categories/${id}/`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
+        },
+    }).then(res => res.json()).then(data => {
+        dispatch({
+            type: "DELETE_CATEGORY",
+            payload:id
+        })
+    })
+}
+
 
 export const getCategory = () => dispatch => {
     fetch(CATEGORY_GET_URL, {
         method: "GET",
         headers: {
-                'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'  Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE3OTYzMTA2LCJqdGkiOiI4YzY4YTA0MDUzZTQ0ZWYxYTk3ODM2MmJhZTE2OGZlMiIsInVzZXJfaWQiOjF9.Tp5rWRgTUKeir4ywqU_EyZA9qy92fiCxasA6yb73DSc'
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -113,7 +166,7 @@ export const addCategory = (category) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': '  Bearer '+ ACCESS_TOKEN
         },
         body:JSON.stringify(category)
     }).then(response => response.json()).then(data => {
@@ -125,12 +178,31 @@ export const addCategory = (category) => dispatch => {
 }
 
 
+
+
 // ================================================== FIlter Category API ===================================================
+export const deleteFilterCategory = id => dispatch => {
+    fetch(`http://127.0.0.1:8000/category/filter/${id}/`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
+        },
+    }).then(res => res.json()).then(data => {
+        dispatch({
+            type: "DELETE_FILTER_CATEGORY",
+            payload:id
+        })
+    })
+}
+
+
+
 export const getFilterCategory = () => dispatch => {
     fetch(FILTER_CATEGORY_GET_URL, {
         method: "GET",
         headers: {
-                'Authorization':'Bearer ' + ACCESS_TOKEN
+                'Authorization':'Bearer '+ ACCESS_TOKEN
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -146,7 +218,7 @@ export const addFilterCategory = (category) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': '  Bearer '+ ACCESS_TOKEN
         },
         body:JSON.stringify(category)
     }).then(response => response.json()).then(data => {
@@ -164,7 +236,7 @@ export const getAboutContext = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'  Bearer '+ ACCESS_TOKEN
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -179,7 +251,7 @@ export const postAboutContext = (about) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
         },
         body: JSON.stringify(about)
     }).then(response => response.json()).then(data => {
@@ -196,7 +268,7 @@ export const postMissionContext = (mission) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': '  Bearer '+ACCESS_TOKEN
         },
         body: JSON.stringify(mission)
     }).then(response => response.json()).then(data => {
@@ -213,7 +285,7 @@ export const getMissionContext = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'Bearer '+ ACCESS_TOKEN
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -230,7 +302,7 @@ export const postOurShopContext = (ourshop) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': '  Bearer '+ACCESS_TOKEN
         },
         body: JSON.stringify(ourshop)
     }).then(response => response.json()).then(data => {
@@ -246,7 +318,7 @@ export const getOurShopContext = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'  Bearer '+ ACCESS_TOKEN
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -263,7 +335,7 @@ export const postShopAddress = (shop_address) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
         },
         body: JSON.stringify(shop_address)
     }).then(response => response.json()).then(data => {
@@ -279,7 +351,7 @@ export const getShopAddress = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'Bearer '+ACCESS_TOKEN
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -295,7 +367,7 @@ export const postWorkDuration = (work) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': '  Bearer ' +ACCESS_TOKEN 
         },
         body: JSON.stringify(work)
     }).then(response => response.json()).then(data => {
@@ -312,7 +384,7 @@ export const getWorkDuration = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'  Bearer '+ ACCESS_TOKEN  
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -329,7 +401,7 @@ export const postTechniqueSupport = (support) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': '  Bearer '+ACCESS_TOKEN
         },
         body: JSON.stringify(support)
     }).then(response => response.json()).then(data => {
@@ -346,7 +418,7 @@ export const getTechniqueSupport = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'Bearer '+ ACCESS_TOKEN  
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -362,7 +434,7 @@ export const postCopyRight = (copyright) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
         },
         body: JSON.stringify(copyright)
     }).then(response => response.json()).then(data => {
@@ -378,7 +450,7 @@ export const getCopyRight = () => dispatch => {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': 'Bearer '+ ACCESS_TOKEN  
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -394,7 +466,7 @@ export const getInvoice = () => dispatch => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + ACCESS_TOKEN
+            'Authorization':'  Bearer '+ ACCESS_TOKEN
         }
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -410,7 +482,7 @@ export const postInvoice = (invoice) => dispatch => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + ACCESS_TOKEN
+            'Authorization': 'Bearer ' + ACCESS_TOKEN 
         },
         body: JSON.stringify(invoice)
     }).then(response => response.json()).then(data => {
@@ -421,6 +493,21 @@ export const postInvoice = (invoice) => dispatch => {
     })
 };
 
+export const deleteInvoice = id => dispatch => {
+    fetch(`http://127.0.0.1:8000/invoices/${id}/`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
+        },
+    }).then(res => res.json()).then(data => {
+        dispatch({
+            type: "DELETE_INVOICE",
+            payload:id
+        })
+    })
+}
+
 
 // ========================================== PRODUCT IMAGES ===============================
 
@@ -429,7 +516,7 @@ export const getProductImages = () => dispatch => {
     fetch(GET_PRODUCT_IMAGE_URL, {
             method: 'GET',
             headers: {
-                'Authorization':'Bearer ' + ACCESS_TOKEN
+                'Authorization':'Bearer ' + ACCESS_TOKEN 
             },
     }).then(response => response.json()).then(data => {
         dispatch({
@@ -438,5 +525,52 @@ export const getProductImages = () => dispatch => {
         })
     })
 }
+
+
+export const getSlideImage = () => dispatch => {
+    fetch(GET_SLIDE_IMAGE_URL, {
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_SLIDER_IMAGE",
+            payload: data
+        })
+    })
+}
+
+export const postSlidePhoto = (image) => dispatch => {
+    fetch(POST_SLIDE_PHOTO_URL, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + ACCESS_TOKEN 
+        },
+        body: JSON.stringify(image)
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "POST_SLIDER_PHOTO",
+            payload: data
+        })
+    })
+};
+
+export const getSlidePhoto = () => dispatch => {
+    fetch(GET_SLIDE_PHOTO_URL, {
+        method: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + ACCESS_TOKEN
+        }
+    }).then(response => response.json()).then(data => {
+        dispatch({
+            type: "GET_SLIDER_PHOTO",
+            payload: data
+        })
+    })
+}
+
+
 // =============================================== REGISTRATION API ==============================================
 

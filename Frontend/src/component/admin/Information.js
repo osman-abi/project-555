@@ -4,6 +4,11 @@ import { getAboutContext,getCopyRight,getShopAddress,getOurShopContext,getMissio
 import { Container } from "reactstrap";
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+
+
+
+
+
 export class Information extends Component {
 
     static propTypes = {
@@ -30,7 +35,7 @@ export class Information extends Component {
             <div className='section-ptb'>
                 <Container>
                 <div className='haqqimizda__melumat mb-5'>
-                    <h1 className='text-center'> Haqqimizda melumat  </h1>
+                    <h1 className='text-center'> Haqqımızda  </h1>
                     {about_context.map((about, index) => {
                         return (
                         
@@ -43,7 +48,7 @@ export class Information extends Component {
                 <hr />
                 <Container>
                     <div className='missiyamiz mb-5'>
-                        <h1 className='text-center'> Missiyamiz </h1>
+                        <h1 className='text-center'> Missiyamız </h1>
                         {mission_context.map((mission, index) => {
                             return (
                                 <div className='text-center'
@@ -56,7 +61,7 @@ export class Information extends Component {
                 <hr />
                 <Container>
                     <div className='missiyamiz mb-5'>
-                        <h1 className='text-center'> Magazamiz </h1>
+                        <h1 className='text-center'> Mağazamız </h1>
                         {ourshop.map((shop, index) => {
                             return (
                                 <div className='text-center'
@@ -69,7 +74,7 @@ export class Information extends Component {
                 <hr />
                 <Container>
                     <div className='missiyamiz mb-5'>
-                        <h1 className='text-center'> Texniki destek </h1>
+                        <h1 className='text-center'> Texniki dəstək </h1>
                         {technique_support.map((tech, index) => {
                             return (
                                 <div className='text-center'
@@ -83,7 +88,7 @@ export class Information extends Component {
                 <hr />
                 <Container>
                     <div className='missiyamiz mb-5'>
-                        <h1 className='text-center'> Unvan </h1>
+                        <h1 className='text-center'> Ünvan </h1>
                         {shop_address.map((address, index) => {
                             return (
                                 <div className='text-center'
@@ -91,7 +96,7 @@ export class Information extends Component {
                                     key={index}> {address.address}</div>
                             )
                         })}
-                        <h1 className='text-center'> Email unvani </h1>
+                        <h1 className='text-center'> Email ünvanı </h1>
                         {shop_address.map((address, index) => {
                             return (
                                 <div className='text-center'
@@ -99,7 +104,7 @@ export class Information extends Component {
                                     key={index}> {address.email_1}</div>
                             )
                         })}
-                        <h1 className='text-center'> Telefon nomresi </h1>
+                        <h1 className='text-center'> Telefon nömrəsi </h1>
                         {shop_address.map((address, index) => {
                             return (
                                 <div className='text-center'

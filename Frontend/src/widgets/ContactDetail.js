@@ -34,7 +34,7 @@ function ContactDetail() {
                   <div className="ciyashop_info_box_2-content-inner">
                     <h6 className="ciyashop_info_box_2-title inline_hover">Ünvan : </h6>
                     <div className="ciyashop_info_box_2-content">
-                      <p>1635 Franklin Street Montgomery, Near Sherwood Mall. AL 36104</p>
+                      {/* <p>1635 Franklin Street Montgomery, Near Sherwood Mall. AL 36104</p> */}
                     </div>
                   </div>
                 </div>
@@ -59,8 +59,8 @@ function ContactDetail() {
                     <h6 className="ciyashop_info_box_2-title inline_hover">
                       Əlaqə nömrəsi : </h6>
                     <div className="ciyashop_info_box_2-content">
-                      <p>126-632-2345<br />
-                        857-778-1265</p>
+                      {/* <p>126-632-2345<br />
+                        857-778-1265</p> */}
                     </div>
                   </div>
                 </div>
@@ -84,8 +84,8 @@ function ContactDetail() {
                   <div className="ciyashop_info_box_2-content-inner">
                     <h6 className="ciyashop_info_box_2-title inline_hover">Mail : </h6>
                     <div className="ciyashop_info_box_2-content">
-                      <p>support@ciyashop.com<br />
-                        gethelp@ciyashop.com</p>
+                      {/* <p>support@ciyashop.com<br />
+                        gethelp@ciyashop.com</p> */}
                     </div>
                   </div>
                 </div>

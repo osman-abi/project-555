@@ -56,10 +56,13 @@ const initialState = {
     work_duration: [],
     technique_support: [],
     invoice:[],
-    copyright:[],
+    copyright: [],
+    slider: [],
+    slide_photos:[],
     images: [],
     contact: [],
-    social: []
+    social: [],
+    logo:[]
 }
     
 
@@ -80,6 +83,17 @@ export default function (state = initialState, action) {
                 ...state,
                 products:state.products.filter(product=>product.id!==action.payload)
             }
+        case "GET_LOGO":
+            return {
+                ...state,
+                logo:action.payload
+            }
+        case "ADD_LOGO":
+            return {
+                ...state,
+                logo:[...state.logo, action.payloaf]
+            }
+        
         case "GET_CATEGORY":
             return {
                 ...state,
@@ -90,6 +104,11 @@ export default function (state = initialState, action) {
                 ...state,
                 category: [...state.category, action.payload]
             };
+        case "DELETE_CATEGORY":
+            return {
+                ...state,
+                category: state.category.filter(cat=>cat.id!==action.payload)
+            }
         case "GET_FILTER_CATEGORY":
             return {
                 ...state,
@@ -99,6 +118,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 filter_category: [...state.filter_category, action.payload]
+            };
+        case "DELETE_FILTER_CATEGORY":
+            return {
+                ...state,
+                filter_category:state.filter_category.filter(fil=>fil.id !== action.payload)
+            }
+        case "DELETE_INVOICE":
+            return {
+                ...state,
+                invoice: state.invoice.filter(inv=>inv.id!==action.payload)
             }
         case "GET_ABOUT_CONTEXT":
             return {
@@ -178,6 +207,21 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 images:action.payload
+            }
+        case "GET_SLIDER_IMAGE":
+            return {
+                ...state,
+                slider:action.payload
+            }
+        case "POST_SLIDER_PHOTO":
+            return {
+                ...state,
+                slide_photos:[...state.slide_photos, action.payload]
+            }
+        case "GET_SLIDER_PHOTO":
+            return {
+                ...state,
+                slide_photos:action.payload
             }
         case "GET_CONTACT_INFO":
             return {

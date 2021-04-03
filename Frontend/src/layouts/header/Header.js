@@ -11,7 +11,7 @@ import logo2 from '../../assets/images/logo2.jpg';
 import navLinks from '../../NavLinks.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {  getProductImages } from '../../actions/index'
+import {  getProductImages,getLogo,getShopAddress } from '../../actions/index'
 
 
 class Header extends React.Component {
@@ -48,8 +48,12 @@ class Header extends React.Component {
     }
 
     static propTypes = {
+        getShopAddress: PropTypes.func.isRequired,
+        shop_address:PropTypes.array.isRequired,
         images: PropTypes.array.isRequired,
-        user:PropTypes.array.isRequired,
+        user: PropTypes.array.isRequired,
+        logos: PropTypes.array.isRequired,
+        getLogo:PropTypes.func.isRequired,
         getProductImages: PropTypes.func.isRequired,
         registerUser: PropTypes.func.isRequired
     }
@@ -102,6 +106,8 @@ class Header extends React.Component {
       componentDidMount() {
           window.addEventListener('scroll', this.handleScroll);
           this.props.getProductImages();
+          this.props.getLogo()
+          this.props.getShopAddress();
           console.log(this.props.images)
         //   localStorage.setItem("isSuperuser", 0)
           
@@ -321,7 +327,7 @@ class Header extends React.Component {
         let isSuperuser = localStorage.getItem('isSuperuser');
         const isLoggedIn = localStorage.getItem('isLOggedIn')
         console.log(typeof isLoggedIn)
-        const { images } = this.props
+        const { images, logos, shop_address } = this.props
         if (isSuperuser == '0') {
             navLinks.length = 4
         }
@@ -360,16 +366,21 @@ class Header extends React.Component {
                                 <Row>
                                     <Col lg={6} sm={12}>
                                         <div className="topbar-left text-left">
-                                            <div className="topbar-link">
-                                                <ul>
+                                        <div className="topbar-link">
+                                            {shop_address.map((shop, index) => {
+                                                return (
+                                                    
+                                                    <ul key={ index}>
 
                                                     <li className="topbar_item topbar_item_type-email">
-                                                    <Link to="/elaqe"><i className="fa fa-envelope-o">&nbsp;</i>  </Link>
+                                                    <Link to="/elaqe"><i className="fa fa-envelope-o">&nbsp;</i> {shop.email_1}  </Link>
                                                     </li>
                                                     <li className="topbar_item topbar_item_type-phone_number">
-                                                        <Link to="/elaqe"><i className="fa fa-phone">&nbsp;</i> </Link>
+                                                        <Link to="/elaqe"><i className="fa fa-phone">&nbsp;</i>{shop.phone_number_1} </Link>
                                                     </li>
                                                 </ul>
+                                                )
+                                            })}
                                             </div>
                                         </div>
                                     </Col>
@@ -433,8 +444,12 @@ class Header extends React.Component {
                                         <div className="row align-items-center justify-content-md-center">
                                             <Col xl={2} lg={2} className="col-6">
                                                 <div className="logo-wrapper">
-                                                    <Link to="/">
-                                                        <img className="img-fluid" src={logo2} alt="logo" />
+                                                <Link to="/">
+                                                    {logos.map((logo, index) => {
+                                                        return(
+                                                        <img key={index} className="img-fluid" src={`http://127.0.0.1:8000${logo.logo_image}`} alt="logo" />
+                                                        )
+                                                    })}
                                                 
                                                 </Link>
                                                 </div>
@@ -665,7 +680,7 @@ class Header extends React.Component {
                                                             <input type="text" class="form-control" onChange={this.handleFirstname} value={firstname} placeholder="Ad daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
-                                                            <label>Soyad</label>
+                                                            <label>SoyAd</label>
                                                             <input type="text" class="form-control" onChange={this.handleLastname} value={lastname} placeholder="Soyad daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
@@ -682,7 +697,7 @@ class Header extends React.Component {
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Tel:</label>
-                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrənizi daxil edin"></input>
+                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrınizi daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
                                                             <label>Ünvan:</label>
@@ -718,8 +733,10 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
     images: state.user.images,
-    user: state.user.user
+    user: state.user.user,
+    logos: state.user.logo,
+    shop_address:state.user.shop_address
 })
 export default connect(
-    mapStateToProps, { getProductImages }
+    mapStateToProps, { getProductImages,getLogo,getShopAddress }
 )(Header)

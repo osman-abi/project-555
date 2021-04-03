@@ -8,7 +8,7 @@ import { Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 
 import invoice from '../../api/invoice.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getInvoice } from "../../actions/index";
+import { getInvoice,deleteInvoice } from "../../actions/index";
 
 class Invoices extends Component {
 
@@ -31,7 +31,8 @@ class Invoices extends Component {
 
   static propTypes = {
         invoices: PropTypes.array.isRequired,
-        getInvoice:PropTypes.func.isRequired
+    getInvoice: PropTypes.func.isRequired,
+        deleteInvoice:PropTypes.func.isRequired
     }
     toggle() {
       this.setState(prevState => ({
@@ -90,13 +91,9 @@ class Invoices extends Component {
     onDeleteInvoice(res){
       if(res)
       {
-        let deleteInvoice=this.data;
-        let newdata=this.state.invoices.filter((InvoiceList)=>InvoiceList.id !== deleteInvoice.id)
-        this.setState({
-            ...this.state,
-            modal1:false,
-            invoices:newdata
-        })
+        let deleteInvoice = this.data;
+        this.props.deleteInvoice(deleteInvoice.id)
+        // window.location.reload()
       }
     }
 
@@ -305,5 +302,5 @@ const mapStateToProps = state => ({
 
 
 export default connect(
-    mapStateToProps, { getInvoice }
+    mapStateToProps, { getInvoice,deleteInvoice }
 )(Invoices)

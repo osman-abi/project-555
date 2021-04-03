@@ -1,5 +1,6 @@
 import React,{Fragment} from 'react';
-import {Switch,Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { Redirect } from "react-router";
 
 import Headers from './layouts/header/Header';
 import Footer from './layouts/footer/Footer';
@@ -64,24 +65,28 @@ class App extends React.Component {
       return `/${pathArray[1]}` === '/ComingSoon'  ? true : `/${pathArray[1]}` === '/Maintenance' ? true :`/${pathArray[1]}` === '/admin-panel'  ? true : false;
   }
 
-  componentDidMount() {
-    const { email, password } = this.state
-    const data = {email, password}
-    fetch('http://127.0.0.1:8000/registration/token/', {
-      method: 'POST',
-       headers: {
-                'Content-Type': 'application/json'
-            },
-      body:JSON.stringify(data)
-    }).then(res => res.json()).then(data => {
-      // console.log(data)
-      localStorage.setItem("access_token", data.access)
-      localStorage.setItem('refresh_token', data.refresh)
-    })
-  }
+  // componentDidMount() {
+   
+
+
+  //   const { email, password } = this.state
+  //   const data = {email, password}
+  //   fetch('http://127.0.0.1:8000/registration/token/', {
+  //     method: 'POST',
+  //      headers: {
+  //               'Content-Type': 'application/json'
+  //           },
+  //     body:JSON.stringify(data)
+  //   }).then(res => res.json()).then(data => {
+  //     // console.log(data)
+  //     localStorage.setItem("access_token", data.access)
+  //     localStorage.setItem('refresh_token', data.refresh)
+  //   })
+  // }
 
   render() {
     const { location } = this.props;
+    //  var user = localStorage.getItem("isSuperuser");
     return (
       <IntlProvider
         locale="a"
@@ -93,6 +98,9 @@ class App extends React.Component {
                 <Switch>
                   <Route path="/ComingSoon" component={ComingSoon} />
                   <Route path="/Maintenance" component={Maintenance} />
+                {/* <Route exact path='/admin-panel'>
+                  {user == '1' ? <AdminDashboard/> : <HomePage/>}
+                  </Route> */}
                   <Route path="/admin-panel" component={AdminDashboard} />
                 </Switch>
               :

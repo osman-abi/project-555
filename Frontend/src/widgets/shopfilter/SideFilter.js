@@ -227,7 +227,7 @@ class SideFilter extends Component {
                         onChange={this.SearchTextchange.bind(this)}
                         placeholder="axtar..." />
                 </div>
-                <div className="widget widget_price_filter">
+                {/* <div className="widget widget_price_filter">
                     <div className="d-flex align-items-center justify-content-between">
                         <h4 className="widget-title">Qiymətə görə</h4>
                         <p><a className="price-clear-filter" onClick={() => this.clearprice(this.props.prices)}>Təmizlə</a></p>
@@ -248,7 +248,7 @@ class SideFilter extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
                     <div className="d-flex align-items-center justify-content-between">
                         <h4 className="widget-title">Rənginə görə</h4>
@@ -273,7 +273,14 @@ class SideFilter extends Component {
                 </div> */}
                 <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
                     <div className="d-flex align-items-center justify-content-between">
-                        <h4 className="widget-title">Kategoriyasına görə</h4>
+                        {this.props.filter_categories.map((filtered_category, index) => {
+                        return (
+                            <div key={index} className='d-flex align-items-center justify-content-between'>
+                                {filtered_category.parent == null ? <h4 className="widget-title">{ filtered_category.name}</h4> : null}
+                            </div>
+                        )
+                    })}
+                        
                         <p><a className="price-clear-filter" onClick={() => this.clearcategory()} >Təmizlə</a></p>
                     </div>
                     <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
@@ -293,11 +300,22 @@ class SideFilter extends Component {
                                             }
                                             
                                         })}
-                                    </div>)
+                                    </div> 
+                                    )
                             })}
                         </Scrollbars>
                     </div>
                 </div>
+
+                {/* <div className='widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav'>
+                    {this.props.filter_categories.map((filtered_category, index) => {
+                        return (
+                            <div key={index} className='d-flex align-items-center justify-content-between'>
+                                {filtered_category.parent == null ? <h4 className="widget-title">{ filtered_category.name}</h4> : null}
+                            </div>
+                        )
+                    })}
+                </div> */}
                 {/* <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
                     <div className="d-flex align-items-center justify-content-between">
                         <h4 className="widget-title">Ölçüsünə görə</h4>

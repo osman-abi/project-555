@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Input, FormGroup, Container,Label } from 'reactstrap';
 import Form from 'reactstrap/lib/Form';
-import { postMissionContext,postOurShopContext,postAboutContext,postShopAddress,postWorkDuration, postTechniqueSupport,postCopyRight } from "../../actions/index";
+import { postMissionContext,postOurShopContext,postAboutContext,postShopAddress,postWorkDuration,addLogo, postTechniqueSupport,postCopyRight } from "../../actions/index";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import ImageUploader from 'react-images-upload';
 import Slider from "react-slick";
 
@@ -63,8 +62,10 @@ export class AddInformation extends Component {
             duration_t_from: "",
             duration_t_to: "",
             saturday_from: "",
-            saturday_to:""
-            
+            saturday_to:"",
+            /////////////////////////////////
+            ErrorMsg: "",
+            photos: [],
         }
     }
 
@@ -75,7 +76,8 @@ export class AddInformation extends Component {
         postShopAddress: PropTypes.func.isRequired,
         postWorkDuration: PropTypes.func.isRequired,
         postTechniqueSupport: PropTypes.func.isRequired,
-        postCopyRight:PropTypes.func.isRequired
+        postCopyRight: PropTypes.func.isRequired,
+        addLogo:PropTypes.func.isRequired
     }
 
 
@@ -281,8 +283,65 @@ export class AddInformation extends Component {
         this.props.postCopyRight(copyright)
 
     }
+
+    Uploadimage(picture) {
+        const ACCESS_TOKEN = localStorage.getItem("access_token")
+            if(picture == '')
+            {
+                this.setState({
+                    ...this.state,
+                    ErrorMsg:"File Not Supported"
+                })
+            }
+            else
+            {
+                const files = picture
+                const formData = new FormData();
+                formData.append('image', files[0]);
+                
+                fetch('http://127.0.0.1:8000/images/cover_image/', {
+                    method: 'POST',
+                     headers: {
+            // 'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ ACCESS_TOKEN
+        },
+                    body: formData
+
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // console.log(data)
+                        this.state.photos.push(data.id)
+                        this.setState({
+                            photos: this.state.photos,
+                            ErrorMsg:''
+                        });
+                    });
+                // console.log(picture)
+            }
+    }
     
 
+    SlideUpload = e => {
+        
+    }
+    
+    UploadLogo = e => {
+        const files = e
+        console.log(files[0])
+        const formData = new FormData();
+        formData.append('logo_image', files[0]);
+        fetch('http://127.0.0.1:8000/images/logo/', {
+            method: "POST",
+            headers: {
+                // 'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ localStorage.getItem("access_token")
+            },
+            body:formData
+        }).then(res=>console.log(res.json()))
+        // this.props.addLogo(formData)
+                
+    }
 
 
 
@@ -293,7 +352,7 @@ export class AddInformation extends Component {
         return (
             <div className='section-ptb'>
                 <Container>
-                <h1 className='text-center'> Haqqimizda melumat </h1>
+                <h1 className='text-center'> Haqqımızda məlumat </h1>
                 <form onSubmit={this.submitAboutContextForm} className='form-inline justify-content-center'>
                     <FormGroup>
                             <textarea rows='5' cols='120' value={about_context} onChange={ this.changeAboutContext}/>
@@ -305,19 +364,19 @@ export class AddInformation extends Component {
                 <hr />
                 <br />
                 <Container>
-                <h1 className='text-center'> Missiyamiz </h1>
+                <h1 className='text-center'> Missiyamız </h1>
                 <form onSubmit={this.submitMissionContextForm} className='form-inline justify-content-center'>
                     <FormGroup>
                         <textarea rows='5' cols='120' value={mission_context} onChange={ this.changeMissionContext} />
                     </FormGroup>
-                    <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Tesdiqle</button>
+                    <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Təsdiqlə</button>
                     </form>
                 </Container>
                 <br/>
                 <hr />
                 <br />
                 <Container>
-                <h1 className='text-center'> Magaza haqqinda context </h1>
+                <h1 className='text-center'> Mağaza haqqında context </h1>
                 <form onSubmit={this.submitOurShop} className='form-inline justify-content-center'>
                     <FormGroup>
                         <textarea rows='5' cols='120' value={ourshop_context} onChange={ this.changeOurShopContext}/>
@@ -330,12 +389,12 @@ export class AddInformation extends Component {
                 <hr />
                 <br />
                 <Container>
-                <h1 className='text-center'> Texniki destek </h1>
+                <h1 className='text-center'> Texniki dəstək </h1>
                 <form onSubmit={this.submitTechniqueSupportForm} className='form-inline justify-content-center'>
                     <FormGroup>
                         <textarea rows='5' cols='120' value={support_text} onChange={ this.changeTechniqueSupport}/>
                     </FormGroup>
-                    <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Tesdiqle</button>
+                    <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Təsdiqlə</button>
                     </form>
                 </Container>
 
@@ -350,7 +409,7 @@ export class AddInformation extends Component {
                             <input type='text' placeholder='2021' value={year} onChange={this.changeCopyRightYear}  className='form-control'/>
                         <textarea rows='5' cols='120' value={context} onChange={ this.changeCopyRightContext}/>
                     </FormGroup>
-                    <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Tesdiqle</button>
+                    <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Təsdiqlə</button>
                     </form>
                 </Container>
 
@@ -358,17 +417,17 @@ export class AddInformation extends Component {
                 <hr />
                 <br />
                 <Container>
-                    <h1 className='text-center'> Magaza haqqinda melumat </h1>
+                    <h1 className='text-center'> Mağaza haqqında məlumat </h1>
                 <form onSubmit={this.shopAddressForm} className="form-inline justify-content-center flex-column">
                     <br/>
-                        <h3 className='text-center' > Unvan </h3>
+                        <h3 className='text-center' > Ünvan </h3>
                     
                         <div className='text-center mb-4' >
                             
                             <Input type='text' className='form-control' style={{width:"600px"}} className='mb-2' value={address} onChange={ this.changeAdressContext}/>
                         </div>
                         <br/>
-                        <h3 className='text-center'> Email unvani </h3>
+                        <h3 className='text-center'> Email ünvanı </h3>
                         <FormGroup className='flex-row mb-4'>
                             <Input type='text' placeholder='email hesabinizi daxil edin' value={email} onChange={ this.changeEmailContext} className='ml-1' />
                             <Input type='text' placeholder='email hesabinizi daxil edin' value={email1} onChange={ this.changeEmail1Context} className='ml-1' />
@@ -387,28 +446,28 @@ export class AddInformation extends Component {
                             <Input type='text' placeholder='telefon nomrenizi daxil edin' value={phone4} onChange={ this.changePhone4Context} className='ml-1' />
                             <Input type='text' placeholder='telefon nomrenizi daxil edin' value={phone5} onChange={ this.changePhone5Context} className='ml-1' />
                         </FormGroup>
-                        <button type="submit" class="btn btn-outline-success text-center w-75 mt-3 btn-block">Tesdiqle</button>
+                        <button type="submit" class="btn btn-outline-success text-center w-75 mt-3 btn-block">Təsdiqlə</button>
                     </form>
                 </Container>
                 <br/>
                 <hr />
                 <br />
                 <Container>
-                <h1 className='text-center'> Is intervali </h1>
+                <h1 className='text-center'> İş intervalı </h1>
                     <form onSubmit={this.workingDurationForm} className='form-inline justify-content-center'>
                         <FormGroup className='mb-4'>
-                        Heftenin necenci gununden:  <input type='number' value={duration_d_from} onChange={ this.changeDayFrom} className='mr-4 ml-4'/>
-                        heftenin necenci gununue:  <input type='number' value={duration_d_to} onChange={ this.changeDayTo}  className=' ml-4'/>
+                        Həftənin neçənci gününden:  <input type='number' value={duration_d_from} onChange={ this.changeDayFrom} className='mr-4 ml-4'/>
+                        Həftənin neçənci gününə:  <input type='number' value={duration_d_to} onChange={ this.changeDayTo}  className=' ml-4'/>
                         </FormGroup>
 
                         <FormGroup className='mb-4'>
-                            Saat neceden:  <input type='number' value={duration_t_from} onChange={ this.changeTimeFrom} className='mr-4 ml-4'/>
-                            Saat neceye:  <input type='number' value={duration_t_to} onChange={ this.changeTimeTo} className=' ml-4'/>
+                            Saat neçəden:  <input type='number' value={duration_t_from} onChange={ this.changeTimeFrom} className='mr-4 ml-4'/>
+                            Saat neçəyə:  <input type='number' value={duration_t_to} onChange={ this.changeTimeTo} className=' ml-4'/>
                         </FormGroup>
 
                         <FormGroup className='mb-4'>
-                            Senbe gunu saat neceden:  <input type='number' value={saturday_from} onChange={ this.changeSaturdayFrom} className='mr-4 ml-4'/>
-                            Saat neceye:  <input type='number' value={saturday_to} onChange={ this.changeSaturdayTo} className=' ml-4'/>
+                            Şənbə günü saat neçədən:  <input type='number' value={saturday_from} onChange={ this.changeSaturdayFrom} className='mr-4 ml-4'/>
+                            Saat neçəyə:  <input type='number' value={saturday_to} onChange={ this.changeSaturdayTo} className=' ml-4'/>
                         </FormGroup>
                     <button type="submit" class="btn btn-outline-success w-75 mt-3 btn-block">Tesdiqle</button>
                     </form>
@@ -447,13 +506,25 @@ export class AddInformation extends Component {
                         <Input type='submit' class="btn btn-outline-success w-75 mt-3 btn-block" value='Təsdiqlə'/>
                                                     </form>
                 </Container>
-                
-
+                                                                    <br/>
+                                                                    <hr />
+                                                                    <br />
+                                                                    <Container>
+                                                                        <h1 className='text-center'> Logo </h1>
+                                                                            <ImageUploader
+                                                                                buttonText=""
+                                                                                withIcon={false}
+                                                                                withPreview={true}
+                                                                                fileTypeError={this.state.ErrorMsg}
+                                                                                onChange={this.UploadLogo}
+                                                                                imgExtension={['.jpg', '.jpeg', '.png']}
+                                                                            />
+                                                                        </Container>
                 
             </div>
         )
     }
 }
 
-export default connect(null,{postAboutContext, postMissionContext,postOurShopContext,postShopAddress,postWorkDuration,postTechniqueSupport,postCopyRight})(AddInformation)
+export default connect(null,{postAboutContext, postMissionContext,postOurShopContext,postShopAddress,postWorkDuration,postTechniqueSupport,addLogo,postCopyRight})(AddInformation)
 
