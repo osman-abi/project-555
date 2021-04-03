@@ -81,7 +81,9 @@ class SuccessScreen extends Component {
 
   render() {
 
-
+    const {firstname} = localStorage.getItem("CheckOutFirstName")
+    const {lastname} = localStorage.getItem("CheckOutLastName")
+    const {address} = localStorage.getItem("CheckOutAddress")
 const date = new Date();
 
    return (
@@ -114,44 +116,37 @@ const date = new Date();
                   <div className="success-screen">
                     <div className="thank-you text-center">
                       <i className="fa fa-check-circle-o"></i>
-                      <h1 className="text-white">TƏşəkkürlər</h1>
-                      <span>Ödənişiniz uğurla yerinə yetdi. Sifarişiniz tezliklə həyata keçiriləcək</span>
-                      <strong className="text-white">Transaction ID:637686G154T154485</strong>
+                      <h1 className="text-white">Təşəkkürlər</h1>
+                      <span>Sifarişiniz tezliklə təsdiqlənəcək </span>
                     </div>
-                    <div className="delivery p-4 p-md-5 bg-light text-center">
-                      <span className="h5">Gözlənilən çatdırılma tarixi</span>
-                      <h2 className="mb-0 mt-2"> { date.toLocaleString('en-us', { month: 'long' }) } {new Date().getDay()+2}, {new Date().getFullYear()}  </h2>
-                    </div>
+                    
                     {(this.state.CartItems != null && this.state.CartItems.length > 0) ?
                     <div className="pt-4 px-4 pt-md-5 px-md-5 pb-3">
                     <Row>
                       <Col lg={6}>
                        <h6>Ship To</h6>
                         <ul className="list-unstyled mb-0">
-                          <li>{CommonList[0].profile.firstname} {CommonList[0].profile.lastname}</li>
-                          <li>{this.state.Adress1}</li>
-                          <li>{this.state.Adress2}</li>
-                          <li>{this.state.Adress3}</li>
+                           <li>{firstname}  { lastname }</li>
+                          <li>{address}</li>
 
                         </ul>
                       </Col>
                       <Col lg={6} className="text-lg-right mt-4 mt-lg-0">
-                        <h6>Summary</h6>
+                        <h6>Xülasə</h6>
                         <ul className="list-unstyled mb-0">
-                          <li><span>Sifariş ID:</span> <strong>7582654455365</strong></li>
-                          <li><span>Sifarişin tarixi:</span> <strong> { date.toLocaleString('en-us', { month: 'long' }) } {new Date(). getDay()}, {new Date().getFullYear()}</strong></li>
-                          <li><span>Sifarişin Ümumi məbləği:</span> <strong>AZN {parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} </strong></li>
+                          <li><span>Tarix:</span> <strong> { date.toLocaleString('en-us', { month: 'long' }) } {new Date(). getDay()}, {new Date().getFullYear()}</strong></li>
+                          <li><span>Sifarişin məbləği:</span> <strong>${parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} </strong></li>
                         </ul>
                       </Col>
                     </Row>
                     </div>
                       :
-                      <div>Heç bir məhsul tapılmadı
+                      <div>Heç bir məhsul tapilmadı
                       </div>
                     }
                     {(this.state.CartItems != null && this.state.CartItems.length > 0) ?
                     <div className="ordered-detail">
-                      <h5 className="mb-4">Sifariş haqqında ümumi məlumat</h5>
+                      <h5 className="mb-4">Your Ordered Details</h5>
                       <div className="table-responsive">
                       {(this.state.CartItems != null && this.state.CartItems.length > 0) ?
                       <table class="table mb-0">
@@ -163,15 +158,15 @@ const date = new Date();
                               {/* <img alt="img 01"  src={require(`../../assets/images/${CartItem.ProductImage}`)}    className="img-fluid" /> */}
                             </td>
                             <td  className="ordered-name">
-                              <h6 className="mb-0">Məhsulun adı</h6>
+                              <h6 className="mb-0">Sifarişin adı</h6>
                               <span>{CartItem.ProductName}</span>
                             </td>
                             <td className="ordered-quantity">
-                              <h6 className="mb-0">Miqdar</h6>
+                              <h6 className="mb-0">Sifarişin miqdarı</h6>
                               <span>{CartItem.Qty}</span>
                             </td>
                             <td className="ordered-price">
-                             <h6 className="mb-0">Qiymət</h6>
+                             <h6 className="mb-0">Sifarişin məbləği</h6>
                              <span>{(CartItem.Rate * CartItem.Qty).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} AZN</span>
                             </td>
                           </tr>
@@ -186,13 +181,10 @@ const date = new Date();
                       <table class="table total-table table-borderless mt-4 mb-0">
                         <tbody>
                           <tr>
-                            <td>Qiyməti</td>
+                            <td>Məbləğ</td>
                             <td className="text-right">${parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0))).toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</td>
                           </tr>
-                          <tr>
-                          <td>Çatdırılma</td>
-                            <td className="text-right">${this.state.TotalShippingCarge.toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</td>
-                          </tr>
+                          
                           <tr className="border-top">
                           <td><strong className="h5">Cəmi</strong></td>
                             <td className="text-right h5"><strong>${parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</strong></td>
@@ -203,7 +195,7 @@ const date = new Date();
                     </div>
                     :
                     <div>
-                      Heç bir məhsul tapılmad
+                      Heç bir məhsul tapılmadı
                     </div>
                     }
                     <div className="d-sm-flex px-4 pb-4 px-md-5 pb-md-5">

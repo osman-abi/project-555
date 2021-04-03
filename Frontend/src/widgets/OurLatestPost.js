@@ -1,289 +1,220 @@
 /**
- * OurLatestPost Widget
+ * Top Salling Product Widgets
  */
-import React , {Component} from 'react';
-import Slider from "react-slick";
+import React, { Component } from 'react';
 import { Row, Col, Container } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { ToastContainer,toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { getProducts, getProductImages } from "../actions/index";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import MyProducts from '../api/product.json'
 
-function OurLatestPost(props) {
+class OurLatestPost extends Component {
 
-    const settings = props.settings;
-    return (
-            <Col sm={12}>
-                <div className="latest-post-wrapper latest-post-type-carousel latest-post-style-1 latest-post-without-intro">
-                    <Slider {...settings} className="slider-arrow-hover slider-spacing-10">
-                        <div className="item">
-                            <div className="latest-post-item">
-                                <div className="latest-post-item-inner">
-                                <div className="latest-post-image">
-                                    <img  src={require(`../assets/images/blog/img-01.jpg`)}  className="img-fluid" alt="blog" />
-                                </div>
-                                <div className="latest-post-content">
-                                    <div className="post-date">
-                                    <div className="post-date-inner">
-                                    14<span>Aug</span>
-                                    </div>
-                                    </div>
-                                    <div className="latest-post-meta">
-                                    <ul>
-                                    <li>
-                                        <i className="fa fa-user" />
-                                        <Link to="#" rel="category tag">ciyashop</Link>
-                                    </li>
-                                    <li>
-                                        <i className="fa fa-folder-open" />
-                                        <Link to="#" rel="category tag">Clothing</Link>
-                                    </li>
-                                    </ul>
-                                    </div>
-                                    <h3 className="blog-title">
-                                    <Link to="/BlogSinglePage">Blog Post With Image</Link>
-                                    </h3>
-                                    <div className="latest-post-excerpt">
-                                    <p>I truly believe Augustine’s words are true and if you look at history you...</p>
-                                    </div>
-                                    <div className="latest-post-entry-footer">
-                                    <Link to="/BlogSinglePage">Read More...</Link>
-                                    <div className="latest-post-social-share">
-                                    <ul>
-                                        <li>
-                                            <Link to="#" className="facebook-share">
-                                            <i className="fa fa-facebook" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="twitter-share">
-                                            <i className="fa fa-twitter" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="linkedin-share">
-                                            <i className="fa fa-linkedin" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="google-share">
-                                            <i className="fa fa-google" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="pinterest-share">
-                                            <i className="fa fa-pinterest" />
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="latest-post-item">
-                                <div className="latest-post-item-inner">
-                                <div className="latest-post-image">
-                                    <img src={require(`../assets/images/blog/img-02.jpg`)} className="img-fluid" alt="blog" />
-                                </div>
-                                <div className="latest-post-content">
-                                    <div className="post-date">
-                                    <div className="post-date-inner">
-                                    24<span>Aug</span>
-                                    </div>
-                                    </div>
-                                    <div className="latest-post-meta">
-                                    <ul>
-                                    <li>
-                                        <i className="fa fa-user" />
-                                        <Link to="#" rel="category tag">ciyashop</Link>
-                                    </li>
-                                    <li>
-                                        <i className="fa fa-folder-open" />
-                                        <Link to="#" rel="category tag">Fashion</Link>
-                                    </li>
-                                    </ul>
-                                    </div>
-                                    <h3 className="blog-title">
-                                    <Link to="/BlogSinglePage">Blog Post With Image Slider</Link>
-                                    </h3>
-                                    <div className="latest-post-excerpt">
-                                    <p>Success isn’t really that difficult. there is a significant portion of the...</p>
-                                    </div>
-                                    <div className="latest-post-entry-footer">
-                                    <Link to="/BlogSinglePage">Read More...</Link>
-                                    <div className="latest-post-social-share">
-                                    <ul>
-                                        <li>
-                                            <Link to="#" className="facebook-share">
-                                            <i className="fa fa-facebook" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="twitter-share">
-                                            <i className="fa fa-twitter" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="linkedin-share">
-                                            <i className="fa fa-linkedin" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="google-share">
-                                            <i className="fa fa-google" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="pinterest-share">
-                                            <i className="fa fa-pinterest" />
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="latest-post-item">
-                                <div className="latest-post-item-inner">
-                                <div className="latest-post-image">
-                                    <img  src={require(`../assets/images/blog/img-03.jpg`)}  className="img-fluid" alt="blog" />
-                                </div>
-                                <div className="latest-post-content">
-                                    <div className="post-date">
-                                    <div className="post-date-inner">
-                                    15<span>Oct</span>
-                                    </div>
-                                    </div>
-                                    <div className="latest-post-meta">
-                                    <ul>
-                                    <li>
-                                        <i className="fa fa-user" />
-                                        <Link to="#" rel="category tag">ciyashop</Link>
-                                    </li>
-                                    <li>
-                                        <i className="fa fa-folder-open" />
-                                        <Link to="#" rel="category tag">Clothing</Link>
-                                    </li>
-                                    </ul>
-                                    </div>
-                                    <h3 className="blog-title">
-                                    <Link to="/BlogSinglePage">Blog Post With Custom Quote</Link>
-                                    </h3>
-                                    <div className="latest-post-excerpt">
-                                    <p>Making a decision to do something – this is the first step. we all...</p>
-                                    </div>
-                                    <div className="latest-post-entry-footer">
-                                    <Link to="/BlogSinglePage">Read More...</Link>
-                                    <div className="latest-post-social-share">
-                                    <ul>
-                                        <li>
-                                            <Link to="#" className="facebook-share">
-                                            <i className="fa fa-facebook" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="twitter-share">
-                                            <i className="fa fa-twitter" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="linkedin-share">
-                                            <i className="fa fa-linkedin" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="google-share">
-                                            <i className="fa fa-google" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="pinterest-share">
-                                            <i className="fa fa-pinterest" />
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="latest-post-item">
-                                <div className="latest-post-item-inner">
-                                <div className="latest-post-image">
-                                    <img  src={require(`../assets/images/blog/img-04.jpg`)}  className="img-fluid" alt="blog" />
-                                </div>
-                                <div className="latest-post-content">
-                                    <div className="post-date">
-                                    <div className="post-date-inner">
-                                    18<span>Sep</span>
-                                    </div>
-                                    </div>
-                                    <div className="latest-post-meta">
-                                    <ul>
-                                    <li>
-                                        <i className="fa fa-user" />
-                                        <Link to="#" rel="category tag">ciyashop</Link>
-                                    </li>
-                                    <li>
-                                        <i className="fa fa-folder-open" />
-                                        <Link to="#" rel="category tag">Fashion Show</Link>
-                                    </li>
-                                    </ul>
-                                    </div>
-                                    <h3 className="blog-title">
-                                    <Link to="/BlogSinglePage">Blog Post with Youtube Video</Link>
-                                    </h3>
-                                    <div className="latest-post-excerpt">
-                                    <p>So, there you have it; the six steps that will help you to the fabled land...</p>
-                                    </div>
-                                    <div className="latest-post-entry-footer">
-                                    <Link to="/BlogSinglePage">Read More...</Link>
-                                    <div className="latest-post-social-share">
-                                    <ul>
-                                        <li>
-                                            <Link to="#" className="facebook-share">
-                                            <i className="fa fa-facebook" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="twitter-share">
-                                            <i className="fa fa-twitter" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="linkedin-share">
-                                            <i className="fa fa-linkedin" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="google-share">
-                                            <i className="fa fa-google" />
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#" className="pinterest-share">
-                                            <i className="fa fa-pinterest" />
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                                </div>
-                            </div>
-                    </Slider>
-                </div>
-            </Col>
-      )
+   constructor(props) {
+      super(props);
+      this.AddToCart = this.AddToCart.bind(this);
+      this.AddToWishList = this.AddToWishList.bind(this);
+      var AddToCart,AddToWishList
+   }
 
+   static propTypes = {
+        products: PropTypes.array.isRequired,
+      getProducts: PropTypes.func.isRequired,
+        getProductImages: PropTypes.func.isRequired
+    }
+
+   componentDidMount() {
+      this.props.getProducts();
+      this.props.getProductImages();
+      console.log(this.props.products)
+   }
+   
+   
+
+  AddToCart(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
+   var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+   if(Cart == null)
+      Cart = new Array();
+   let selectedProduct = Cart.find(product => product.ProductName === ProductName);
+   if(selectedProduct == null)
+   {
+
+      Cart.push({ProductID:ProductID,ProductName,ProductImage:ProductImage,Qty:Qty,Rate:Rate,StockStatus:StockStatus});
+      localStorage.removeItem("LocalCartItems");
+      localStorage.setItem("LocalCartItems",JSON.stringify(Cart));
+
+      toast.success("Səbətə əlavə edildi");
+   }
+   else {
+      toast.warning("Səbətdə var");
+   }
 }
 
-export default OurLatestPost;
 
+AddToWishList(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
+   var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
+   if(Cart == null)
+      Cart = new Array();
+
+      let selectedProduct = Cart.find(product => product.ProductID === ProductID);
+      if(selectedProduct == null)
+      {
+
+         Cart.push({ProductID:ProductID,ProductName:ProductName,ProductImage:ProductImage,Qty:Qty,Rate:Rate,StockStatus:StockStatus});
+         localStorage.removeItem("LocalWishListItems");
+         localStorage.setItem("LocalWishListItems",JSON.stringify(Cart));
+
+         toast.success("Seçilmişlərə əlavə edildi");
+      }
+      else {
+         toast.warning("Bu məhsuldan seçilmişlərdə var");
+      }
+}
+CheckCardItem(ID)
+{
+   let checkcart=false;
+   var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+   if(Cart && Cart.length > 0) {
+      for (const cartItem of Cart) {
+         if (cartItem.ProductID === ID) {
+            checkcart = true
+         }
+      }
+   }
+   return checkcart;
+}
+CheckWishList(ID)
+{
+   let wishlist=false;
+   var Wish = JSON.parse(localStorage.getItem("LocalWishListItems"));
+
+   if(Wish && Wish.length > 0) {
+      for (const wishItem of Wish) {
+         if (wishItem.ProductID === ID) {
+            wishlist = true
+         }
+      }
+   }
+   return wishlist;
+}
+
+rating(productrat)
+{
+   let rat=[];
+   let i = 1;
+   while (i <= 5) {
+         if(i<=productrat)
+         {
+               rat.push(<i className="fa fa-star" />);
+         }
+         else
+         {
+               rat.push(<i className="fa fa-star-o" />);
+         }
+         i += 1;
+   }
+   return rat;
+}
+   render() {
+      const { products, images } = this.props
+       console.log(products)
+       const latest_elements = products.slice(-8)
+      return (
+
+         <Row className="products products-loop grid ciyashop-products-shortcode">
+              <ToastContainer autoClose={1000} />
+
+            {latest_elements.map((product, index) =>
+              (index < 8) && product.stock_status == true?
+
+
+              <Col sm={6} lg={3}>
+
+                  <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
+                  <div className="product-inner element-hovered">
+                     <div className="product-thumbnail">
+                        <div className="product-thumbnail-inner">
+                                 <Link to={`/shop/${product.category}/${product.id}`}>
+                              <div className="product-thumbnail-main">
+                                    {images.map((all_images, ind) => {
+                                                    return product.images[0] == all_images.id ?
+                                                        <img className="img-fluid" style={{ width: "100%;", height:"auto;"}} key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        :
+                                                        <img className="img-fluid" />
+                                                })}
+                                 {/* <img src={require(`../assets/images/${product.pictures[0]}`)} className="img-fluid" alt="shop" /> */}
+
+                              </div>
+                              <div className="product-thumbnail-swap">
+                                 {images.map((all_images, ind) => {
+                                                    return product.images[1] == all_images.id ?
+                                                        <img className="img-fluid" key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        :
+                                                        <img className="img-fluid" />
+                                                })}
+                                 {/* <img src={require(`../assets/images/${product.pictures[1]}`)} className="img-fluid" alt="shop" /> */}
+                              </div>
+                           </Link>
+                        </div>
+                        <div className="product-actions">
+                           <div className="product-actions-inner">
+                              <div className="product-action product-action-add-to-cart">
+                                 {!this.CheckCardItem(product.id) ?
+                                       <Link onClick={()=>this.AddToCart(product.id,product.name,product.images[0],1,product.price,"var")}  className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
+                                 :
+                                       <Link  to="/ShopingCart"  className="button add_to_cart_button" rel="nofollow">Səbəti göstər</Link>
+                                 }
+
+                              </div>
+                              <div className="product-action product-action-wishlist">
+                                 {!this.CheckWishList(product.id) ?
+                                    <Link onClick={()=>this.AddToWishList(product.id,product.name,product.images[0],1,product.price,"var")} className="add_to_wishlist" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top"> Seçilmişlərə əlavə et</Link>
+                                 :
+                                       <Link to="/wishlist" className="add_to_wishlist_fill" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top">Seçilmişləri göstər</Link>
+                                 }
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div className="product-info">
+                        
+                        <h3 className="product-name">
+                           <Link to={`/shop/${product.category}/${product.id}`}>{product.name} </Link>
+                        </h3>
+                        <div className="product-rating-price">
+                        <span className="price">
+                           <ins>
+                              <span className="price-amount amount">
+                                 <span className="currency-symbol"></span>{product.price.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} AZN
+                              </span>
+                           </ins>
+                        </span>
+                        
+                        </div>
+                        <div className="product-details__short-description">
+                           <p>
+                 </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               </Col>
+              :
+              <div></div>
+            )}
+
+         </Row>
+      )
+   }
+}
+
+const mapStateToProps = state => ({
+   products: state.user.products,
+   images: state.user.images
+})
+
+export default connect(mapStateToProps, { getProducts, getProductImages })(OurLatestPost);

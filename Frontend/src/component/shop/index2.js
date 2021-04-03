@@ -125,12 +125,18 @@ class ShopPage2 extends Component {
                                                 onChange={this.handleChange}
                                                 total={this.props.products.length} //total number of card data available
                                             />
+                                            {/* <Pagination
+                                            totalRecords={products.length}
+                                            pageLimit={12}
+                                            onPageChanged={this.onPageChanged}
+                                            IsDeleteProcess={this.state.IsDeleteProcess}
+                                        /> */}
                                         </div>
                                     </Row>
                                     :
                                     <Row className="products products-loop grid ciyashop-products-shortcode">
                                         <div className="col-sm-12 text-center  mt-5" >
-                                            
+                                            <img src={require(`../../assets/images/empty-search.jpg`)} className="img-fluid mb-4" />
                                             <h3>Təəssüf! Axtardığınız kateqoriyaya uyğun  nəticə tapılmadı </h3>
                                             
                                             <button onClick={this.refreshPage} className="btn btn-solid">Alış verişə davam et</button>

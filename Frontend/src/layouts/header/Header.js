@@ -11,7 +11,7 @@ import logo2 from '../../assets/images/logo2.jpg';
 import navLinks from '../../NavLinks.js';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {  getProductImages,getLogo,getShopAddress } from '../../actions/index'
+import {  getProductImages,getLogo,getShopAddress,getFacebook,getInstagram,getWhatsapp } from '../../actions/index'
 
 
 class Header extends React.Component {
@@ -48,6 +48,12 @@ class Header extends React.Component {
     }
 
     static propTypes = {
+        facebook: PropTypes.array.isRequired,
+        instagram: PropTypes.array.isRequired,
+        whatsapp: PropTypes.array.isRequired,
+        getWhatsapp: PropTypes.func.isRequired,
+        getFacebook: PropTypes.func.isRequired,
+        getInstagram:PropTypes.func.isRequired,
         getShopAddress: PropTypes.func.isRequired,
         shop_address:PropTypes.array.isRequired,
         images: PropTypes.array.isRequired,
@@ -108,6 +114,9 @@ class Header extends React.Component {
           this.props.getProductImages();
           this.props.getLogo()
           this.props.getShopAddress();
+          this.props.getFacebook();
+          this.props.getInstagram();
+          this.props.getWhatsapp();
           console.log(this.props.images)
         //   localStorage.setItem("isSuperuser", 0)
           
@@ -250,7 +259,7 @@ class Header extends React.Component {
             lastname: lastname,
             address:address
         }
-       let REGISTRATION_URL = 'http://127.0.0.1:8000/registration/register/'
+       let REGISTRATION_URL = 'http://167.172.107.236/registration/register/'
     fetch(REGISTRATION_URL, {
         method: "POST",
         headers: {
@@ -263,59 +272,48 @@ class Header extends React.Component {
 
         localStorage.setItem('username', data.data.username)
         localStorage.setItem('email', data.data.email)
-        localStorage.setItem('password', data.data.password)
         localStorage.setItem('phone_number', data.data.phone_number)
         localStorage.setItem("lastname", data.data.lastname)
         localStorage.setItem("address", data.data.address)
         localStorage.setItem("isLOggedIn", 1)
-        if (email == this.state.admin_email && password == this.state.admin_password) {
-            localStorage.setItem("isSuperuser", 1)
-        } else {
-            localStorage.setItem("isSuperuser", 0)
-        }
+        
     })
 
         
     }
 
     logOut = e => {
-        // e.preventDefault();
-        var access_token = localStorage.getItem("access_token")
-        var refresh_token = localStorage.getItem("refresh_token")
-        var data = {
-            email: localStorage.getItem("email"),
-            password: localStorage.getItem("password"),
-            refresh: refresh_token
-        }
-        fetch('http://127.0.0.1:8000/registration/logout/', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + access_token
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json())
+    
         localStorage.setItem("username", "")
+        
         localStorage.setItem("email", "")
         localStorage.setItem("password", "")
         localStorage.setItem('phone_number', "")
         localStorage.setItem("lastname", "")
         localStorage.setItem("address", "")
         localStorage.setItem("isLOggedIn", 0)
-        localStorage.setItem("isSuperuser",0)
     }
 
     onLogIn = e => {
-        localStorage.setItem("isLOggedIn",1)
+        e.preventDefault()
+        localStorage.setItem("isLOggedIn", 1)
         const { email, password } = this.state
-        console.log('email',email,'password',password)
-        if (email == this.state.admin_email && password == this.state.admin_password) {
-            localStorage.setItem('isSuperuser',1)
-        } else {
-            localStorage.setItem('isSuperuser',0)
-        }
-        }
-        
+        const data = { email, password }
+        fetch('http://167.172.107.236/registration/login/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json()).then(data => {
+            localStorage.setItem('username', data.data.username)
+        localStorage.setItem('email', data.data.email)
+        localStorage.setItem('phone_number', data.data.phone_number)
+        localStorage.setItem("lastname", data.data.lastname)
+        localStorage.setItem("address", data.data.address)
+        localStorage.setItem("isLOggedIn", 1)
+        })
+    }
     
     
     render() {
@@ -327,10 +325,8 @@ class Header extends React.Component {
         let isSuperuser = localStorage.getItem('isSuperuser');
         const isLoggedIn = localStorage.getItem('isLOggedIn')
         console.log(typeof isLoggedIn)
-        const { images, logos, shop_address } = this.props
-        if (isSuperuser == '0') {
-            navLinks.length = 4
-        }
+        const { images, logos, shop_address,instagram,whatsapp,facebook } = this.props
+        
         if(pageName== '/topbar-with-load-more')
         {
             searchName="/topbar-with-load-more"
@@ -411,22 +407,37 @@ class Header extends React.Component {
                                                     </li>
                                                     <li className="topbar_item topbar_item_type-social_profiles">
                                                         <div className="topbar-social_profiles-wrapper">
-                                                            <ul className="topbar-social_profiles">
-                                                                <li className="topbar-social_profile">
-                                                                    <a href={'https://www.facebook.com'} target="_blank" >
+                                                        <ul className="topbar-social_profiles">
+                                                            {facebook.map((hesab, index) => {
+                                                                return (
+                                                                <li key={index} className="topbar-social_profile">
+                                                                    <a href={hesab.link} target="_blank" >
                                                                         <i className="fa fa-facebook" />
                                                                     </a>
                                                                 </li>
-                                                                <li className="topbar-social_profile" >
-                                                                    <a href={'https://instagram.com/'} target="_blank">
+                                                                    
+                                                                )
+                                                            })}
+                                                            {instagram.map((hesab, index) => {
+                                                                return (
+                                                                <li key={index} className="topbar-social_profile" >
+                                                                    <a href={hesab.link} target="_blank">
                                                                         <i className="fa fa-instagram" />
                                                                     </a>
                                                                 </li>
-                                                                <li className="topbar-social_profile" >
-                                                                    <a href={'https://vimeo.com/'} target="_blank">
+
+                                                                )
+                                                            })}
+                                                            {whatsapp.map((hesab, index) => {
+                                                                return (
+                                                                <li key={index} className="topbar-social_profile" >
+                                                                    <a href={hesab.link} target="_blank">
                                                                         <i className="fa fa-whatsapp" />
                                                                     </a>
                                                                 </li>
+                                                                    
+                                                                )
+                                                            })}
                                                             </ul>
                                                         </div>
                                                     </li>
@@ -735,8 +746,11 @@ const mapStateToProps = state => ({
     images: state.user.images,
     user: state.user.user,
     logos: state.user.logo,
-    shop_address:state.user.shop_address
+    shop_address: state.user.shop_address,
+    facebook: state.user.facebook,
+    instagram: state.user.instagram,
+    whatsapp:state.user.whatsapp
 })
 export default connect(
-    mapStateToProps, { getProductImages,getLogo,getShopAddress }
+    mapStateToProps, { getProductImages,getLogo,getShopAddress,getInstagram,getWhatsapp,getFacebook }
 )(Header)

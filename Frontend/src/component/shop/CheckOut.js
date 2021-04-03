@@ -243,7 +243,10 @@ class CheckOut extends Component {
             .toLocaleString(navigator.language, { minimumFractionDigits: 2 })
         e.preventDefault();
         const { firstname, lastname, phone, shipping_address, email, items } = this.state
-        console.table(this.state)
+        localStorage.setItem("CheckOutFirstName", firstname)
+        localStorage.setItem("CheckOutLastName", lastname)
+        localStorage.setItem("CheckOutAddress", shipping_address)
+        
         const invoice = { firstname, lastname, shipping_address, phone, email, items, amount }
         this.props.postInvoice(invoice);
 

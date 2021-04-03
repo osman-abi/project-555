@@ -65,24 +65,7 @@ class App extends React.Component {
       return `/${pathArray[1]}` === '/ComingSoon'  ? true : `/${pathArray[1]}` === '/Maintenance' ? true :`/${pathArray[1]}` === '/admin-panel'  ? true : false;
   }
 
-  // componentDidMount() {
-   
-
-
-  //   const { email, password } = this.state
-  //   const data = {email, password}
-  //   fetch('http://127.0.0.1:8000/registration/token/', {
-  //     method: 'POST',
-  //      headers: {
-  //               'Content-Type': 'application/json'
-  //           },
-  //     body:JSON.stringify(data)
-  //   }).then(res => res.json()).then(data => {
-  //     // console.log(data)
-  //     localStorage.setItem("access_token", data.access)
-  //     localStorage.setItem('refresh_token', data.refresh)
-  //   })
-  // }
+  
 
   render() {
     const { location } = this.props;

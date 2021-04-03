@@ -61,7 +61,9 @@ const initialState = {
     slide_photos:[],
     images: [],
     contact: [],
-    social: [],
+    facebook: [],
+    instagram: [],
+    whatsapp:[],
     logo:[]
 }
     
@@ -238,12 +240,21 @@ export default function (state = initialState, action) {
                 ...state,
                 invoice:action.payload
             }
-        case "GET_SOCIAL_INFO":
+        case "GET_FACEBOOK_IFNO":
             return {
                 ...state,
-                social:action.payload
+                facebook:action.payload
             }
-            
+        case "GET_INSTAGRAM_INFO":
+            return {
+                ...state,
+                instagram:action.payload
+            }
+        case "GET_WHATSAPP_INFO":
+            return {
+                ...state,
+                whatsapp:action.payload
+            }
         default:
             return state;
     }

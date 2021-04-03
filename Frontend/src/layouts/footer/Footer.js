@@ -7,16 +7,30 @@ import { Link } from 'react-router-dom';
 import logo2 from '../../assets/images/logo2.jpg';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {  getLogo,getShopAddress } from '../../actions/index'
+import {  getLogo,getShopAddress, getAboutContext, getCopyRight ,getFacebook,getInstagram,getWhatsapp} from '../../actions/index'
 
 class Footer extends React.Component {
 
-    constructor(props)
-    {
-        super(props);
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             email:""
+        }
     }
+    
 
     static propTypes = {
+        facebook: PropTypes.array.isRequired,
+        instagram: PropTypes.array.isRequired,
+        whatsapp: PropTypes.array.isRequired,
+        getWhatsapp: PropTypes.func.isRequired,
+        getFacebook: PropTypes.func.isRequired,
+        getInstagram:PropTypes.func.isRequired,
+        getCopyRight: PropTypes.func.isRequired,
+        copyright:PropTypes.array.isRequired,
+        about_context: PropTypes.array.isRequired,
+        getAboutContext:PropTypes.func.isRequired,
         shop_address: PropTypes.array.isRequired,
         getShopAddress:PropTypes.func.isRequired,
         logos: PropTypes.array.isRequired,
@@ -28,11 +42,37 @@ class Footer extends React.Component {
     {
         window.addEventListener('scroll', this.Checkscroll);
         this.props.getLogo();
-        this.props.getShopAddress()
+        this.props.getShopAddress();
+        this.props.getAboutContext()
+        this.props.getCopyRight()
+        this.props.getFacebook();
+          this.props.getInstagram();
+          this.props.getWhatsapp();
     }
     componentWillUnmount()
     {
         window.removeEventListener('scroll',this.Checkscroll);
+    }
+
+    changeEmail = e => {
+        this.setState({
+            email:e.target.value
+        })
+    }
+
+    subscribe = e => {
+        e.preventDefault();
+        alert('Təbriklər! Mağazamıza abunə oldunuz')
+        const { email } = this.state
+        const data = {email}
+        fetch('http://167.172.107.236/​registration​/subscribe​/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(data)
+        }).then(res => res.json())
+        
     }
 
     Checkscroll()
@@ -63,8 +103,9 @@ class Footer extends React.Component {
         window.scroll({top: 0, left: 0, behavior: 'smooth' })
     }
     render() {
-        const {logos,shop_address} = this.props
-        let backtotop = {display : 'none'}
+        const {logos,shop_address,abouts,copyright,facebook,whatsapp,instagram} = this.props
+        let backtotop = { display: 'none' }
+        const {email} = this.state
         return (
         <div>
                 <footer className="site-footer">
@@ -83,18 +124,37 @@ class Footer extends React.Component {
                                                     })}
                                 </Link></p>
                             </div>
-                            <div className="text-content">
-                                <p className="mb-3 mt-4">Khanbuta is an enchanting and easy to use e-Commerce WP theme that allows you to sell your products in a dynamic way.</p>
-                                <p className="mb-4">The theme is packed with everything you need to create a new website.</p>
+                                            <div className="text-content">
+                                                {abouts.map((context, index) => {
+                                                    return (
+                                                       
+                                                        <p key={index} className="mb-3 mt-4"> {context.about_context} </p>
+                                                   ) 
+                                                })}
                             </div>
                             <div className="pgs-social-profiles mt-4">
                                 <div className="social-profiles-wrapper">
                                 <div className="social-profiles-wrapper-inner social-profiles-default social-profiles-shape-square">
                                     <div className="social-profiles">
-                                    <ul>
-                                        <li><a href="https://www.facebook.com" title="Facebook" target="_blank"><i className="fa fa-facebook" /></a></li>
-                                        <li><a href="https://twitter.com" title="Twitter" target="_blank"><i className="fa fa-whatsapp" /></a></li>
-                                        <li><a href="https://google.com/" title="Google" target="_blank"><i className="fa fa-instagram" /></a></li>
+                                                            <ul>
+                                                                {facebook.map((hesab, index) => {
+                                                                    return (
+                                                      
+                                                                        <li key={index}><a href={hesab.link} title="Facebook" target="_blank"><i className="fa fa-facebook" /></a></li>
+                                                  )
+                                                                })}
+                                                                {whatsapp.map((hesab, index) => {
+                                                                    return (
+                                                      
+                                                                        <li key={index}><a href={hesab.link} title="Whatsapp" target="_blank"><i className="fa fa-whatsapp" /></a></li>
+                                                  )
+                                                                })}
+                                                                {instagram.map((hesab, index) => {
+                                                                    return (
+                                                      
+                                                                        <li key={index}><a href={hesab.link} title="Instagram" target="_blank"><i className="fa fa-instagram" /></a></li>
+                                                  )
+                                              })}                  
                                     </ul>
                                     </div>
                                 </div>
@@ -150,13 +210,13 @@ class Footer extends React.Component {
                                 <h4 className="footer-title title">Abunə ol</h4>
                                 <div className="newsletter">
                                 <div className="section-field">
-                                    <form className="newsletter_form">
+                                    <form onSubmit={this.subscribe} className="newsletter_form">
                                     <div className="input-area">
-                                        <input type="text" className="placeholder newsletter-email" name="newsletter_email" placeholder="Emailinizi daxil edin" />
+                                        <input type="email" onChange={this.changeEmail} className="placeholder newsletter-email" name="newsletter_email" placeholder="Emailinizi daxil edin" />
                                     </div>
                                     <div className="button-area">
                                         <span className="input-group-btn">
-                                        <button className="btn btn-icon newsletter-mailchimp submit" type="button">Subscribe</button>
+                                        <button className="btn btn-icon newsletter-mailchimp submit" type="submit">Subscribe</button>
                                         </span>
                                         <span className="newsletter-spinner spinimg-pgs_newsletter_widget_2" />
                                     </div>
@@ -173,8 +233,13 @@ class Footer extends React.Component {
                     <div className="footer-widget">
                         <Container>
                         <div className="row align-items-center justify-content-center">
-                            <Col md={6} className="text-center">
-                                 <p> © Copyright 2019 <Link to="#">Made by</Link> Khanbuta group</p>
+                                        <Col md={6} className="text-center">
+                                            {copyright.map((copy, index) => {
+                                                return (
+                                                    <p key={index}> © Copyright {copy.year} <Link to="#">Made by</Link> {copy.context} </p>
+
+                                                )
+                                            })}
                             </Col>
                             {/* <Col md={6}  className="float-right">
                                 <div className="payments text-right">
@@ -200,8 +265,13 @@ class Footer extends React.Component {
 };
 
 const mapStateToProps = state => ({
+    abouts:state.user.about_context,
     logos: state.user.logo,
-    shop_address:state.user.shop_address
+    shop_address: state.user.shop_address,
+    copyright:state.user.copyright,
+    facebook: state.user.facebook,
+    instagram: state.user.instagram,
+    whatsapp:state.user.whatsapp
 })
 
-export default connect(mapStateToProps,{getLogo,getShopAddress})(Footer);
+export default connect(mapStateToProps,{getLogo,getShopAddress,getAboutContext,getCopyRight,getInstagram,getWhatsapp,getFacebook})(Footer);

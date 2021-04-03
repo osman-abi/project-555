@@ -86,14 +86,6 @@ export default [
       "type": "Menu",
       "path": "/elaqe",
       "icon": "home"
-   },
-   {
-      "menu_title": "Admin Panel",
-      "path": "/admin-panel/qaimeler",
-      "icon": "perm_identity",
-      "child_routes": null
-   },
-   {
-      
    }
+   
 ]

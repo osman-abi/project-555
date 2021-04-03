@@ -199,7 +199,7 @@ class SideFilter extends Component {
         this.props.sizeValue(sizes);
     }
     render() {
-        var { products } = this.props
+        var { products,filter_categories } = this.props
         var price = []
         for (const i of products) {
             price.push(i)
@@ -227,114 +227,53 @@ class SideFilter extends Component {
                         onChange={this.SearchTextchange.bind(this)}
                         placeholder="axtar..." />
                 </div>
-                {/* <div className="widget widget_price_filter">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <h4 className="widget-title">Qiymətə görə</h4>
-                        <p><a className="price-clear-filter" onClick={() => this.clearprice(this.props.prices)}>Təmizlə</a></p>
-                    </div>
-                    <div classs="shop-filter shop-filter-product-price widget_price_filter">
-                        <div className="shop-filter-wrapper">
-                            <div className="price_slider_wrapper">
-                                <Slider
-                                    range
-                                    step={1}
-                                    min={0}
-                                    max={100}
-                                    tipFormatter={this.toolformatter}
-                                    value={this.state.priceplace}
-                                    onChange={this.onChangePricePlace}
-                                    
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
-                {/* <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <h4 className="widget-title">Rənginə görə</h4>
-                        <p><a className="price-clear-filter" onClick={() => this.clearcolor()} >Təmizlə</a></p>
-                    </div>
+                
+            
 
-                    <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '210px' }}>
-                        <Scrollbars>
-                            <ul className="pgs-widget-layered-nav-list" tabIndex={0} style={{ right: '-17px' }}>
-                                {this.props.colors.map((color, index) => {
-                                    return (
-                                        <div className="form-check pgs-filter-checkbox" key={index}>
-                                            <input type="checkbox" onClick={(e) => this.onClickColorFilter(e, colorsFilterValues)} value={color} defaultChecked={colorsFilterValues.includes(color) ? true : false} className="form-check-input" id={color} />
-                                            <label className="form-check-label"
-                                                htmlFor={color}>{color}</label>
-                                        </div>
-                                    )
-                                })}
-                            </ul>
-                        </Scrollbars>
-                    </div>
-                </div> */}
-                <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
-                    <div className="d-flex align-items-center justify-content-between">
-                        {this.props.filter_categories.map((filtered_category, index) => {
-                        return (
-                            <div key={index} className='d-flex align-items-center justify-content-between'>
-                                {filtered_category.parent == null ? <h4 className="widget-title">{ filtered_category.name}</h4> : null}
+                {filter_categories.map((filtered_category, index) => {
+                    return filtered_category.parent == null ?
+                    <div key={index} className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
+                            <div className="d-flex align-items-center justify-content-between">
+                                <div className='d-flex align-items-center justify-content-between'>
+                                    <h4 className="widget-title">{filtered_category.name}</h4>
+                                    <p><a className="price-clear-filter" onClick={() => this.clearcategory()} >Təmizlə</a></p>
+                                </div>
                             </div>
-                        )
-                    })}
-                        
-                        <p><a className="price-clear-filter" onClick={() => this.clearcategory()} >Təmizlə</a></p>
-                    </div>
-                    <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
-                        <Scrollbars>
-                            {this.props.categorys.map((category, index) => {
-                                return (
-                                    <div className="form-check pgs-filter-checkbox" key={index}>
-                                        <input type="checkbox" onClick={(e) => this.onClickCategoryFilter(e, categoryFilterValues)} value={category} defaultChecked={categoryFilterValues.includes(category) ? true : false} className="form-check-input" id={category} />
-                                        {this.props.filter_categories.map((filtered_category, index) => {
+                            <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
+                                <Scrollbars>
+                                    {this.props.categorys.map((category, index) => {
+                                        return (
+                                            <div className="form-check pgs-filter-checkbox" key={index}>
+                                                <input type="checkbox" onClick={(e) => this.onClickCategoryFilter(e, categoryFilterValues)} value={category} defaultChecked={categoryFilterValues.includes(category) ? true : false} className="form-check-input" id={category} />
+                                                {filter_categories.map((filtered, index) => {
                                             {
-                                               return filtered_category.id == category ?
+                                               return filtered.id == category && filtered.parent == filtered_category.id ?
                                                     
                                                 <label className="form-check-label"
-                                                    key={index} htmlFor={category}>{filtered_category.name}</label>
+                                                    key={index} htmlFor={category}>{filtered.name}</label>
                                                     :
-                                                   <label>  </label>
+                                                   null
                                             }
                                             
                                         })}
-                                    </div> 
-                                    )
-                            })}
-                        </Scrollbars>
-                    </div>
-                </div>
-
-                {/* <div className='widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav'>
-                    {this.props.filter_categories.map((filtered_category, index) => {
-                        return (
-                            <div key={index} className='d-flex align-items-center justify-content-between'>
-                                {filtered_category.parent == null ? <h4 className="widget-title">{ filtered_category.name}</h4> : null}
+                                            </div>
+                                        )
+                                    })}
+                                </Scrollbars>
                             </div>
-                        )
-                    })}
-                </div> */}
-                {/* <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <h4 className="widget-title">Ölçüsünə görə</h4>
-                        <p><a className="price-clear-filter" onClick={() => this.clearsize()} >Təmizlə</a></p>
-                    </div>
-                    <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
-                        <Scrollbars>
-                            {this.props.sizes.map((size, index) => {
-                                return (
+                        </div>
+                        :null
+            })}
 
-                                    <div class="form-check pgs-filter-checkbox">
-                                        <input type="checkbox" onClick={(e) => this.onClickSizeFilter(e, sizeFilterValues)} value={size} defaultChecked={sizeFilterValues.includes(size) ? true : false} class="form-check-input" id={size} />
-                                        <label class="form-check-label" htmlFor={size}>{size}</label>
-                                    </div>
-                                )
-                            })}
-                        </Scrollbars>
-                    </div>
-                </div> */}
+
+
+
+
+
+
+
+
+               
             </div>
         )
     }

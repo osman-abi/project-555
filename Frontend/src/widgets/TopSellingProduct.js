@@ -30,6 +30,7 @@ class TopSellingProduct extends Component {
    componentDidMount() {
       this.props.getProducts();
       this.props.getProductImages();
+      console.log(this.props.products)
    }
    
    
@@ -67,10 +68,10 @@ AddToWishList(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
          localStorage.removeItem("LocalWishListItems");
          localStorage.setItem("LocalWishListItems",JSON.stringify(Cart));
 
-         toast.success("Item Added to WishList");
+         toast.success("Seçilmişlərə əlavə edildi");
       }
       else {
-         toast.warning("Item is already in WishList");
+         toast.warning("Bu məhsuldan seçilmişlərdə var");
       }
 }
 CheckCardItem(ID)
@@ -119,14 +120,15 @@ rating(productrat)
    return rat;
 }
    render() {
-      const {products, images} = this.props
+      const { products, images } = this.props
+      console.log(products.code)
       return (
 
          <Row className="products products-loop grid ciyashop-products-shortcode">
               <ToastContainer autoClose={1000} />
 
-            { products.map((product, index) =>
-              (index < 8) ?
+            {products.map((product, index) =>
+              (index < 8) && product.best_seller == true && product.stock_status == true?
 
 
               <Col sm={6} lg={3}>

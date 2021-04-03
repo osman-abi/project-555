@@ -299,7 +299,7 @@ export class AddInformation extends Component {
                 const formData = new FormData();
                 formData.append('image', files[0]);
                 
-                fetch('http://127.0.0.1:8000/images/cover_image/', {
+                fetch('http://167.172.107.236/images/cover_image/', {
                     method: 'POST',
                      headers: {
             // 'Content-Type': 'application/json',
@@ -331,7 +331,7 @@ export class AddInformation extends Component {
         console.log(files[0])
         const formData = new FormData();
         formData.append('logo_image', files[0]);
-        fetch('http://127.0.0.1:8000/images/logo/', {
+        fetch('http://167.172.107.236/images/logo/', {
             method: "POST",
             headers: {
                 // 'Content-Type': 'application/json',

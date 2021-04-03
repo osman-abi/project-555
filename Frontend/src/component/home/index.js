@@ -13,7 +13,6 @@ import OurLatestPost from '../../widgets/OurLatestPost.js';
 import Subscribe from '../../widgets/Subscribe.js';
 import TopSellingProduct from '../../widgets/TopSellingProduct.js';
 
-
 const latestblogslider = {
    dots: false,
    infinite: true,
@@ -71,7 +70,7 @@ class HomePage extends Component {
                                              </div>
                                            </Col>
                                           </Row>
-                                          <TopSellingProduct />
+                                          <OurLatestPost/>
                                        </Col>
                                     </Row>
                               </Container>

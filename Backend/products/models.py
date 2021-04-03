@@ -1,5 +1,5 @@
 from django.db import models
-from categories.models import ProductCategory, FilterCategory
+from categories.models import  FilterCategory
 
 
 
@@ -13,8 +13,7 @@ class Product(models.Model):
     images = models.ManyToManyField('images.ProductImage',blank=True)
     filter_category = models.ManyToManyField(
         FilterCategory, blank=True, verbose_name='filter')
-    category = models.ManyToManyField(
-        ProductCategory,  blank=True, verbose_name='kategoriya')
+    
     stock_status = models.BooleanField(default=False)
     best_seller = models.BooleanField(default=False)
     publish_date = models.DateTimeField(

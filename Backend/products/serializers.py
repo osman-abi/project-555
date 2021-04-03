@@ -18,7 +18,6 @@ class ProductSerializer(serializers.ModelSerializer):
             'description',
             'filter_category',
             'images',
-            'category',
             'stock_status',
             'best_seller',
             'publish_date'
