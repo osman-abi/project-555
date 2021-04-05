@@ -32,23 +32,28 @@ class HomSlider extends Component {
     render() {
        const {slider} =this.props
     return (
-        <Slider className="slider-01 slider-simple-arrow" {...settings}>
-               <div key={1} className="slide-01-item">
+         <Slider className="slider-01 slider-simple-arrow" {...settings}>
+            {slider.map((photo, index) => {
+                return (
+               <div key={index} className="slide-01-item">
                     <div className="slide-inner">
                     <div className="slide-image">
-                        {/* <img src={require(`../assets/images/home-01-slider/img-01.jpg`)} alt="slide-1" /> */}
+                                <img style={{width:'100%',height:"200px"}} src={ `http://127.0.0.1:8000${photo.image}`}/>
                     </div>
                     
                     </div>
                </div>
+                    
+                )
+            })}
 
-                <div key={2} className="slide-01-item">
+                {/* <div key={2} className="slide-01-item">
                     <div className="slide-inner">
                     <div className="slide-image">
-                        {/* <img src={require(`../assets/images/home-01-slider/img-02.jpg`)} alt="slide-1" /> */}
+                        <img src={require(`../assets/images/home-01-slider/img-02.jpg`)} alt="slide-1" />
                     </div>
                     </div>
-                </div>
+                </div> */}
         </Slider>
       )
    }
