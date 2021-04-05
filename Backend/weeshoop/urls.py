@@ -44,14 +44,14 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc',
         cache_timeout = 0), name = 'schema-redoc'),
     #################################################
-    path('registration/', include('account.urls')),
-    path('about/', include('about.urls')),
-    path('shop/', include('address.urls')),
-    path('social/', include('socialinks.urls')),
-    path('category/', include('categories.urls')),
-    path('images/', include('images.urls')),
-    path('products/', include('products.urls')),
-    path('invoices/', include('order.urls'))
+    path('api/registration/', include('account.urls')),
+    path('api/about/', include('about.urls')),
+    path('api/shop/', include('address.urls')),
+    path('api/social/', include('socialinks.urls')),
+    path('api/category/', include('categories.urls')),
+    path('api/images/', include('images.urls')),
+    path('api/products/', include('products.urls')),
+    path('api/invoices/', include('order.urls'))
 
 ]
 
