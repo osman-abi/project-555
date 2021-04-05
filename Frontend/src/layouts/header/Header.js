@@ -259,7 +259,7 @@ class Header extends React.Component {
             lastname: lastname,
             address:address
         }
-       let REGISTRATION_URL = 'https://167.172.107.236/registration/register/'
+       let REGISTRATION_URL = 'https://1klikle.az/registration/register/'
     fetch(REGISTRATION_URL, {
         method: "POST",
         headers: {
@@ -299,7 +299,7 @@ class Header extends React.Component {
         localStorage.setItem("isLOggedIn", 1)
         const { email, password } = this.state
         const data = { email, password }
-        fetch('https://167.172.107.236/registration/login/', {
+        fetch('https://1klikle.az/registration/login/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
