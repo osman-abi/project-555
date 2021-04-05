@@ -47,7 +47,7 @@ const POST_SLIDE_PHOTO_URL = 'https://1klikle.az/images/cover_photo/'
 const POST_INVOICE_URL = 'https://1klikle.az/invoices/'
 const GET_INVOICE_URL = 'https://1klikle.az/invoices/'
 
-const GET_LOGO_URL = 'https://1klikle.az/images/logo/'
+const GET_LOGO_URL = 'media/images/logo/'
 const ADD_LOGO_URL = 'https://1klikle.az/images/logo/'
 
 // const REGISTRATION_URL = 'https://1klikle.az/registration/register/'
