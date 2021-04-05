@@ -65,7 +65,7 @@ class Footer extends React.Component {
         alert('Təbriklər! Mağazamıza abunə oldunuz')
         const { email } = this.state
         const data = {email}
-        fetch('http://167.172.107.236/​registration​/subscribe​/', {
+        fetch('https://167.172.107.236/​registration​/subscribe​/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

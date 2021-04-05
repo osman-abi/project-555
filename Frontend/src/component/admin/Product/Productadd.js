@@ -104,7 +104,7 @@ class Productadd extends Component{
                 const formData = new FormData();
                 formData.append('image', files[0]);
                 
-                fetch('http://167.172.107.236/images/product_image/', {
+                fetch('https://167.172.107.236/images/product_image/', {
                     method: 'POST',
                      headers: {
             // 'Content-Type': 'application/json',
