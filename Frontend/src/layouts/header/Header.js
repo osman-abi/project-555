@@ -458,7 +458,7 @@ class Header extends React.Component {
                                                 <Link to="/">
                                                     {logos.map((logo, index) => {
                                                         return(
-                                                        <img key={index} className="img-fluid" src={`https://1klikle.az${logo.logo_image}`} alt="logo" />
+                                                        <img key={index} className="img-fluid" src={logo.logo_image} alt="logo" />
                                                         )
                                                     })}
                                                 
