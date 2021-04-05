@@ -299,7 +299,7 @@ export class AddInformation extends Component {
                 const formData = new FormData();
                 formData.append('image', files[0]);
                 
-                fetch('https://1klikle.az/images/cover_image/', {
+                fetch('https://1klikle.az/api/images/cover_image/', {
                     method: 'POST',
                      headers: {
             // 'Content-Type': 'application/json',
@@ -331,7 +331,7 @@ export class AddInformation extends Component {
         console.log(files[0])
         const formData = new FormData();
         formData.append('logo_image', files[0]);
-        fetch('https://1klikle.az/images/logo/', {
+        fetch('https://1klikle.az/api/images/logo/', {
             method: "POST",
             headers: {
                 // 'Content-Type': 'application/json',

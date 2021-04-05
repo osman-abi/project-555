@@ -132,7 +132,7 @@ class ProductEditDetail extends Component {
                 const formData = new FormData();
                 formData.append('image', files[0]);
                 
-                fetch('https://1klikle.az/images/product_image/', {
+                fetch('https://1klikle.az/api/images/product_image/', {
                     method: 'POST',
                      headers: {
             // 'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ class ProductEditDetail extends Component {
         // console.log(this.props.product.id)
         const { name, price, description, category, filter_category, photos } = this.state
         const data = { name, price, description, category, filter_category, photos }
-        fetch(`https://1klikle.az/products/${this.props.product.id}/`, {
+        fetch(`https://1klikle.az/api/products/${this.props.product.id}/`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',

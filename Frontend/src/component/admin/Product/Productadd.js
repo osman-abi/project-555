@@ -104,7 +104,7 @@ class Productadd extends Component{
                 const formData = new FormData();
                 formData.append('image', files[0]);
                 
-                fetch('https://1klikle.az/images/product_image/', {
+                fetch('https://1klikle.az/api/images/product_image/', {
                     method: 'POST',
                      headers: {
             // 'Content-Type': 'application/json',

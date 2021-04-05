@@ -1,58 +1,58 @@
 import ProductsList from '../api/product.json';
 
-const PRODUCT_GET_URL = 'https://1klikle.az/products/'
-const PRODUCT_POST_URL = 'https://1klikle.az/products/'
+const PRODUCT_GET_URL = 'https://1klikle.az/api/products/'
+const PRODUCT_POST_URL = 'https://1klikle.az/api/products/'
 
 
-const CATEGORY_GET_URL = 'https://1klikle.az/category/categories/'
-const CATEGORY_POST_URL = 'https://1klikle.az/category/categories/'
+const CATEGORY_GET_URL = 'https://1klikle.az/api/category/categories/'
+const CATEGORY_POST_URL = 'https://1klikle.az/api/category/categories/'
 
-const FILTER_CATEGORY_GET_URL = 'https://1klikle.az/category/filter/'
-const FILTER_CATEGORY_POST_URL = 'https://1klikle.az/category/filter/'
+const FILTER_CATEGORY_GET_URL = 'https://1klikle.az/api/category/filter/'
+const FILTER_CATEGORY_POST_URL = 'https://1klikle.az/api/category/filter/'
 
-const GET_ABOUT_URL = 'https://1klikle.az/about/abouts/'
-const POST_ABOUT_URL = 'https://1klikle.az/about/abouts/'
+const GET_ABOUT_URL = 'https://1klikle.az/api/about/abouts/'
+const POST_ABOUT_URL = 'https://1klikle.az/api/about/abouts/'
 
-const POST_MISSION_URL = 'https://1klikle.az/about/missions/'
-const GET_MISSION_URL = 'https://1klikle.az/about/missions/'
+const POST_MISSION_URL = 'https://1klikle.az/api/about/missions/'
+const GET_MISSION_URL = 'https://1klikle.az/api/about/missions/'
 
-const GET_FACEBOOK_URL = "https://1klikle.az/social/facebook/link/"
-const GET_INSTAGRAM_URL = "https://1klikle.az/social/instagram/link/"
-const GET_WHATSAPP_URL = "https://1klikle.az/social/whatsapp/link/"
+const GET_FACEBOOK_URL = "https://1klikle.az/api/social/facebook/link/"
+const GET_INSTAGRAM_URL = "https://1klikle.az/api/social/instagram/link/"
+const GET_WHATSAPP_URL = "https://1klikle.az/api/social/whatsapp/link/"
 
 
 
-const POST_OURSHOP_URL = 'https://1klikle.az/about/shops/'
-const GET_OURSHOP_URL = 'https://1klikle.az/about/shops/'
+const POST_OURSHOP_URL = 'https://1klikle.az/api/about/shops/'
+const GET_OURSHOP_URL = 'https://1klikle.az/api/about/shops/'
 
-const POST_SHOP_ADDRESS_URL = 'https://1klikle.az/shop/shop_address/'
-const GET_SHOP_ADDRESS_URL = 'https://1klikle.az/shop/shop_address/'
+const POST_SHOP_ADDRESS_URL = 'https://1klikle.az/api/shop/shop_address/'
+const GET_SHOP_ADDRESS_URL = 'https://1klikle.az/api/shop/shop_address/'
 
-const POST_WORK_DURATION_URL = 'https://1klikle.az/shop/work_duration/'
-const GET_WORK_DURATION_URL = 'https://1klikle.az/shop/work_duration/'
+const POST_WORK_DURATION_URL = 'https://1klikle.az/api/shop/work_duration/'
+const GET_WORK_DURATION_URL = 'https://1klikle.az/api/shop/work_duration/'
 
-const POST_SUPPORT_URL = 'https://1klikle.az/shop/tech_support/'
-const GET_SUPPORT_URL = 'https://1klikle.az/shop/tech_support/'
+const POST_SUPPORT_URL = 'https://1klikle.az/api/shop/tech_support/'
+const GET_SUPPORT_URL = 'https://1klikle.az/api/shop/tech_support/'
 
-const POST_COPYRIGHT_URL = 'https://1klikle.az/shop/copy_right/'
-const GET_COPYRIGHT_URL = 'https://1klikle.az/shop/copy_right/'
+const POST_COPYRIGHT_URL = 'https://1klikle.az/api/shop/copy_right/'
+const GET_COPYRIGHT_URL = 'https://1klikle.az/api/shop/copy_right/'
 
-const GET_PRODUCT_IMAGE_URL = 'https://1klikle.az/images/product_image/'
+const GET_PRODUCT_IMAGE_URL = 'https://1klikle.az/api/images/product_image/'
 
-const GET_SLIDE_IMAGE_URL = 'https://1klikle.az/images/cover_image/'
+const GET_SLIDE_IMAGE_URL = 'https://1klikle.az/api/images/cover_image/'
 
-const GET_SLIDE_PHOTO_URL = 'https://1klikle.az/images/cover_photo/'
-const POST_SLIDE_PHOTO_URL = 'https://1klikle.az/images/cover_photo/'
+const GET_SLIDE_PHOTO_URL = 'https://1klikle.az/api/images/cover_photo/'
+const POST_SLIDE_PHOTO_URL = 'https://1klikle.az/api/images/cover_photo/'
 
-const POST_INVOICE_URL = 'https://1klikle.az/invoices/'
-const GET_INVOICE_URL = 'https://1klikle.az/invoices/'
+const POST_INVOICE_URL = 'https://1klikle.az/api/invoices/'
+const GET_INVOICE_URL = 'https://1klikle.az/api/invoices/'
 
-const GET_LOGO_URL = 'https://1klikle.az/images/logo/'
-const ADD_LOGO_URL = 'https://1klikle.az/images/logo/'
+const GET_LOGO_URL = 'https://1klikle.az/api/images/logo/'
+const ADD_LOGO_URL = 'https://1klikle.az/api/images/logo/'
 
-// const REGISTRATION_URL = 'https://1klikle.az/registration/register/'
-// const LOGIN_URL = 'https://1klikle.az/registration/login/'
-// const LOGOUT_URL = 'https://1klikle.az/registration/logout/'
+// const REGISTRATION_URL = 'https://1klikle.az/api/registration/register/'
+// const LOGIN_URL = 'https://1klikle.az/api/registration/login/'
+// const LOGOUT_URL = 'https://1klikle.az/api/registration/logout/'
 
 const ACCESS_TOKEN = localStorage.getItem('access_token')
 
@@ -87,7 +87,7 @@ export const addProduct = (products) => dispatch => {
 }
 
 export const deleteProduct = id => dispatch => {
-    fetch(`https://1klikle.az/products/${id}/`, {
+    fetch(`https://1klikle.az/api/products/${id}/`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
@@ -131,7 +131,7 @@ export const addLogo = (logo) => dispatch => {
 // =============================================== Category API ===============================================
 
 export const deleteCategory = id => dispatch => {
-    fetch(`https://1klikle.az/category/categories/${id}/`, {
+    fetch(`https://1klikle.az/api/category/categories/${id}/`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
@@ -178,7 +178,7 @@ export const addCategory = (category) => dispatch => {
 
 // ================================================== FIlter Category API ===================================================
 export const deleteFilterCategory = id => dispatch => {
-    fetch(`https://1klikle.az/category/filter/${id}/`, {
+    fetch(`https://1klikle.az/api/category/filter/${id}/`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
@@ -470,7 +470,7 @@ export const postInvoice = (invoice) => dispatch => {
 };
 
 export const deleteInvoice = id => dispatch => {
-    fetch(`https://1klikle.az/invoices/${id}/`, {
+    fetch(`https://1klikle.az/api/invoices/${id}/`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'

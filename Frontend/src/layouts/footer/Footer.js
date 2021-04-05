@@ -65,7 +65,7 @@ class Footer extends React.Component {
         alert('Təbriklər! Mağazamıza abunə oldunuz')
         const { email } = this.state
         const data = {email}
-        fetch('https://1klikle.az/​registration​/subscribe​/', {
+        fetch('https://1klikle.az/api/​registration​/subscribe​/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
