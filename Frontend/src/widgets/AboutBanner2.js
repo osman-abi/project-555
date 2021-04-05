@@ -2,13 +2,27 @@ import React, { Component } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAboutContext } from "../actions/index";
-
+import { getAboutContext,getOurShopContext,getMissionContext } from "../actions/index";
 
 export class AboutBanner2 extends Component {
-   
+    
+    static propTypes = {
+        getAboutContext: PropTypes.func.isRequired,
+        getMissionContext: PropTypes.func.isRequired,
+        getOurShopContext: PropTypes.func.isRequired,
+        ourshop: PropTypes.array.isRequired,
+        mission_context: PropTypes.array.isRequired,
+        about_context:PropTypes.array.isRequired
+    }
+
+    componentDidMount() {
+        this.props.getAboutContext();
+        this.props.getMissionContext();
+        this.props.getOurShopContext();
+    }
 
     render() {
+        const {about_context,mission_context,ourshop} = this.props
         return (
             <div className="section-wrapper section-ptb">
                 <div className="container">
@@ -39,7 +53,12 @@ export class AboutBanner2 extends Component {
                                                         <h5 className="ciyashop_info_box-title" style={{ color: '#323232' }}>
                                                             Mağazamız </h5>
                                                         <div className="ciyashop_info_box-description">
-                                                            <p>But give our customers a positive online.</p>
+                                                            {ourshop.map((shop, index) => {
+                                                                return (
+                                                                    <p key={index}> {shop.ourshop_context} </p>
+
+                                                                )
+                                                            })}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -65,7 +84,11 @@ export class AboutBanner2 extends Component {
                                                         <h5 className="ciyashop_info_box-title" style={{ color: '#323232' }}>
                                                             Missiyamız </h5>
                                                         <div className="ciyashop_info_box-description">
-                                                            <p>Depending on the device you use to access.</p>
+                                                            {mission_context.map((context, index) => {
+                                                                return (
+                                                                    <p key={ index}> {context.mission_context} </p>
+                                                                )
+                                                            })}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -82,6 +105,12 @@ export class AboutBanner2 extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    about_context:state.user.about_context,
+    mission_context: state.user.mission_context,
+    ourshop:state.user.ourshop
+})
 
-export default AboutBanner2
+
+export default connect(mapStateToProps,{getAboutContext,getMissionContext,getOurShopContext})(AboutBanner2)
 // export default AboutBanner2
