@@ -126,7 +126,7 @@ class ProductList extends Component {
                     <div className="product-inner element-hovered">
                         <div className="product-thumbnail">
                             <div className="product-thumbnail-inner">
-                                <Link to={`/shop/${product.category}/${product.id}`}>
+                                <Link to={`/shop/${product.filter_category[0]}/${product.id}`}>
                                     {product.images[0] ?
                                         <div className="product-thumbnail-main">
                                             {/* <img src={require(`../assets/images/${product.images[0]}`)} className="img-fluid" /> */}

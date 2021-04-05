@@ -141,10 +141,8 @@ class ProductDetail extends Component {
                                                             <div className="ciyashop_info_box_2-content">
                                                             <div className="ciyashop_info_box_2-content-wrap">
                                                                 <div className="ciyashop_info_box_2-content-inner">
-                                                                <h6 className="ciyashop_info_box_2-title inline_hover">Pulsuz çatdırılma </h6>
-                                                                <div className="ciyashop_info_box_2-content">
-                                                                    <p>Free Shipping on orders $199.</p>
-                                                                </div>
+                                                                <h6 className="ciyashop_info_box_2-title inline_hover"> Çatdırılma </h6>
+                                                                
                                                                 </div>
                                                             </div>
                                                             </div>
@@ -166,10 +164,7 @@ class ProductDetail extends Component {
                                                             <div className="ciyashop_info_box_2-content-wrap">
                                                                 <div className="ciyashop_info_box_2-content-inner">
                                                                 <h6 className="ciyashop_info_box_2-title inline_hover">
-                                                                    24/7 Xidmət: </h6>
-                                                                <div className="ciyashop_info_box_2-content">
-                                                                    <p>Online and phone support 24 / 7</p>
-                                                                </div>
+                                                                Keyfiyyətli Xidmət: </h6>
                                                                 </div>
                                                             </div>
                                                             </div>
@@ -190,10 +185,8 @@ class ProductDetail extends Component {
                                                             <div className="ciyashop_info_box_2-content">
                                                             <div className="ciyashop_info_box_2-content-wrap">
                                                                 <div className="ciyashop_info_box_2-content-inner">
-                                                                <h6 className="ciyashop_info_box_2-title inline_hover">30 gün ərzində geri qaytrama </h6>
-                                                                <div className="ciyashop_info_box_2-content">
-                                                                    <p>Tam zəmanət verilir </p>
-                                                                </div>
+                                                                <h6 className="ciyashop_info_box_2-title inline_hover">Tam Zəmanət</h6>
+                                                                
                                                                 </div>
                                                             </div>
                                                             </div>

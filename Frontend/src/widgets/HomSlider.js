@@ -4,6 +4,9 @@
 import React , {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
+import { getSlideImage } from "../actions/index";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const settings = {
     dots: false,
@@ -16,7 +19,18 @@ const settings = {
 
 class HomSlider extends Component {
 
-   render() {
+    
+    static propTypes = {
+        slider: PropTypes.array.isRequired,
+        getSlideImage:PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        this.props.getSlideImage()
+    }
+
+    render() {
+       const {slider} =this.props
     return (
         <Slider className="slider-01 slider-simple-arrow" {...settings}>
                <div key={1} className="slide-01-item">
@@ -40,4 +54,7 @@ class HomSlider extends Component {
    }
 }
 
-export default HomSlider;
+const mapStateToProps = state => ({
+    slider:state.user.slider
+})
+export default connect(mapStateToProps,{getSlideImage})(HomSlider);

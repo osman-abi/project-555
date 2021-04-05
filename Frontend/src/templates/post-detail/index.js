@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import { toast } from 'react-toastify';
 import { Row } from 'reactstrap';
+import { getProductImages,getFilterCategory } from "../../actions/index";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
 
 const settings = {
     dots: false,
@@ -35,8 +38,31 @@ const productslider = {
           photoIndex: 0,
           isOpen: false,
           qty:1,
-          newImage:props.product.images[0]
+          newImage:''
         };
+      }
+
+      static propTypes = {
+          filter_category: PropTypes.array.isRequired,
+          getFilterCategory:PropTypes.func.isRequired,
+          images: PropTypes.array.isRequired,
+          getProductImages:PropTypes.func.isRequired
+      }
+
+      componentDidMount() {
+          var emptyArr = []
+          this.props.getProductImages()
+          for (const i of this.props.images) {
+              for (const j of this.props.product.images) {
+                  if (i==j) {
+                      emptyArr.push(i.image)
+                      this.setState({
+                          newImage:emptyArr[0]
+                      })
+                  }
+              }
+          }
+          this.props.getFilterCategory()
       }
 
     changePreviewImage(image) {
@@ -133,12 +159,19 @@ const productslider = {
 
     render() {
         const { photoIndex, isOpen  } = this.state;
-        // const qty=this.state.qty;
-        const {product} = this.props;
-        const images=[];
-        // {product.pictures.map((pic)=>
-        //     images.push(require(`../../assets/images/${pic}`))
-        // )}
+        const qty=this.state.qty;
+        const {product, images, filter_categories} = this.props;
+        const sekiller=[];
+        {product.images.map((pic)=>
+            images.map((photo) => {
+                if (pic == photo.id) {
+                    sekiller.push(`http://127.0.0.1:8000${photo.image}`)
+                    
+                }
+            })
+                
+            
+        )}
 
         let rat=[];
         let rating=product.rating;
@@ -166,7 +199,7 @@ const productslider = {
                             <div className="ciyashop-product-gallery ciyashop-product-gallery--with-images slick-carousel">
                             <Slider {...settings} className="ciyashop-product-gallery__wrapper popup-gallery">
                                 <div className="ciyashop-product-gallery__image">
-                                        {/* <img src={require(`../../assets/images/${this.state.newImage}`)}  className="img-fluid" /> */}
+                                        <img src={`http://127.0.0.1:8000${this.state.newImage}`}  className="img-fluid" />
                                 </div>
                             </Slider>
                             <div className="ciyashop-product-gallery_buttons_wrapper">
@@ -178,15 +211,27 @@ const productslider = {
                             </div>
                             </div>
                             <div className="ciyashop-product-thumbnails">
-                                {/* <Slider {...productslider} className="ciyashop-product-thumbnails__wrapper"> */}
-                                    {/* {product.pictures.map((pictureimage,index) => */}
-                                        {/* <div className="ciyashop-product-thumbnail__image"> */}
-                                            {/* <Link  onMouseOver={() => this.changePreviewImage(pictureimage)} > */}
-                                                {/* <img src={require(`../../assets/images/${pictureimage}`)}  className="img-fluid" /> */}
-                                            {/* </Link> */}
-                                        {/* </div> */}
-                                    {/* )} */}
-                                {/* </Slider> */}
+                                            {images.map((cover, index) => {
+                                                return (
+                                                     <Slider key={index} {...productslider} className="ciyashop-product-thumbnails__wrapper">
+                                                        {product.images.map((photo, index) => {
+                                                            return photo==cover.id ? 
+                                                            <div key={index} className="ciyashop-product-thumbnail__image">
+                                                                <Link onMouseOver={() => this.changePreviewImage(cover.image)} >
+                                                                    <img src={`http://127.0.0.1:8000${cover.image}`} className="img-fluid" />
+                                                                </Link>
+                                                                </div>
+                                                                : null
+                                                        })}
+                                                        {/* {product.images[0] == cover.id ? */}
+                                                        
+                                                            {/* : null} */}
+                                                        
+                                                    </Slider> 
+                                        
+                                    )
+                                })}
+                                
                             </div>
                             <div className="clearfix" />
                         </div>
@@ -213,14 +258,14 @@ const productslider = {
                     <form className="cart">
                         <div className="quantity">
                         <label className="screen-reader-text" htmlFor="quantity_5cdab503cf26f">Miqdar</label>
-                         <input type="text" className="input-text qty text" value={0} title="Qty" />
+                         <input type="text" className="input-text qty text" value={qty} title="Qty" />
                             <div className="quantity-nav">
                                     <Link className="quantity-button quantity-up" onClick={() => this.PlusQty()} >+</Link>
                                      <Link className="quantity-button quantity-down" onClick={() => this.MinusQty()} >-</Link>
                             </div>
                         </div>
                         {!this.CheckCardItem(product.id) ?
-                                       <Link onClick={()=>this.AddToCart(product.id,product.name,product.pictures[0],product.salePrice,"var")}  className="button single_add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
+                                       <Link onClick={()=>this.AddToCart(product.id,product.name,product.images[0],product.price,"var")}  className="button single_add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                  :
                                        <Link  to="/ShopingCart"  className="button single_add_to_cart_button" rel="nofollow">Səbətə keçid et</Link>
                                  }
@@ -230,7 +275,7 @@ const productslider = {
 
                                 {!this.CheckWishList(product.id) ?
                                  <div className="add-to-wishlist">
-                                <Link onClick={()=>this.AddToWishList(product.id,product.name,product.pictures[0],product.salePrice,"var")}>
+                                <Link onClick={()=>this.AddToWishList(product.id,product.name,product.images[0],product.price,"var")}>
                                 Seçilmişlərə əlavə et
                                 </Link>
                                 </div>
@@ -245,27 +290,37 @@ const productslider = {
                         <span className="sku_wrapper">
                         <label>İD:</label>
                         <span className="sku">
-                            9624 </span>
-                        </span>
-                        <span className="size">
-                        <label>Ölçü:</label>
-                            {/* {product.size.map((sizes,index)=>
-                                <span itemProp="size">
-                                    <Link to="#" rel="tag">{sizes}{index === product.size.length-1 ?'':','}</Link>
-                                </span>
-                            )} */}
-                        </span>
-                        <span className="posted_in"><label>Kategpriya:</label>
+                            {product.id} </span>
+                                        </span>
+                                        {filter_categories.map((filtered, i) => {
+                                            return filtered.parent == null ? <span className="size">
+                                            
+                        <label key={i}>{filtered.name}:</label>
+                            {product.filter_category.map((category,index)=>
+
+                            
+                                <span key={index} itemProp="size">
+                                    {filter_categories.map((filtercat, i) => {
+                                       return filtercat.id == category && filtercat.parent == filtered.id ?<Link to="#" rel="tag">{filtercat.name}</Link>:null
+                                    })}
+                                    
+                               
+                                 </span>
+                            )}
+                         </span>: null
+                                        })}
+                                        
+                      {/*  <span className="posted_in"><label>Kategpriya:</label>
                             {product.category}
                         </span>
                         <span className="brands">
-                        <label>Marka:</label>
+                        <label>Marka:</label> */}
                             {/* {product.tags.map((brand,index)=>
                                 <span itemProp="brand">
                                     <Link to="#" rel="tag">{brand}{index === product.tags.length-1 ?'':','}</Link>
                                 </span>
                             )} */}
-                        </span>
+                        {/* </span> */}
                     </div>
                     <div className="social-profiles">
                         <span className="share-label">Paylaş :</span>
@@ -343,19 +398,19 @@ const productslider = {
 
             {isOpen && (
               <Lightbox
-                mainSrc={images[photoIndex]}
-                nextSrc={images[(photoIndex + 1) % images.length]}
-                prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+                mainSrc={sekiller[photoIndex]}
+                nextSrc={sekiller[(photoIndex + 1) % sekiller.length]}
+                prevSrc={sekiller[(photoIndex + sekiller.length - 1) % sekiller.length]}
                 onCloseRequest={() => this.setState({ isOpen: false })}
                 enableZoom={false}
                 onMovePrevRequest={() =>
                   this.setState({
-                    photoIndex: (photoIndex + images.length - 1) % images.length,
+                    photoIndex: (photoIndex + sekiller.length - 1) % sekiller.length,
                   })
                 }
                 onMoveNextRequest={() =>
                   this.setState({
-                    photoIndex: (photoIndex + 1) % images.length,
+                    photoIndex: (photoIndex + 1) % sekiller.length,
                   })
                 }
               />
@@ -370,5 +425,10 @@ const productslider = {
         )
     }
 }
-export default PostDetail;
+
+const mapStateToProps = state => ({
+    images: state.user.images,
+    filter_categories:state.user.filter_category    
+})
+export default connect(mapStateToProps, {getProductImages,getFilterCategory})(PostDetail)
 
