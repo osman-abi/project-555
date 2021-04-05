@@ -132,7 +132,7 @@ class ProductList extends Component {
                                             {/* <img src={require(`../assets/images/${product.images[0]}`)} className="img-fluid" /> */}
                                             {images.map((all_images, ind) => {
                                                     return product.images[0] == all_images.id ?
-                                                        <img className="img-fluid" style={{ width: "100%;", height:"auto;"}} key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        <img className="img-fluid" style={{ width: "100%;", height:"auto;"}} key={ind} src={all_images.image} />
                                                         :
                                                         <img className="img-fluid" />
                                                 })}
@@ -145,7 +145,7 @@ class ProductList extends Component {
                                             {/* <img src={require(`../assets/images/${product.images[1]}`)} className="img-fluid" /> */}
                                             {images.map((all_images, ind) => {
                                                     return product.images[1] == all_images.id ?
-                                                        <img className="img-fluid" key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        <img className="img-fluid" key={ind} src={all_images.image} />
                                                         :
                                                         <img className="img-fluid" />
                                                 })}

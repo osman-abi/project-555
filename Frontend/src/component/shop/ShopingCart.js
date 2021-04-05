@@ -213,7 +213,7 @@ class ShopingCart extends Component {
                                                                 {
                                                                     images.map((image, index) => {
                                                                         return image.id == CartItem.ProductImage ?
-                                                                        <img key={index} src={`http://127.0.0.1:8000${image.image}`} alt="product" />
+                                                                        <img key={index} src={image.image} alt="product" />
                                                                             :
                                                                             null
                                                                     })
