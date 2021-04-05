@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'b4qe9m-amp3ty-%x19zsa0kwnmu#w70jo_df68y@+6%a&97n=7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -112,7 +112,7 @@ WSGI_APPLICATION = 'weeshoop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if not DEBUG:
+if  DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -168,7 +168,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static_files/'
-if DEBUG:
+if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, "static_files")
 else:
     STATICFILES_DIRS = [

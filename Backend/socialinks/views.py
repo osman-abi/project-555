@@ -44,7 +44,7 @@ def instagram_link_list(request):
 def whatsapp_link_list(request):
     if request.method == 'GET':
         whatsapp = WhatsappLink.objects.all()
-        serializer = WhatsappLinkSerializer(facebook, many=True)
+        serializer = WhatsappLinkSerializer(whatsapp, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = WhatsappLinkSerializer(data=request.data)
