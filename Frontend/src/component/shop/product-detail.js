@@ -47,7 +47,12 @@ class ProductDetail extends Component {
              AllProduct:this.props.products,
              ProductId:parseInt(this.props.match.params.id),
              CurrentProduct:null,
-             activeTab: '1'
+             activeTab: '1',
+             ////////////////
+             
+             firstname: "",
+             email: "",
+             commentt:""
          }
          this.toggle = this.toggle.bind(this);
     }
@@ -70,6 +75,42 @@ class ProductDetail extends Component {
             })
         }
     }
+
+    changeName = e => {
+        this.setState({
+            firstname:e.target.value
+        })
+    }
+
+    changeEmail = e => {
+        this.setState({
+            email:e.target.value
+        })
+    }
+
+    changeComment = e => {
+        this.setState({
+            commentt:e.target.value
+        })
+    }
+
+    addComment = e => {
+        e.preventDefault();
+        const data = {
+            product: this.state.CurrentProduct.id,
+            firstname: this.state.firstname,
+            email: this.state.email,
+            commentt: this.state.commentt
+        }
+        fetch('https://1klikle.az/api/products/comments/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res=>res.json())
+    }
+
     toggle(tab) {
         if (this.state.activeTab !== tab) {
           this.setState({
@@ -79,6 +120,7 @@ class ProductDetail extends Component {
     }
     render() {
         const Productedit = this.state.CurrentProduct;
+        const {firstname,email,commentt} = this.state
         
      return (
        
@@ -124,7 +166,7 @@ class ProductDetail extends Component {
                                                 <div className="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="home-tab">
                                                 <h2>What is Lorem Ipsum?</h2>
                                                 <p><strong>Lorem Ipsum</strong> {Productedit.description} </p>
-                                                
+                                                Link
                                                 <div className="product-info-box border-top border-bottom mt-5  pt-4 pt-lg-0 pb-2 pb-sm-0">
                                                     <Row>
                                                     <Col sm={6} md={4}>
@@ -203,23 +245,23 @@ class ProductDetail extends Component {
                                 <TabPane tabId="2">
                                 <div className="product-reviews">
                                     <h6>Rəy bildir</h6>
-                                    <form>
+                                    <form onSubmit={this.addComment}>
                                        <div class="form-group">
                                         <label>Ad</label>
-                                        <input type="Text" class="form-control"></input>
+                                        <input type="text" onChange={this.changeName} value={firstname} class="form-control"></input>
                                       </div>
                                       <div class="form-group">
                                         <label>Email</label>
-                                        <input type="Text" class="form-control"></input>
+                                        <input type="email" onChange={this.changeEmail} value={email} class="form-control"></input>
                                       </div>
                                       
                                       <div class="form-group">
                                         <label>Rəyiniz </label>
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea class="form-control" onChange={this.changeComment} value={commentt} rows="3"></textarea>
                                       </div>
                                       
                                        <div class="form-group">
-                                        <Link class="btn btn-primary">Təsdiqlə</Link>
+                                        <button type='submit' class="btn btn-primary">Təsdiqlə</button>
                                       </div>
 
 

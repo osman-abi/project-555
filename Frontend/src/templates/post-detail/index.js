@@ -165,7 +165,7 @@ const productslider = {
         {product.images.map((pic)=>
             images.map((photo) => {
                 if (pic == photo.id) {
-                    sekiller.push(photo.image)
+                    sekiller.push(`http://127.0.0.1:8000${photo.image}`)
                     
                 }
             })
@@ -199,7 +199,7 @@ const productslider = {
                             <div className="ciyashop-product-gallery ciyashop-product-gallery--with-images slick-carousel">
                             <Slider {...settings} className="ciyashop-product-gallery__wrapper popup-gallery">
                                 <div className="ciyashop-product-gallery__image">
-                                        <img src={this.state.newImage}  className="img-fluid" />
+                                        <img src={`http://127.0.0.1:8000${this.state.newImage}`}  className="img-fluid" />
                                 </div>
                             </Slider>
                             <div className="ciyashop-product-gallery_buttons_wrapper">
@@ -218,7 +218,7 @@ const productslider = {
                                                             return photo==cover.id ? 
                                                             <div key={index} className="ciyashop-product-thumbnail__image">
                                                                 <Link onMouseOver={() => this.changePreviewImage(cover.image)} >
-                                                                    <img src={cover.image} className="img-fluid" />
+                                                                    <img src={`http://127.0.0.1:8000${cover.image}`} className="img-fluid" />
                                                                 </Link>
                                                                 </div>
                                                                 : null
@@ -351,8 +351,7 @@ const productslider = {
                                 {/* <img src={require(`../../assets/images/products/product-01.jpg`)}  className="img-fluid" alt /> */}
                                 </div>
                                 <div className="ciyashop-sticky-btn-info">
-                                <h4 className="product-title">Women’s Fabric Mix Midi Wrap
-                                    Jumpsuit</h4>
+                                                            <h4 className="product-title">{ product.name}</h4>
                                
                                 </div>
                             </div>
@@ -370,7 +369,7 @@ const productslider = {
                                     </Link>
                                 </div>
                                 </div>
-                                <span className="price">9.00 AZN</span>
+                                                        <span className="price">{ product.price}</span>
                                 <form className="cart">
                                 <div className="quantity">
                                     <label className="screen-reader-text" htmlFor="quantity_5cdab503cf26f">Miqdar</label>

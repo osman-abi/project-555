@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product
+from .models import Product, Comment
 from images.serializers import ProductImageSerializer
 # from categories.serializers import ProductCategorySerializer, FilterCategorySerializer
 
@@ -21,4 +21,16 @@ class ProductSerializer(serializers.ModelSerializer):
             'stock_status',
             'best_seller',
             'publish_date'
+        ]
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            'id',
+            'product',
+            'firstname',
+            'email',
+            'commentt'
         ]

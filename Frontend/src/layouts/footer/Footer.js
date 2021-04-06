@@ -236,7 +236,7 @@ class Footer extends React.Component {
                                         <Col md={6} className="text-center">
                                             {copyright.map((copy, index) => {
                                                 return (
-                                                    <p key={index}> © Copyright {copy.year} <Link to="#">Made by</Link> {copy.context} </p>
+                                                    <p key={index}> © Copyright {copy.year} <Link to="https://khanbutagroup.az/">Made by</Link> {copy.context} </p>
 
                                                 )
                                             })}

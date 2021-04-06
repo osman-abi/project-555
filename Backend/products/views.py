@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ProductSerializer
-from .models import Product
+from .serializers import ProductSerializer,CommentSerializer
+from .models import Product,Comment
 from drf_yasg.utils import swagger_auto_schema
 
 # Create your views here.
@@ -43,3 +43,18 @@ def product_detail(request, pk):
     elif request.method == "DELETE":
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@swagger_auto_schema(methods=['post'], request_body=CommentSerializer)
+@api_view(['GET', 'POST'])
+def comment_list(request):
+    if request.method == 'GET':
+        coment = Comment.objects.all()
+        serializer = CommentSerializer(coment, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

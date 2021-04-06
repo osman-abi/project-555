@@ -21,3 +21,10 @@ class Product(models.Model):
 
     def __str__(self):
         return f"mehsul = {self.name}"
+
+
+class Comment(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    firstname = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
+    commentt = models.TextField()

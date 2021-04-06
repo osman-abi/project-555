@@ -118,7 +118,6 @@ class Header extends React.Component {
           this.props.getInstagram();
           this.props.getWhatsapp();
           console.log(this.props.images)
-        //   localStorage.setItem("isSuperuser", 0)
           
         //   console.log(this.props.user)
       }
@@ -322,7 +321,6 @@ class Header extends React.Component {
         let pageName = '/'+pathArray[pathArray.length -1];
         var searchName;
         let { firstname, lastname, email, phone, address, password } = this.state
-        let isSuperuser = localStorage.getItem('isSuperuser');
         const isLoggedIn = localStorage.getItem('isLOggedIn')
         console.log(typeof isLoggedIn)
         const { images, logos, shop_address,instagram,whatsapp,facebook } = this.props

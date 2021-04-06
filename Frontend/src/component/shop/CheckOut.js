@@ -123,87 +123,87 @@ class CheckOut extends Component {
 
 
 
-      handleValidation()
-      {
-            let fieldvalue=this.state.fieldvalue;
-            let errors = {};
-            let formIsValid = true;
+    //   handleValidation()
+    //   {
+    //         const fieldvalue=this.state.fieldvalue;
+    //         let errors = {};
+    //         let formIsValid = true;
 
-            //First Name
-            if (!fieldvalue["firstname"]) {
-                formIsValid = false;
-                errors["firstname"] = "Please Enter First Name";
-            }
+    //         //First Name
+    //         if (!fieldvalue["firstname"]) {
+    //             formIsValid = false;
+    //             errors["firstname"] = "Please Enter First Name";
+    //         }
 
-            if (typeof fieldvalue["firstname"] !== "undefined") {
-                if (!fieldvalue["firstname"].match(/^[a-zA-Z]+$/)) {
-                  formIsValid = false;
-                  errors["firstname"] = "Please Enter Only Letter";
-                }
-            }
-
-
-            //Last Name
-            if (!fieldvalue["lastname"]) {
-                formIsValid = false;
-                errors["lastname"] = "Please Enter Last Name";
-            }
-
-            if (typeof fieldvalue["lastname"] !== "undefined") {
-                if (!fieldvalue["lastname"].match(/^[a-zA-Z]+$/)) {
-                  formIsValid = false;
-                  errors["lastname"] = "Please Enter Only Letter";
-                }
-            }
+    //         if (typeof fieldvalue["firstname"] !== "undefined") {
+    //             if (!fieldvalue["firstname"].match(/^[a-zA-Z]+$/)) {
+    //               formIsValid = false;
+    //               errors["firstname"] = "Please Enter Only Letter";
+    //             }
+    //         }
 
 
-             //streetno
-             if (!fieldvalue["streetno"]) {
-                formIsValid = false;
-                errors["streetno"] = "Please Enter Street address";
-            }
+    //         //Last Name
+    //         if (!fieldvalue["lastname"]) {
+    //             formIsValid = false;
+    //             errors["lastname"] = "Please Enter Last Name";
+    //         }
 
-             //state
-             if (!fieldvalue["state"]) {
-                formIsValid = false;
-                errors["state"] = "Please Enter Town / City";
-            }
+    //         if (typeof fieldvalue["lastname"] !== "undefined") {
+    //             if (!fieldvalue["lastname"].match(/^[a-zA-Z]+$/)) {
+    //               formIsValid = false;
+    //               errors["lastname"] = "Please Enter Only Letter";
+    //             }
+    //         }
 
-            if (!fieldvalue["zipcode"]) {
-                formIsValid = false;
-                errors["zipcode"] = "Please Enter Postcode / ZIP";
-            }
 
-            if (typeof fieldvalue["zipcode"] !== "undefined") {
-                if (fieldvalue["zipcode"].length < 6) {
-                  formIsValid = false;
-                  errors["zipcode"] = "Please Enter valid Postcode / ZIP";
-                }
-            }
+    //          //streetno
+    //          if (!fieldvalue["streetno"]) {
+    //             formIsValid = false;
+    //             errors["streetno"] = "Please Enter Street address";
+    //         }
 
-            if (!fieldvalue["phone"]) {
-                formIsValid = false;
-                errors["phone"] = "Please Enter Phone";
-            }
+    //          //state
+    //          if (!fieldvalue["state"]) {
+    //             formIsValid = false;
+    //             errors["state"] = "Please Enter Town / City";
+    //         }
 
-            // if (typeof fieldvalue["phone"] !== "undefined") {
-            //     if (!fieldvalue["phone"].match(/^\d{10}$/)) {
-            //       formIsValid = false;
-            //       errors["phone"] = "Please Enter Valid Phone";
-            //     }
-            // }
+    //         if (!fieldvalue["zipcode"]) {
+    //             formIsValid = false;
+    //             errors["zipcode"] = "Please Enter Postcode / ZIP";
+    //         }
 
-          //Email ID
-          if (!fieldvalue["email"]) {
-            formIsValid = false;
-            errors["email"] = "Please Enter Email ID";
-          }
-          this.setState({ errors: errors });
-          localStorage.setItem("firstname",fieldvalue["firstname"]);
-          localStorage.setItem("lastname",fieldvalue["lastname"]);
-          return formIsValid;
+    //         if (typeof fieldvalue["zipcode"] !== "undefined") {
+    //             if (fieldvalue["zipcode"].length < 6) {
+    //               formIsValid = false;
+    //               errors["zipcode"] = "Please Enter valid Postcode / ZIP";
+    //             }
+    //         }
 
-      }
+    //         if (!fieldvalue["phone"]) {
+    //             formIsValid = false;
+    //             errors["phone"] = "Please Enter Phone";
+    //         }
+
+    //         // if (typeof fieldvalue["phone"] !== "undefined") {
+    //         //     if (!fieldvalue["phone"].match(/^\d{10}$/)) {
+    //         //       formIsValid = false;
+    //         //       errors["phone"] = "Please Enter Valid Phone";
+    //         //     }
+    //         // }
+
+    //       //Email ID
+    //       if (!fieldvalue["email"]) {
+    //         formIsValid = false;
+    //         errors["email"] = "Please Enter Email ID";
+    //       }
+    //       this.setState({ errors: errors });
+    //       localStorage.setItem("firstname",fieldvalue["firstname"]);
+    //       localStorage.setItem("lastname",fieldvalue["lastname"]);
+    //       return formIsValid;
+
+    //   }
 
     handleFirstName = e => {
         this.setState({
@@ -250,11 +250,11 @@ class CheckOut extends Component {
         const invoice = { firstname, lastname, shipping_address, phone, email, items, amount }
         this.props.postInvoice(invoice);
 
-        if(this.handleValidation()){
+        
             localStorage.setItem("FinalCheckoutCartItems",localStorage.getItem("LocalCartItems"));
             localStorage.removeItem("LocalCartItems");
             this.props.history.push(`/SuccessScreen`)
-        }
+        
       }
     
 

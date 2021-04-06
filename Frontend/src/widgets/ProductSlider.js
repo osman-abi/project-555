@@ -1,26 +1,27 @@
-/**
- * ProductSlider Widget
- */
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Slider from "react-slick";
-import { Row, Col, Container } from 'reactstrap';
+import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import MyProducts from '../api/product.json';
 import { ToastContainer, toast } from 'react-toastify';
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+import { getProducts, getProductImages } from "../actions/index";
 
-function ProductSlider(props) {
-    const settings = props.settings;
-    const productSub = props.productSub;
-    var cloneproduct=[];
-    var cnt=0;
-    MyProducts.map((product,index) => {
-            if(product.subcategory===productSub && cnt <6 ){
-                cloneproduct[cnt]= product;
-                cnt++;  
-            }
-        }
-    );
-    function AddToCart(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
+export class ProductSlider extends Component {
+
+    static propTypes = {
+        getProducts: PropTypes.func.isRequired,
+        products: PropTypes.array.isRequired,
+        getProductImages: PropTypes.func.isRequired,
+        images:PropTypes.func.isRequired
+    }
+
+    componentDidMount() {
+        this.props.getProducts()
+        this.props.getProductImages()
+    }
+
+    AddToCart(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
         var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
         if(Cart == null)
            Cart = new Array();
@@ -40,7 +41,7 @@ function ProductSlider(props) {
      }
 
 
-     function CheckCardItem(ID)
+     CheckCardItem(ID)
      {
         let checkcart=false;
         var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
@@ -53,7 +54,7 @@ function ProductSlider(props) {
         }
         return checkcart;
     }
-    function CheckWishList(ID)
+    CheckWishList(ID)
     {
         let wishlist=false;
         var Wish = JSON.parse(localStorage.getItem("LocalWishListItems"));
@@ -68,7 +69,7 @@ function ProductSlider(props) {
         return wishlist;
     }
 
-     function AddToWishList(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
+     AddToWishList(ProductID,ProductName,ProductImage,Qty,Rate,StockStatus) {
         var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
         if(Cart == null)
            Cart = new Array();
@@ -90,7 +91,7 @@ function ProductSlider(props) {
 
      }
 
-    function rating(productrat)
+    rating(productrat)
      {
         let rat=[];  
         let i = 1;
@@ -108,12 +109,26 @@ function ProductSlider(props) {
         return rat;
      }
 
-    return (
-        <Col sm={12}>
-            <ToastContainer autoClose={1000} />
-            <div className="products-listing-items-wrapper products-listing-carousel">
-                <div className="products" data-nav-arrow="false" data-items={4} data-md-items={3} data-sm-items={3} data-xs-items={2} data-xx-items={1} data-space={20}>
-                    <Slider {...settings} className="slider-spacing-10 slider-arrow-hover">
+    render() {
+        const settings = this.props.settings;
+        const {images,products} = this.props
+    const productSub = this.props.productSub;
+    var cloneproduct=[];
+    var cnt=0;
+    products.map((product) => {
+            if(product.filter_category[0]===productSub && cloneproduct.indexOf(product) === -1 && cnt <6 ){
+                cloneproduct[cnt]= product;
+                cnt++;  
+            }
+        }
+    );
+        return (
+            <>
+               <Col sm={12}>
+             <ToastContainer autoClose={1000} />
+             <div className="products-listing-items-wrapper products-listing-carousel">
+                 <div className="products" data-nav-arrow="false" data-items={4} data-md-items={3} data-sm-items={3} data-xs-items={2} data-xx-items={1} data-space={20}>
+                     <Slider {...settings} className="slider-spacing-10 slider-arrow-hover">
                             {cloneproduct.map((product,index) =>
 
                             <div>
@@ -122,36 +137,41 @@ function ProductSlider(props) {
                                         <div className="product-inner element-hovered">
                                             <div className="product-thumbnail">
                                                 <div className="product-thumbnail-inner">
-                                                    <a href={`/shop/${product.category}/${product.id}`}> 
-                                                        {product.pictures[0] ?
-                                                            <div className="product-thumbnail-main">
-                                                                <img src={require(`../assets/images/${product.pictures[0]}`)} className="img-fluid" />
-                                                            </div>
+                                                    <a href={`/shop/${product.filter_category[0]}/${product.id}`}> 
+                                                        <div className="product-thumbnail-main">
+                                    {images.map((all_images, ind) => {
+                                                    return product.images[0] == all_images.id ?
+                                                        <img className="img-fluid" style={{ width: "100%;", height:"auto;"}} key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
                                                         :
-                                                            null
-                                                        }
-                                                        {product.pictures[1]  ?
-                                                            <div className="product-thumbnail-swap">
-                                                                    <img src={require(`../assets/images/${product.pictures[1]}`)} className="img-fluid" />
-                                                            </div>
-                                                            :
-                                                            null
-                                                        }
+                                                        <img className="img-fluid" />
+                                                })}
+                                 {/* <img src={require(`../assets/images/${product.pictures[0]}`)} className="img-fluid" alt="shop" /> */}
+
+                              </div>
+                              <div className="product-thumbnail-swap">
+                                 {images.map((all_images, ind) => {
+                                                    return product.images[1] == all_images.id ?
+                                                        <img className="img-fluid" key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
+                                                        :
+                                                        <img className="img-fluid" />
+                                                })}
+                                 {/* <img src={require(`../assets/images/${product.pictures[1]}`)} className="img-fluid" alt="shop" /> */}
+                              </div>
                                                     </a>
                                                 </div>
 
                                                 <div className="product-actions">
                                                     <div className="product-actions-inner">
                                                         <div className="product-action product-action-add-to-cart">
-                                                               {!CheckCardItem(product.id) ? 
-                                                                    <Link onClick={() => AddToCart(product.id,product.name, product.pictures[0], 1, product.salePrice, "var")} className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
+                                                               {!this.CheckCardItem(product.id) ? 
+                                                                    <Link onClick={this.AddToCart(product.id,product.name, product.images[0], 1, product.price, "var")} className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                                                 : 
                                                                     <Link  to="/ShopingCart"  className="button add_to_cart_button" rel="nofollow">View Cart</Link>
                                                                 }
                                                         </div>
                                                         <div className="product-action product-action-wishlist">
-                                                            {!CheckWishList(product.id) ? 
-                                                                <Link onClick={()=>AddToWishList(product.id,product.name,product.pictures[0],1,product.salePrice,"var")} className="add_to_wishlist" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top"> Seçilmişlərə əlavə et </Link>
+                                                            {!this.CheckWishList(product.id) ? 
+                                                                <Link onClick={this.AddToWishList(product.id,product.name,product.images[0],1,product.price,"var")} className="add_to_wishlist" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top"> Seçilmişlərə əlavə et </Link>
                                                             :
                                                                 <Link to="/wishlist" className="add_to_wishlist_fill" data-toggle="tooltip" data-original-title="Wishlist" data-placement="top">View Wishlist</Link>
                                                             }
@@ -160,18 +180,16 @@ function ProductSlider(props) {
                                                 </div>
                                             </div>
                                             <div className="product-info">
-                                                <span className="ciyashop-product-category">
-                                                    {product.category}
-                                                </span>
+                                                
                                                 <h3 className="product-name">
-                                                    <a href={`/shop/${product.category}/${product.id}`}>{product.name}</a>
+                                                    <a href={`/shop/${product.filter_category[0]}/${product.id}`}>{product.name}</a>
                                                 </h3>
                                                 <div className="product-rating-price">
                                                 
                                                 <span className="price">
                                                     <ins>
                                                         <span className="price-amount amount">
-                                                            <span className="currency-symbol"></span>{product.salePrice.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                                                            <span className="currency-symbol"></span>{product.price.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                                         </span> AZN
                                                     </ins>
                                                 </span>
@@ -190,11 +208,15 @@ function ProductSlider(props) {
                 </div>
             </div>
             
-    </Col>
-
-    )
-
-
+    </Col> 
+            </>
+        )
+    }
 }
-export default ProductSlider;
 
+const mapStateToProps = state => ({
+   products: state.user.products,
+   images: state.user.images
+})
+
+export default connect(mapStateToProps, {getProductImages,getProducts})(ProductSlider)
