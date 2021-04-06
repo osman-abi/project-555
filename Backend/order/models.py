@@ -1,7 +1,10 @@
 from django.db import models
 from account.models import User
 from products.models import Product
-
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+import string
+import random
 # Create your models here.
 
 

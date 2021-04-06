@@ -7,7 +7,7 @@ class Logo(models.Model):
     logo_image = models.ImageField(upload_to='uploads/')
 
     def __str__(self):
-        return f"{self.id}ci sekil"
+        return f"{self.logo_image.url}"
 
 class CoverImage(models.Model):
     image = models.ImageField(upload_to='coverimages/')
