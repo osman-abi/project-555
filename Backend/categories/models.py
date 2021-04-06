@@ -11,6 +11,9 @@ class FilterCategory(models.Model):
     parent = models.ForeignKey('self', related_name="childeren", blank=True,
                                null=True, on_delete=models.CASCADE, verbose_name="Üst Kateqoriya")
 
+    class Meta:
+        verbose_name = "Filter Kateqoriyalar"
+
     def __str__(self):
         full_path = [self.name]
         k = self.parent

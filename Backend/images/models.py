@@ -12,6 +12,9 @@ class Logo(models.Model):
 class CoverImage(models.Model):
     image = models.ImageField(upload_to='coverimages/')
 
+    class Meta:
+        verbose_name = "Slayd şəkillər"
+
 class CoverPhoto(models.Model):
     image = models.ManyToManyField(CoverImage, verbose_name='cover foto')
 

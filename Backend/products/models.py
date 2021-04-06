@@ -19,6 +19,9 @@ class Product(models.Model):
     publish_date = models.DateTimeField(
         auto_now=True, verbose_name='Əlavə edilmə tarixi')
 
+    class Meta:
+        verbose_name = "Məhsullar"
+
     def __str__(self):
         return f"mehsul = {self.name}"
 
@@ -28,3 +31,6 @@ class Comment(models.Model):
     firstname = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True)
     commentt = models.TextField()
+
+    class Meta:
+        verbose_name = "Məhsul haqqında rəylər"

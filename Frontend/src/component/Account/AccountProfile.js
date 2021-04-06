@@ -13,8 +13,13 @@ class AccountProfile extends Component {
         window.scrollTo(0, 0)
     }
 
-    render() {
-      const Profile=Common['0']['profile'];
+  render() {
+      const username = localStorage.getItem("username")
+    const lastname = localStorage.getItem("lastname")
+    const email = localStorage.getItem("email")
+    const phone_number = localStorage.getItem("phone_number")
+    const address = localStorage.getItem("address")
+      // const Profile=Common['0']['profile'];
       return (
            <div>
             <div className="inner-intro">
@@ -48,17 +53,14 @@ class AccountProfile extends Component {
                       <div className="woocommerce-Address">
                         <div className="woocommerce-Address-title">
                           <h5 class="mb-0">Profil</h5>
-                          <Link className="edit" to="/Account/AccountProfileedit">Düzəliş et</Link>
                         </div>
-                        <div className="woocommerce-Address-info mt-4">
+                       <div className="woocommerce-Address-info mt-4">
                           <ul class="list-unstyled mb-0">
-                            <li><span>Ad:</span><strong>{Profile.firstname}</strong></li>
-                            <li><span>Soyad:</span><strong>{Profile.lastname}</strong></li>
-                            <li><span>Cins:</span><strong>{Profile.gender}</strong></li>
-                            <li><span>Doğum:</span><strong>{Profile.dob}</strong></li>
-                            <li><span>Tel:</span><strong>{Profile.phoneno}</strong></li>
-                            <li><span>Email:</span><strong>{Profile.email}</strong></li>
-                            <li><span>Ünvan:</span><strong>{Profile.address}</strong></li>
+                            <li><span>Ad:</span><strong>{username}</strong></li>
+                            <li><span>Soyad:</span><strong>{lastname}</strong></li>
+                            <li><span>Tel:</span><strong>{phone_number}</strong></li>
+                            <li><span>Email:</span><strong>{email}</strong></li>
+                            <li><span>Ünvan:</span><strong>{address}</strong></li>
                           </ul>
                         </div>
                       </div>

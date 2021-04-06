@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 import { Col, Container, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
 import OrderData from '../../api/userOrder';
 import Sitebar from './Sitebar';
+import { getMyOrders } from "../../actions/index";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 
 class OrderHistory extends Component {
     constructor(props){
@@ -16,7 +20,13 @@ class OrderHistory extends Component {
         ViewOrder:''
       }
       this.toggle = this.toggle.bind(this);
+  }
+  
+  static propTypes = {
+    myOrders: PropTypes.array.isRequired,
+    getMyOrders:PropTypes.func.isRequired
     }
+
     toggle() {
       this.setState(prevState => ({
         modal: !prevState.modal
@@ -32,9 +42,10 @@ class OrderHistory extends Component {
     }
     componentDidMount() {
         window.scrollTo(0, 0)
+      this.props.getMyOrders();
     }
     render() {
-       const OrderHistory = this.state.Order;
+       const OrderHistory = this.props.myOrder;
        const ViewOrderdata=this.state.ViewOrder;
        return (
         <div>
@@ -81,10 +92,10 @@ class OrderHistory extends Component {
                              <tbody>
                                 {OrderHistory.map((Ordervalue) =>
                                       <tr>
-                                        <td>{Ordervalue.orderid}</td>
-                                        <td>{Ordervalue.date}</td>
+                                        <td>{Ordervalue.orderID}</td>
+                                        <td>{Ordervalue.history}</td>
                                         {/* <td>{Ordervalue.status}</td> */}
-                                        <td>${Ordervalue.price.toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</td>
+                                        <td>${Ordervalue.amount.toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</td>
                                         {/* <td><Link className="action-button"  onClick={() => this.onViewOrder(Ordervalue)}  href="#">Bax</Link></td> */}
                                       </tr>
                                 )}
@@ -200,4 +211,9 @@ class OrderHistory extends Component {
 
     }
 }
-export default OrderHistory;
+
+const mapStateToProps = state => ({
+    myOrders: state.user.myOrders
+})
+
+export default connect(mapStateToProps,{getMyOrders})(OrderHistory)

@@ -27,9 +27,9 @@ export class AboutBanner2 extends Component {
             <div className="section-wrapper section-ptb">
                 <div className="container">
                     <Row>
-                        <Col lg={5}>
+                        {/* <Col lg={5}>
                             <img src={require(`../assets/images/about-us.jpg`)} className="img-fluid" />
-                        </Col>
+                        </Col> */}
                         <Col lg={7} className="mt-4 mt-lg-0">
                             <div className="section-title mb-3">
                                 <h2 className="font-bold">Daha ətraflı</h2>

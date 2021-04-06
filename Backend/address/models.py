@@ -19,6 +19,9 @@ class ShopAddress(models.Model):
     phone_number_5 = models.CharField(max_length=200 ,blank=True)
     phone_number_6 = models.CharField(max_length=200 ,blank=True)
 
+    class Meta:
+        verbose_name="Bizimlə əlaqə"
+
     def __str__(self):
         return f"unvan = {self.address}"
 
@@ -30,9 +33,18 @@ class WorkingDuration(models.Model):
     saturday_from = models.CharField(max_length=100, blank=True)
     saturday_to = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        verbose_name = "İş intervalı"
+
 class TechniqueSupport(models.Model):
     support_text = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name = "Texniki dəstək"
+    def __str__(self):
+        return self.support_text
+
+        
 """ FOOTER """
 class CopyRigth(models.Model):
     year = models.CharField(max_length=10,blank=True)

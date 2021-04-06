@@ -247,7 +247,6 @@ class Header extends React.Component {
     };
 
     submitForm = e => {
-        e.preventDefault()
         alert('Qeydiyyatınız uğurla həyata keçirildi')
         const { firstname, lastname, email, password, phone, address } = this.state;
         const data = {
@@ -262,8 +261,7 @@ class Header extends React.Component {
     fetch(REGISTRATION_URL, {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE3NDQ3ODczLCJqdGkiOiJhZTM1ZTY2OGEzYmI0YTVkODRlZGUyZTQ3YjA1NjI4OCIsInVzZXJfaWQiOjF9.0BlsVhPIizrLWqh1J4i9mrenyJnWZvjKRWG3lJ3tHOI'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     }).then(response => response.json()).then(data => {
@@ -274,6 +272,7 @@ class Header extends React.Component {
         localStorage.setItem('phone_number', data.data.phone_number)
         localStorage.setItem("lastname", data.data.lastname)
         localStorage.setItem("address", data.data.address)
+        localStorage.setItem("userID",data.data.id)
         localStorage.setItem("isLOggedIn", 1)
         
     })
@@ -294,7 +293,6 @@ class Header extends React.Component {
     }
 
     onLogIn = e => {
-        e.preventDefault()
         localStorage.setItem("isLOggedIn", 1)
         const { email, password } = this.state
         const data = { email, password }
@@ -305,12 +303,13 @@ class Header extends React.Component {
             },
             body: JSON.stringify(data)
         }).then(res => res.json()).then(data => {
+            localStorage.setItem("userID",data.data.id)
             localStorage.setItem('username', data.data.username)
-        localStorage.setItem('email', data.data.email)
-        localStorage.setItem('phone_number', data.data.phone_number)
-        localStorage.setItem("lastname", data.data.lastname)
-        localStorage.setItem("address", data.data.address)
-        localStorage.setItem("isLOggedIn", 1)
+            localStorage.setItem('email', data.data.email)
+            localStorage.setItem('phone_number', data.data.phone_number)
+            localStorage.setItem("lastname", data.data.lastname)
+            localStorage.setItem("address", data.data.address)
+            localStorage.setItem("isLOggedIn", 1)
         })
     }
     
@@ -675,7 +674,7 @@ class Header extends React.Component {
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <button type='submit'className='btn btn-primary mt-1'> Giriş </button>
+                                                            <button onClick={this.toggle} type='submit'className='btn btn-primary mt-1'> Giriş </button>
                                                             <Link className="btn btn-secondary ml-2 mt-1" onClick={this.toggle} >İmtina et</Link>
                                                         </div>
                                                         <p className="mb-0">Hesabınız yoxdur? <Link to="#" className={classnames({ active: this.state.activeTab === '2' })}
@@ -689,7 +688,7 @@ class Header extends React.Component {
                                                             <input type="text" class="form-control" onChange={this.handleFirstname} value={firstname} placeholder="Ad daxil edin"></input>
                                                     </div>
                                                     <div class="form-group">
-                                                            <label>SoyAd</label>
+                                                            <label>Soyad</label>
                                                             <input type="text" class="form-control" onChange={this.handleLastname} value={lastname} placeholder="Soyad daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
@@ -713,7 +712,7 @@ class Header extends React.Component {
                                                             <input type="texttext" class="form-control" onChange={this.handleAddress} value={address} placeholder="Ünvanı daxil edin"></input>
                                                         </div>
                                                         <div class="form-group">
-                                                            <button className='btn btn-primary' type='submit'> Qeydiyyatdan keç </button>
+                                                            <button onClick={this.toggle} className='btn btn-primary' type='submit'> Qeydiyyatdan keç </button>
                                                             <Link className="btn btn-secondary ml-2" onClick={this.toggle} >İmtina</Link>
 
                                                         </div>

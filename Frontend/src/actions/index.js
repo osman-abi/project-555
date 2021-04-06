@@ -20,7 +20,8 @@ const GET_FACEBOOK_URL = "https://1klikle.az/api/social/facebook/link/"
 const GET_INSTAGRAM_URL = "https://1klikle.az/api/social/instagram/link/"
 const GET_WHATSAPP_URL = "https://1klikle.az/api/social/whatsapp/link/"
 
-
+const GET_MY_ORDERS_URL = 'https://1klikle.az/api/invoices/orders/'
+const POST_MY_ORDERS_URL = 'https://1klikle.az/api/invoices/orders/'
 
 const POST_OURSHOP_URL = 'https://1klikle.az/api/about/shops/'
 const GET_OURSHOP_URL = 'https://1klikle.az/api/about/shops/'
@@ -55,6 +56,30 @@ const ADD_LOGO_URL = 'https://1klikle.az/api/images/logo/'
 // const LOGOUT_URL = 'https://1klikle.az/api/registration/logout/'
 
 const ACCESS_TOKEN = localStorage.getItem('access_token')
+
+export const getMyOrders = () => dispatch=>{
+    fetch(GET_MY_ORDERS_URL).then(res => res.json()).then(data => {
+        dispatch({
+            type: "GET_MY_ORDERS",
+            payload:data
+        })
+    })
+}
+
+export const postMyOrders = (myOrders) => dispatch => {
+    fetch(POST_MY_ORDERS_URL, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(myOrders)
+    }).then(res => res.json()).then(data => {
+        dispatch({
+            type:"POST_MY_ORDERS",
+            payload:data
+        })
+    })
+}
 
 // =================================================== Product API =============================================
 
@@ -572,7 +597,7 @@ export const getWhatsapp = () => dispatch => {
             
         }).then(response => response.json()).then(data => {
             dispatch({
-                type: "GET_WHATSAPP",
+                type: "GET_WHATSAPP_INFO",
                 payload: data
             })
         })

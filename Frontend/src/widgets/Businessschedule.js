@@ -3,10 +3,27 @@
  */
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getWorkDuration, getTechniqueSupport } from "../actions/index";
 
 
 class Businessschedule extends Component {
-   render() {
+
+  static propTypes = {
+    getWorkDuration: PropTypes.func.isRequired,
+    getTechniqueSupport: PropTypes.func.isRequired,
+    technique_support: PropTypes.array.isRequired,
+    work_duration:PropTypes.array.isRequired
+  }
+
+  componentDidMount() {
+    this.props.getWorkDuration();
+    this.props.getTechniqueSupport()
+  }
+  
+  render() {
+     const {work_duration, technique_support} = this.props
     return (
       <Row>
         <Col md={6} className="mb-4 mb-md-0">
@@ -27,9 +44,15 @@ class Businessschedule extends Component {
                       İş saatları </h4>
                     <div className="ciyashop_info_box-description">
                       <p className="mb-1"></p>
-                      <p><strong>neçənci gündən neçənci günə</strong> : 10 a.m. – 7 p.m. (GMT +1)<br />
-                        <strong>Şənbə günü saat neçədən neçəyə</strong> : 9 a.m. – 1 p.m. (GMT +1)<br />
+                      {work_duration.map((work, index) => {
+                        return (
+                        <p key={index}>
+                          <strong>{work.duration_d_from} -- {work.duration_d_to} </strong> : <p>{work.duration_t_from} – { work.duration_t_to}</p><br />
+                          <strong>Şənbə günü</strong> : <p>{work.saturday_from} – {work.saturday_to}</p><br />
                         </p>
+
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
@@ -54,7 +77,12 @@ class Businessschedule extends Component {
                     <h4 className="ciyashop_info_box-title">
                       Texniki dəstək </h4>
                     <div className="ciyashop_info_box-description">
-                      <p></p>
+                      {technique_support.map((support, index) => {
+                        return (
+                          <p key={ index}> {support.support_text} </p>
+
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
@@ -62,39 +90,18 @@ class Businessschedule extends Component {
             </div>
           </div>
         </Col>
-        {/* <Col md={4}>
-          <div className="ciyashop_info_box ciyashop_info_box-layout-style_2 ciyashop_info_box-content_alignment-left ciyashop_info_box-with-icon ciyashop_info_box-icon-source-font ciyashop_info_box-icon-style-default ciyashop_info_box-icon-size-sm ciyashop_info_box-icon_position-left info_box-step_position-above_title">
-            <div className="ciyashop_info_box-inner clearfix ciyashop-info-left-icon">
-              <div className="ciyashop_info_box-icon">
-                <div className="ciyashop_info_box-icon-wrap">
-                  <div className="ciyashop_info_box-icon-outer">
-                    <div className="ciyashop_info_box-icon-inner text-dark">
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div className="ciyashop_info_box-content">
-                <div className="ciyashop_info_box-content-wrap">
-                  <div className="ciyashop_info_box-content-inner">
-                    <h4 className="ciyashop_info_box-title">
-                      Digər məlumatlar</h4>
-                    <div className="ciyashop_info_box-description">
-                      <p className="mb-1">Our Support team is available from</p>
-                      <p><strong>Monday to Friday</strong> : 10 a.m. – 7 p.m. (GMT +1)<br />
-                        <strong>Saturday</strong> : 9 a.m. – 1 p.m. (GMT +1)<br />
-                        <strong>Sunday</strong> : Closed</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Col> */}
         </Row>
 
       )
     }
  }
 
- export default Businessschedule;
+const mapStateToProps = state => ({
+  work_duration: state.user.work_duration,
+  technique_support: state.user.technique_support
+  
+})
+
+
+ export default connect(mapStateToProps, {getWorkDuration, getTechniqueSupport})(Businessschedule)
 

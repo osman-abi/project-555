@@ -1,53 +1,9 @@
-/***
- *  Products Reducers
- ***/
-// export default (state = { products: [] }, action) => {
-//     // if(action.type === "ACTUAL_PRODUCTS")
-//     // {
-//     //     return { ...state,
-//     //         products: action.products };
-//     // }
-//     // else
-//     // {
-//     //     return state;
-//     // }
-//     switch (action.type) {
-//         case "ACTUAL_PRODUCTS":
-//             return {
-//                 ...state,
-//                 products: action.payload
-//             };
-//         // case "GET_PRODUCTS":
-//         //     return {
-//         //         ...state,
-//         //         products: action.payload
-//         //     };
-//         default:
-//             return state
-//     }
-// };
 
-////////////////////////////////////////////////////////////////////////////
 
 
 const initialState = {
     products: [],
     category: [],
-    user: [{
-        email: "",
-        username: "",
-        password: "",
-        phone_number: "",
-        lastname: "",
-        address: ""
-    },
-    {
-        access_token: "",
-        refresh_token: ""
-
-    }
-        
-    ],
     filter_category: [],
     about_context: [],
     mission_context: [],
@@ -64,12 +20,23 @@ const initialState = {
     facebook: [],
     instagram: [],
     whatsapp:[],
-    logo:[]
+    logo: [],
+    myOrders:[]
 }
     
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case "GET_MY_ORDERS":
+            return {
+                ...state,
+                myOrders: action.payload
+            }
+        case "POST_MY_ORDERS":
+            return {
+                ...state,
+                myOrders:[...state.myOrders,action.payload]
+            }
         case "GET_PRODUCTS":
             return {
                 ...state,
@@ -240,7 +207,7 @@ export default function (state = initialState, action) {
                 ...state,
                 invoice:action.payload
             }
-        case "GET_FACEBOOK_IFNO":
+        case "GET_FACEBOOK_INFO":
             return {
                 ...state,
                 facebook:action.payload

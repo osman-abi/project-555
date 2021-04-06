@@ -70,5 +70,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 class SubscribedUsers(models.Model):
     email = models.EmailField()
     
+    class Meta:
+        verbose_name="Abunə olunmuş istifadəçilər"
+
     def __str__(self):
         return self.email

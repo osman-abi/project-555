@@ -38,7 +38,7 @@ class HomSlider extends Component {
                <div key={index} className="slide-01-item">
                     <div className="slide-inner">
                     <div className="slide-image">
-                                <img style={{width:'100%',height:"200px"}} src={ `http://127.0.0.1:8000${photo.image}`}/>
+                                <img style={{width:'100%',height:"200px"}} src={photo.image}/>
                     </div>
                     
                     </div>

@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import InvoiceSerializer
-from .models import Invoice
+from .serializers import InvoiceSerializer,MyOrderSerializer
+from .models import Invoice,MyOrders
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -42,3 +42,18 @@ def invoice_detail(request, pk):
     elif request.method == "DELETE":
         invoice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@swagger_auto_schema(methods=['post'], request_body=MyOrderSerializer)
+@api_view(['GET', 'POST'])
+def order_list(request):
+    if request.method == 'GET':
+        order = MyOrders.objects.all()
+        serializer = MyOrderSerializer(order, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = MyOrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

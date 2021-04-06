@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import (
     About,
     Mission,
-    OurShop
+    OurShop,
+    YourMessaga
 )
 
 class AboutSerializer(serializers.ModelSerializer):
@@ -21,3 +22,9 @@ class OurShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = OurShop
         fields = ['id', 'ourshop_context']
+
+
+class YourMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = YourMessaga
+        fields = ['id', 'name','email','title','message']

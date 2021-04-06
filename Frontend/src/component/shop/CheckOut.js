@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Col, Container, Input, Row } from 'reactstrap';
 import CommonList from '../../api/common';
 import { connect } from "react-redux";
-import { postInvoice } from "../../actions/index";
+import { postInvoice,postMyOrders } from "../../actions/index";
 import PropTypes from "prop-types";
 
 class CheckOut extends Component {
@@ -26,7 +26,8 @@ class CheckOut extends Component {
     }
 
     static propTypes = {
-        postInvoice:PropTypes.func.isRequired
+        postInvoice: PropTypes.func.isRequired,
+        postMyOrders:PropTypes.func.isRequired
     }
 
     componentDidMount() {
@@ -52,158 +53,7 @@ class CheckOut extends Component {
         return cart
     }
 
-    // ReadShippingCharge()
-    // {
-    //     if(localStorage.getItem("TotalShippingCharge") != null)
-    //     {
-    //         this.state.TotalShippingCarge =  parseFloat(localStorage.getItem("TotalShippingCharge"));
-    //     }
-    //     else  {
-    //         this.state.TotalShippingCarge = 0;
-    //     }
-
-
-    //     if(localStorage.getItem("ShippingType") != null)
-    //     {
-    //         if(localStorage.getItem("ShippingType") == 1)
-    //         {
-    //             this.refs.rd1.setAttribute("checked", "checked");
-    //             this.refs.rd2.removeAttribute("checked");
-
-    //             if (this.refs.rd1 != null)
-    //                 this.refs.rd1.checked = true;
-    //         }
-    //         else if (localStorage.getItem("ShippingType") == 2)
-    //         {
-    //              this.refs.rd2.setAttribute("checked", "checked");
-    //              this.refs.rd1.removeAttribute("checked");
-
-
-    //              this.refs.rd2.checked = true;
-
-    //         }
-    //     }
-    //     this.forceUpdate();
-    // }
-
-    // SetShippingCharge = (CaseNo) => {
-
-    //     if (CaseNo == 1) {
-    //         this.state.TotalShippingCarge = this.state.ShippingFlatRate;
-
-    //         this.refs.rd1.setAttribute("checked", "checked");
-    //         this.refs.rd2.removeAttribute("checked");
-
-    //         if (this.refs.rd1 != null)
-    //             this.refs.rd1.checked = true;
-
-    //             localStorage.setItem("TotalShippingCharge",this.state.TotalShippingCarge);
-    //             localStorage.setItem("ShippingType",1);
-
-    //     } else if (CaseNo == 2) {
-    //         this.state.TotalShippingCarge = this.state.ShippingLocalPickUp;
-
-    //         this.refs.rd2.setAttribute("checked", "checked");
-    //         this.refs.rd1.removeAttribute("checked");
-
-
-    //         this.refs.rd2.checked = true;
-
-    //         localStorage.setItem("TotalShippingCharge",this.state.TotalShippingCarge);
-    //         localStorage.setItem("ShippingType",2);
-
-
-    //     }
-    //     this.forceUpdate();
-    // }
-
-
-
     
-
-
-
-    //   handleValidation()
-    //   {
-    //         const fieldvalue=this.state.fieldvalue;
-    //         let errors = {};
-    //         let formIsValid = true;
-
-    //         //First Name
-    //         if (!fieldvalue["firstname"]) {
-    //             formIsValid = false;
-    //             errors["firstname"] = "Please Enter First Name";
-    //         }
-
-    //         if (typeof fieldvalue["firstname"] !== "undefined") {
-    //             if (!fieldvalue["firstname"].match(/^[a-zA-Z]+$/)) {
-    //               formIsValid = false;
-    //               errors["firstname"] = "Please Enter Only Letter";
-    //             }
-    //         }
-
-
-    //         //Last Name
-    //         if (!fieldvalue["lastname"]) {
-    //             formIsValid = false;
-    //             errors["lastname"] = "Please Enter Last Name";
-    //         }
-
-    //         if (typeof fieldvalue["lastname"] !== "undefined") {
-    //             if (!fieldvalue["lastname"].match(/^[a-zA-Z]+$/)) {
-    //               formIsValid = false;
-    //               errors["lastname"] = "Please Enter Only Letter";
-    //             }
-    //         }
-
-
-    //          //streetno
-    //          if (!fieldvalue["streetno"]) {
-    //             formIsValid = false;
-    //             errors["streetno"] = "Please Enter Street address";
-    //         }
-
-    //          //state
-    //          if (!fieldvalue["state"]) {
-    //             formIsValid = false;
-    //             errors["state"] = "Please Enter Town / City";
-    //         }
-
-    //         if (!fieldvalue["zipcode"]) {
-    //             formIsValid = false;
-    //             errors["zipcode"] = "Please Enter Postcode / ZIP";
-    //         }
-
-    //         if (typeof fieldvalue["zipcode"] !== "undefined") {
-    //             if (fieldvalue["zipcode"].length < 6) {
-    //               formIsValid = false;
-    //               errors["zipcode"] = "Please Enter valid Postcode / ZIP";
-    //             }
-    //         }
-
-    //         if (!fieldvalue["phone"]) {
-    //             formIsValid = false;
-    //             errors["phone"] = "Please Enter Phone";
-    //         }
-
-    //         // if (typeof fieldvalue["phone"] !== "undefined") {
-    //         //     if (!fieldvalue["phone"].match(/^\d{10}$/)) {
-    //         //       formIsValid = false;
-    //         //       errors["phone"] = "Please Enter Valid Phone";
-    //         //     }
-    //         // }
-
-    //       //Email ID
-    //       if (!fieldvalue["email"]) {
-    //         formIsValid = false;
-    //         errors["email"] = "Please Enter Email ID";
-    //       }
-    //       this.setState({ errors: errors });
-    //       localStorage.setItem("firstname",fieldvalue["firstname"]);
-    //       localStorage.setItem("lastname",fieldvalue["lastname"]);
-    //       return formIsValid;
-
-    //   }
 
     handleFirstName = e => {
         this.setState({
@@ -249,12 +99,17 @@ class CheckOut extends Component {
         
         const invoice = { firstname, lastname, shipping_address, phone, email, items, amount }
         this.props.postInvoice(invoice);
+        const myOrders = {
+            user: localStorage.getItem("userID"),
+            amount:amount
+        }
+            this.props.postMyOrders(myOrders)
 
         
             localStorage.setItem("FinalCheckoutCartItems",localStorage.getItem("LocalCartItems"));
             localStorage.removeItem("LocalCartItems");
             this.props.history.push(`/SuccessScreen`)
-        
+            
       }
     
 
@@ -403,4 +258,4 @@ class CheckOut extends Component {
             )
     }
 }
-export default connect(null, { postInvoice })(CheckOut);
+export default connect(null, { postInvoice,postMyOrders })(CheckOut);

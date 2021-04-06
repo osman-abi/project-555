@@ -5,7 +5,8 @@ from .views import (
     mission_list,
     mission_detail,
     our_shop_list,
-    ourshop_detail
+    ourshop_detail,
+    message_list
 )
 
 urlpatterns = [
@@ -16,5 +17,7 @@ urlpatterns = [
     path('missions/<int:pk>/', mission_detail),
 
     path('shops/', our_shop_list),
-    path('shops/<int:pk>/', ourshop_detail)
+    path('shops/<int:pk>/', ourshop_detail),
+
+    path('message/',message_list)
 ]

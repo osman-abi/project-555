@@ -5,12 +5,14 @@ from rest_framework.response import Response
 from .serializers import (
     AboutSerializer,
     MissionSerializer,
-    OurShopSerializer
+    OurShopSerializer,
+    YourMessageSerializer
 )
 from .models import (
     About,
     Mission,
-    OurShop
+    OurShop,
+    YourMessage
 )
 
 
@@ -132,3 +134,18 @@ def ourshop_detail(request, pk):
     elif request.method == "DELETE":
         ourshop.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@swagger_auto_schema(methods=['post'], request_body=YourMessageSerializer)
+@api_view(['GET', 'POST'])
+def message_list(request):
+    if request.method == 'GET':
+        message = YourMessage.objects.all()
+        serializer = YourMessageSerializer(message, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = YourMessageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
