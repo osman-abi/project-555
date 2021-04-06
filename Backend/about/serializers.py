@@ -3,7 +3,7 @@ from .models import (
     About,
     Mission,
     OurShop,
-    YourMessaga
+    YourMessage
 )
 
 class AboutSerializer(serializers.ModelSerializer):
@@ -26,5 +26,5 @@ class OurShopSerializer(serializers.ModelSerializer):
 
 class YourMessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = YourMessaga
+        model = YourMessage
         fields = ['id', 'name','email','title','message']
