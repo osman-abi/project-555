@@ -12,7 +12,7 @@ class FilterCategory(models.Model):
                                null=True, on_delete=models.CASCADE, verbose_name="Üst Kateqoriya")
 
     class Meta:
-        verbose_name = "Filter Kateqoriyalar"
+        verbose_name_plural = "Filter Kateqoriyalar"
 
     def __str__(self):
         full_path = [self.name]

@@ -28,7 +28,7 @@ class Invoice(models.Model):
     transaction_id = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        verbose_name = "Qəbzlər"
+        verbose_name_plural = "Qəbzlər"
     
     
     def __str__(self):

@@ -71,7 +71,7 @@ class SubscribedUsers(models.Model):
     email = models.EmailField()
     
     class Meta:
-        verbose_name="Abunə olunmuş istifadəçilər"
+        verbose_name_plural="Abunə olunmuş istifadəçilər"
 
     def __str__(self):
         return self.email

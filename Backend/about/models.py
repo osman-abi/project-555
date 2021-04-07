@@ -8,7 +8,7 @@ class About(models.Model):
     about_context = models.TextField(verbose_name='daha etrafli')
     
     class Meta:
-        verbose_name='Haqqımızda daha ətraflı'
+        verbose_name_plural = 'Haqqımızda daha ətraflı'
     
     def __str__(self):
         return self.about_context
@@ -17,7 +17,7 @@ class Mission(models.Model):
     mission_context = models.TextField(verbose_name='missiyamiz')
 
     class Meta:
-        verbose_name = "Missiyamız"
+        verbose_name_plural = "Missiyamız"
 
     def __str__(self):
         return self.mission_context
@@ -26,7 +26,7 @@ class OurShop(models.Model):
     ourshop_context = models.TextField(verbose_name='magazamiz')
 
     class Meta:
-        verbose_name="Mağazamız"
+        verbose_name_plural = "Mağazamız"
 
     def __str__(self):
         return self.ourshop_context
@@ -38,7 +38,7 @@ class YourMessage(models.Model):
     message = models.TextField()
 
     class Meta:
-        verbose_name="Bİzə yazılan mesajlar"
+        verbose_name_plural = "Bİzə yazılan mesajlar"
 
     def __str__(self):
         return f"{self.name} -> {self.message}"

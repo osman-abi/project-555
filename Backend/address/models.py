@@ -20,7 +20,7 @@ class ShopAddress(models.Model):
     phone_number_6 = models.CharField(max_length=200 ,blank=True)
 
     class Meta:
-        verbose_name="Bizimlə əlaqə"
+        verbose_name_plural="Bizimlə əlaqə"
 
     def __str__(self):
         return f"unvan = {self.address}"
@@ -34,17 +34,17 @@ class WorkingDuration(models.Model):
     saturday_to = models.CharField(max_length=100, blank=True)
 
     class Meta:
-        verbose_name = "İş intervalı"
+        verbose_name_plural = "İş intervalı"
 
 class TechniqueSupport(models.Model):
     support_text = models.TextField(blank=True)
 
     class Meta:
-        verbose_name = "Texniki dəstək"
+        verbose_name_plural = "Texniki dəstək"
     def __str__(self):
         return self.support_text
 
-        
+
 """ FOOTER """
 class CopyRigth(models.Model):
     year = models.CharField(max_length=10,blank=True)

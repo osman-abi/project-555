@@ -20,7 +20,7 @@ class Product(models.Model):
         auto_now=True, verbose_name='Əlavə edilmə tarixi')
 
     class Meta:
-        verbose_name = "Məhsullar"
+        verbose_name_plural = "Məhsullar"
 
     def __str__(self):
         return f"mehsul = {self.name}"
@@ -33,4 +33,4 @@ class Comment(models.Model):
     commentt = models.TextField()
 
     class Meta:
-        verbose_name = "Məhsul haqqında rəylər"
+        verbose_name_plural = "Məhsul haqqında rəylər"
