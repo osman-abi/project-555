@@ -30,7 +30,7 @@ class TopSellingProduct extends Component {
    componentDidMount() {
       this.props.getProducts();
       this.props.getProductImages();
-      console.log(this.props.products)
+      // console.log(this.props.products)
    }
    
    
@@ -121,7 +121,7 @@ rating(productrat)
 }
    render() {
       const { products, images } = this.props
-      console.log(products.code)
+      // console.log(products.code)
       return (
 
          <Row className="products products-loop grid ciyashop-products-shortcode">

@@ -124,7 +124,7 @@ const date = new Date();
                     <div className="pt-4 px-4 pt-md-5 px-md-5 pb-3">
                     <Row>
                       <Col lg={6}>
-                       <h6>Ship To</h6>
+                       <h6>Çatdırılacaq Ünvan</h6>
                         <ul className="list-unstyled mb-0">
                            <li>{firstname}  { lastname }</li>
                           <li>{address}</li>
@@ -132,10 +132,10 @@ const date = new Date();
                         </ul>
                       </Col>
                       <Col lg={6} className="text-lg-right mt-4 mt-lg-0">
-                        <h6>Xülasə</h6>
+                        <h6>Məzmun</h6>
                         <ul className="list-unstyled mb-0">
                           <li><span>Tarix:</span> <strong> { date.toLocaleString('en-us', { month: 'long' }) } {new Date(). getDay()}, {new Date().getFullYear()}</strong></li>
-                          <li><span>Sifarişin məbləği:</span> <strong>${parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} </strong></li>
+                          <li><span>Sifarişin məbləği:</span> <strong>{parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} AZN </strong></li>
                         </ul>
                       </Col>
                     </Row>
@@ -146,7 +146,7 @@ const date = new Date();
                     }
                     {(this.state.CartItems != null && this.state.CartItems.length > 0) ?
                     <div className="ordered-detail">
-                      <h5 className="mb-4">Your Ordered Details</h5>
+                      <h5 className="mb-4">Sifarişiniz haqqında məlumat</h5>
                       <div className="table-responsive">
                       {(this.state.CartItems != null && this.state.CartItems.length > 0) ?
                       <table class="table mb-0">
@@ -182,12 +182,12 @@ const date = new Date();
                         <tbody>
                           <tr>
                             <td>Məbləğ</td>
-                            <td className="text-right">${parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0))).toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</td>
+                            <td className="text-right">{parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0))).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} AZN </td>
                           </tr>
                           
                           <tr className="border-top">
                           <td><strong className="h5">Cəmi</strong></td>
-                            <td className="text-right h5"><strong>${parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })}</strong></td>
+                            <td className="text-right h5"><strong>{parseFloat(parseFloat(this.state.CartItems.reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)) + parseFloat((this.state.TotalShippingCarge != undefined) ? this.state.TotalShippingCarge.toFixed(2) : 0)).toLocaleString(navigator.language, { minimumFractionDigits: 2 })} AZN </strong></td>
                           </tr>
                         </tbody>
                       </table>

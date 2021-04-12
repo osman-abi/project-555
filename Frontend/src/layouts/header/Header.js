@@ -321,7 +321,7 @@ class Header extends React.Component {
         var searchName;
         let { firstname, lastname, email, phone, address, password } = this.state
         const isLoggedIn = localStorage.getItem('isLOggedIn')
-        console.log(typeof isLoggedIn)
+        // console.log(typeof isLoggedIn)
         const { images, logos, shop_address,instagram,whatsapp,facebook } = this.props
         
         if(pageName== '/topbar-with-load-more')

@@ -47,7 +47,7 @@ class AdminDashboard extends Component {
 
  render() {
    const { location } = this.props;
-   console.log(location)
+  //  console.log(location)
    const { match } = this.props;
    return (
         <Fragment>

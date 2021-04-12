@@ -223,9 +223,9 @@ export const uniqueMinMaxPrice = (products) => {
         prices.push(product.price)
         minimum = Math.min.apply(Math, prices)
         maximum = Math.max.apply(Math, prices)
-        console.log('minimum=>',minimum, 'maximum=>',maximum)
+        // console.log('minimum=>',minimum, 'maximum=>',maximum)
     })
-    console.log('minimum after loop =>',minimum,'maximum after loop =>', maximum)
+    // console.log('minimum after loop =>',minimum,'maximum after loop =>', maximum)
     return {'min':minimum, 'max':maximum};
     // console.log('min value => ',minimum,'max value =>',maximum)
 }
