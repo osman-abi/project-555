@@ -58,13 +58,20 @@ export const getFilterProductsdata = (user, filters) => {
             for (const key in product.filter_category) {
                 if (Object.hasOwnProperty.call(product.filter_category, key)) {
                     const element = product.filter_category[key];
-                    for (const cat of filters.category) {
+                    filters.category.map((cat) => {
                         if (element == cat) {
-                            categoryMatchValue = true
+                            categoryMatchValue=true
                         } else {
-                            categoryMatchValue = false;
+                            categoryMatchValue = false
                         }
-                    }
+                    })
+                    // for (const cat of filters.category) {
+                    //     if (element == cat) {
+                    //         categoryMatchValue = true
+                    //     } else {
+                    //         categoryMatchValue = false;
+                    //     }
+                    // }
                     
                 }
             }
