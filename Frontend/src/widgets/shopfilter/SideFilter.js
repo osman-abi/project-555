@@ -236,7 +236,7 @@ class SideFilter extends Component {
                             <div className="d-flex align-items-center justify-content-between">
                                 <div className='d-flex align-items-center justify-content-between'>
                                     <h4 className="widget-title">{filtered_category.name}</h4>
-                                    <p><a className="price-clear-filter" style={{marginLeft:"180px"}} onClick={() => this.clearcategory()} >Təmizlə</a></p>
+                                    <p><a className="price-clear-filter" style={{marginLeft:"auto"}} onClick={() => this.clearcategory()} >Təmizlə</a></p>
                                 </div>
                             </div>
                             <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
