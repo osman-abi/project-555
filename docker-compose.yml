@@ -6,7 +6,7 @@ services:
     build:
       context: ./Backend
       dockerfile: Dockerfile
-    command: /venv/bin/gunicorn weeshoop.wsgi --bind 0.0.0.0:8000
+    command: /venv/bin/gunicorn weeshoop.wsgi --bind 0.0.0.0:8000 --timeout 300
     volumes:
       - static_files:/backend/static_files #after static folder create - fill static_files volume
       - media:/backend/media #after static folder create - fill static_files volume
