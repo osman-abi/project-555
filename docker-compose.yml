@@ -6,7 +6,7 @@ services:
     build:
       context: ./Backend
       dockerfile: Dockerfile
-    command: /venv/bin/gunicorn weeshoop.wsgi --bind 0.0.0.0:8000
+    command: /venv/bin/gunicorn weeshoop.wsgi --bind 0.0.0.0:8000 --timeout 300
     volumes:
       - static_files:/backend/static_files #after static folder create - fill static_files volume
       - media:/backend/media #after static folder create - fill static_files volume
@@ -19,6 +19,14 @@ services:
 #       dockerfile: Dockerfile
 #     volumes:
 #       - build_folder:/frontend #"build" folder fills builder_folder
+  postgres:
+    container_name: postgres-db
+    image: postgres:9.6
+    ports:
+      - 5432:5432 # Bind host port 5432 to PostgreSQL port 5432
+    volumes:
+      - ./postgredb:/var/lib/postgresql/data
+    env_file: ./Backend/.env
   nginx:
     image: nginx:latest
     build:
