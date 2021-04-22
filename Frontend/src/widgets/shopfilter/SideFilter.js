@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { categoryValue, colorValue, priceValue, searchValue, sizeValue } from '../../actions/filter';
 import { uniqueCategory, uniqueColors, uniqueMinMaxPrice, uniqueSizes } from '../../services';
-import { getProducts, getFilterCategory } from '../../actions/index'
+import { getProducts, getChildCategory, getParentCategory } from '../../actions/index'
 import PropTypes from "prop-types";
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -25,6 +25,7 @@ class SideFilter extends Component {
     }
 
     static propTypes = {
+        parent_categories: PropTypes.array.isRequired,
         products: PropTypes.array.isRequired,
         getProducts: PropTypes.func.isRequired,
     }
@@ -35,7 +36,9 @@ class SideFilter extends Component {
         })
         this.props.searchValue('');
         this.props.getProducts();
-        this.props.getFilterCategory();
+        this.props.getChildCategory();
+        this.props.getParentCategory();
+        
         // console.log('==>',this.props.prices)
     }
     showfilter() {
@@ -199,7 +202,7 @@ class SideFilter extends Component {
         this.props.sizeValue(sizes);
     }
     render() {
-        var { products,filter_categories } = this.props
+        var { products,child_categories,parent_categories } = this.props
         var price = []
         for (const i of products) {
             price.push(i)
@@ -228,15 +231,22 @@ class SideFilter extends Component {
                         placeholder="axtar..." />
                 </div>
                 
-            
+                {/* {child_categories.map((child, i) => {
+                    parent_categories.map((Parent, i) => {
+                        return child.parent === Parent.id ? <p key={i}> {Parent.name} </p>:null
+                    })
+                })} */}
 
-                {filter_categories.map((filtered_category, index) => {
-                    return filtered_category.parent == null ?
-                    <div key={index} className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
-                            <div className="d-flex align-items-center justify-content-between">
+                {parent_categories.map((parentCategory, i) => {
+                    
+                        
+                    
+                   return(
+                    <div key={i} className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
+                            <div className="d-flex align-items-center justify-content-between" >
                                 <div className='d-flex align-items-center justify-content-between'>
-                                    <h4 className="widget-title">{filtered_category.name}</h4>
-                                    <p><a className="price-clear-filter" style={{marginLeft:"auto"}} onClick={() => this.clearcategory()} >Təmizlə</a></p>
+                                    <h4 className="widget-title" key={i}>{parentCategory.name}</h4>
+                                    <p><a className="price-clear-filter" onClick={() => this.clearcategory()} >Təmizlə</a></p>
                                 </div>
                             </div>
                             <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
@@ -245,24 +255,25 @@ class SideFilter extends Component {
                                         return (
                                             <div className="form-check pgs-filter-checkbox" key={index}>
                                                 <input type="checkbox" onClick={(e) => this.onClickCategoryFilter(e, categoryFilterValues)} value={category} defaultChecked={categoryFilterValues.includes(category) ? true : false} className="form-check-input" id={category} />
-                                                {filter_categories.map((filtered, index) => {
-                                            {
-                                               return filtered.id == category && filtered.parent == filtered_category.id ?
+                                                
+                                                {child_categories.map((childCategory, index) => {
+                                                    return childCategory.id === category && childCategory.parent === parentCategory.id ?
                                                     
-                                                <label className="form-check-label"
-                                                    key={index} htmlFor={category}>{filtered.name}</label>
-                                                    :
-                                                   null
-                                            }
+                                                        <label className="form-check-label"
+                                                            key={index} htmlFor={category}>{childCategory.name}</label>
+                                                        :
+                                                        null
                                             
-                                        })}
+                                                })}
+                                        
                                             </div>
                                         )
                                     })}
                                 </Scrollbars>
                             </div>
-                        </div>
-                        :null
+                            </div>
+                   )
+                        
             })}
 
 
@@ -281,13 +292,14 @@ class SideFilter extends Component {
 
 const mapDispatchToProps = state => ({
     categorys: uniqueCategory(state.user.products),
-    filter_categories: state.user.filter_category,
+    child_categories: state.user.child_category,
+    parent_categories: state.user.parent_category,
     prices: uniqueMinMaxPrice(state.user.products),
     products:state.user.products,
     filters: state.filters
 })
 export default connect(
     mapDispatchToProps,
-    { categoryValue, sizeValue, colorValue, priceValue, searchValue, getProducts, getFilterCategory }
+    { categoryValue, sizeValue, colorValue, priceValue, searchValue, getProducts, getChildCategory, getParentCategory }
 )(SideFilter);
 

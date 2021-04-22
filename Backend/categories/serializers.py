@@ -1,12 +1,18 @@
 from rest_framework import serializers
-from .models import FilterCategory
+from .models import ParentCategory, ChildCategory
+
 
 """ I """
 
 
-
-
-class FilterCategorySerializer(serializers.ModelSerializer):
+class ParentCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = FilterCategory
-        fields = ['id', 'name', 'parent']
+        model = ParentCategory
+        fields = ['id', 'name']
+
+
+class ChildCategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ChildCategory
+        fields = ['id', 'parent', 'name']

@@ -115,7 +115,7 @@ class CheckOut extends Component {
 
 
     render() {
-        const isLoggedIn = localStorage.getItem('isLOggedIn')
+        
         const {firstname,lastname,shipping_address,phone,email} = this.state
         return (
 
@@ -241,11 +241,9 @@ class CheckOut extends Component {
 
 
                                         
-                                        {isLoggedIn == '1' ? <button type="submit" class="button" name="checkout_place_order" id="place_order" value="Place order" data-value="Place order">
+                                        <button type="submit" class="button" name="checkout_place_order" id="place_order" value="Place order" data-value="Place order">
                                          Sifarişi təsdiqlə
-                                        </button>: <button type="button" class="button" name="checkout_place_order" id="place_order" value="Place order" data-value="Place order" disabled>
-                                         Qeydiyyatdan keç
-                                        </button>}
+                                        </button>
                                         
                                     </div>
                                 </div>

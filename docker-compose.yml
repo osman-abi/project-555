@@ -19,6 +19,14 @@ services:
 #       dockerfile: Dockerfile
 #     volumes:
 #       - build_folder:/frontend #"build" folder fills builder_folder
+  postgres:
+    container_name: postgres-db
+    image: postgres:9.6
+    ports:
+      - 5432:5432 # Bind host port 5432 to PostgreSQL port 5432
+    volumes:
+      - ./postgredb:/var/lib/postgresql/data
+    env_file: ./Backend/.env
   nginx:
     image: nginx:latest
     build:

@@ -31,15 +31,7 @@ class Header extends React.Component {
             classset: '',
             getproduct: AllProduct,
             /////////////////////////////
-            firstname: "",
-            lastname: "",
-            email: "",
-            password: "",
-            phone: "",
-            address: "",
-            /////////////////////////////
-            admin_email: "admin@admin.com",
-            admin_password: "admin"
+            
         }
         var removeFromCart, removeFromWishList;
         this.toggle = this.toggle.bind(this);
@@ -246,72 +238,6 @@ class Header extends React.Component {
         })
     };
 
-    submitForm = e => {
-        alert('Qeydiyyatınız uğurla həyata keçirildi')
-        const { firstname, lastname, email, password, phone, address } = this.state;
-        const data = {
-            email: email,
-            username: firstname,
-            password: password,
-            phone_number: phone,
-            lastname: lastname,
-            address:address
-        }
-       let REGISTRATION_URL = 'https://1klikle.az/api/registration/register/'
-    fetch(REGISTRATION_URL, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => response.json()).then(data => {
-        // console.log(data.data)
-
-        localStorage.setItem('username', data.data.username)
-        localStorage.setItem('email', data.data.email)
-        localStorage.setItem('phone_number', data.data.phone_number)
-        localStorage.setItem("lastname", data.data.lastname)
-        localStorage.setItem("address", data.data.address)
-        localStorage.setItem("userID",data.data.id)
-        localStorage.setItem("isLOggedIn", 1)
-        
-    })
-
-        
-    }
-
-    logOut = e => {
-    
-        localStorage.setItem("username", "")
-        
-        localStorage.setItem("email", "")
-        localStorage.setItem("password", "")
-        localStorage.setItem('phone_number', "")
-        localStorage.setItem("lastname", "")
-        localStorage.setItem("address", "")
-        localStorage.setItem("isLOggedIn", 0)
-    }
-
-    onLogIn = e => {
-        localStorage.setItem("isLOggedIn", 1)
-        const { email, password } = this.state
-        const data = { email, password }
-        fetch('https://1klikle.az/api/registration/login/', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json()).then(data => {
-            localStorage.setItem("userID",data.data.id)
-            localStorage.setItem('username', data.data.username)
-            localStorage.setItem('email', data.data.email)
-            localStorage.setItem('phone_number', data.data.phone_number)
-            localStorage.setItem("lastname", data.data.lastname)
-            localStorage.setItem("address", data.data.address)
-            localStorage.setItem("isLOggedIn", 1)
-        })
-    }
     
     
     render() {
@@ -319,9 +245,7 @@ class Header extends React.Component {
         let pathArray = pathnames.split('/');
         let pageName = '/'+pathArray[pathArray.length -1];
         var searchName;
-        let { firstname, lastname, email, phone, address, password } = this.state
-        const isLoggedIn = localStorage.getItem('isLOggedIn')
-        // console.log(typeof isLoggedIn)
+        
         const { images, logos, shop_address,instagram,whatsapp,facebook } = this.props
         
         if(pageName== '/topbar-with-load-more')
@@ -383,23 +307,7 @@ class Header extends React.Component {
                                                 <ul>
                                                     <li className="topbar_item topbar_item_type-topbar_menu">
                                                         <div className="menu-top-bar-menu-container">
-                                                            <ul className="top-menu list-inline">
-                                                            <li className="menu-item">
-                                                                
-                                                                {/* After login open this */}
-                                                                {
-                                                                    isLoggedIn == '1' ? <Link to="/Account/AccountProfile">Mənim hesabım</Link> : null
-                                                                }
-                                                                    
-                                                                </li>
-                                                            <li>
-                                                                {
-                                                                    isLoggedIn == '1' ? <Link to="#" onClick={this.logOut} data-toggle="modal" data-target="#"><i className="fa fa-sign-in">&nbsp;</i> Çıxış </Link> 
-                                                                        : <Link to="#" onClick={this.toggle} data-toggle="modal" data-target="#"><i className="fa fa-sign-in">&nbsp;</i> Giriş </Link>
-                                                                    
-                                                                }
-                                                                </li>
-                                                            </ul>
+                                                            
                                                         </div>
                                                     </li>
                                                     <li className="topbar_item topbar_item_type-social_profiles">
@@ -638,91 +546,6 @@ class Header extends React.Component {
 
                                 </Row>
                                 <Row>
-                                    <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-login modal-dialog-centered">
-                                        <ModalHeader toggle={this.toggle}>
-                                            <h4 className="mb-0">Daxil ol</h4>
-                                        </ModalHeader>Modal
-                                        <ModalBody>
-                                            <Nav tabs>
-                                                <NavItem>
-                                                    <NavLink
-                                                        className={classnames({ active: this.state.activeTab === '1' })}
-                                                        onClick={() => { this.logintoggle('1'); }}
-                                                    >
-                                                        Daxil ol
-                                                    </NavLink>
-                                                </NavItem>
-                                                <NavItem>
-                                                    <NavLink
-                                                        className={classnames({ active: this.state.activeTab === '2' })}
-                                                        onClick={() => { this.logintoggle('2'); }}
-                                                    >
-                                                        Qeydiyyat
-                                                    </NavLink>
-                                                </NavItem>
-                                            </Nav>
-                                            <TabContent activeTab={this.state.activeTab}>
-                                                <TabPane tabId="1">
-                                                <form onSubmit={ this.onLogIn}>
-                                                        <div class="form-group">
-                                                            <label>Email ünvanı</label>
-                                                            <input type="text" class="form-control" onChange={this.handleEmail} value={email} placeholder="Email ünvanını daxil edin"></input>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label> Şifrə </label>
-                                                            <input type="text" class="form-control" onChange={this.handlePassword} value={password} placeholder="Şifrənizi daxil edin"></input>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <button onClick={this.toggle} type='submit'className='btn btn-primary mt-1'> Giriş </button>
-                                                            <Link className="btn btn-secondary ml-2 mt-1" onClick={this.toggle} >İmtina et</Link>
-                                                        </div>
-                                                        <p className="mb-0">Hesabınız yoxdur? <Link to="#" className={classnames({ active: this.state.activeTab === '2' })}
-                                                            onClick={() => { this.logintoggle('2'); }} > Qeydiyyat </Link></p>
-                                                    </form>
-                                                </TabPane>
-                                                <TabPane tabId="2">
-                                                    <form onSubmit={this.submitForm}>
-                                                        <div class="form-group">
-                                                            <label>Ad</label>
-                                                            <input type="text" class="form-control" onChange={this.handleFirstname} value={firstname} placeholder="Ad daxil edin"></input>
-                                                    </div>
-                                                    <div class="form-group">
-                                                            <label>Soyad</label>
-                                                            <input type="text" class="form-control" onChange={this.handleLastname} value={lastname} placeholder="Soyad daxil edin"></input>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Email ünvanı</label>
-                                                            <input type="text" class="form-control" onChange={this.handleEmail} value={email} placeholder="Emailinizi daxil edin"></input>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Şifrə </label>
-                                                            <input type="password" class="form-control" onChange={this.handlePassword} value={password} placeholder="Şifrənizi daxil edin"></input>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Şifrə (Təkrar) </label>
-                                                            <input type="password" class="form-control"  placeholder="Şifrənizi yeniden daxil edin"></input>
-                                                    </div>
-                                                    <div class="form-group">
-                                                            <label>Tel:</label>
-                                                            <input type="texttext" class="form-control" onChange={this.handlePhone} value={phone} placeholder="Nömrınizi daxil edin"></input>
-                                                    </div>
-                                                    <div class="form-group">
-                                                            <label>Ünvan:</label>
-                                                            <input type="texttext" class="form-control" onChange={this.handleAddress} value={address} placeholder="Ünvanı daxil edin"></input>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button onClick={this.toggle} className='btn btn-primary' type='submit'> Qeydiyyatdan keç </button>
-                                                            <Link className="btn btn-secondary ml-2" onClick={this.toggle} >İmtina</Link>
-
-                                                        </div>
-                                                        <p className="mb-0">Hesabınız var?<Link to="#" className={classnames({ active: this.state.activeTab === '1' })}
-                                                            onClick={() => { this.logintoggle('1'); }} > Daxil ol </Link></p>
-                                                    </form>
-                                                </TabPane>
-                                            </TabContent>
-                                        </ModalBody>
-                                    </Modal>
                                     <div className="col-12">
                                         <div className="mobile-menu" id="mobileMenu" />
                                      </div>

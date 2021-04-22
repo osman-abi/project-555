@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import  filter_category_list, filter_category_detail
+from .views import parent_category_list, child_category_list
 
 urlpatterns = [
-    
-    path('filter/', filter_category_list),
-    path('filter/<int:pk>/', filter_category_detail)
+
+    path('parent/', parent_category_list),
+    path('child/', child_category_list)
 ]
