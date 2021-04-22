@@ -3,7 +3,7 @@ import { Input, FormGroup,  } from 'reactstrap';
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addCategory } from "../../actions/index";
+import { addParentCategory } from "../../actions/index";
 import CategoryTable from "./CategoryTable";
 export class Category extends Component {
 
@@ -14,7 +14,7 @@ export class Category extends Component {
     }
 
     static propTypes = {
-        addCategory: PropTypes.func.isRequired,
+        addParentCategory: PropTypes.func.isRequired,
     }
 
     onChangeName = (e) => {
@@ -33,7 +33,7 @@ export class Category extends Component {
         e.preventDefault();
         const { name, parent } = this.state
         const category = { name, parent }
-        this.props.addCategory(category)
+        this.props.addParentCategory(category)
         alert("OK")
     }
 
@@ -64,6 +64,6 @@ export class Category extends Component {
 
 
 
-export default connect(null, {addCategory})(Category)
+export default connect(null, {addParentCategory})(Category)
 // export default Category
 // export default connect(null, { addProduct })(Productadd)

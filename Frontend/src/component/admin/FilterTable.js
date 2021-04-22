@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getFilterCategory } from "../../actions/index";
+import { getChildCategory } from "../../actions/index";
 
 
 export class FilterTable extends Component {
 
     static propTypes = {
         filter_category: PropTypes.array.isRequired,
-        getFilterCategory: PropTypes.func.isRequired,
+        getChildCategory: PropTypes.func.isRequired,
     }
     componentDidMount() {
-        this.props.getFilterCategory();
+        this.props.getChildCategory();
         // console.log('=============', this.props.filter_category)
     }
 
@@ -62,5 +62,5 @@ const mapStateToProps = (state) => ({
   filter_category: state.user.filter_category,
 });
 
-export default connect(mapStateToProps, {getFilterCategory})(FilterTable)
+export default connect(mapStateToProps, {getChildCategory})(FilterTable)
 

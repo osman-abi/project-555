@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import { toast } from 'react-toastify';
 import { Row } from 'reactstrap';
-import { getProductImages,getFilterCategory } from "../../actions/index";
+import { getProductImages,getChildCategory,getParentCategory } from "../../actions/index";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
@@ -43,8 +43,7 @@ const productslider = {
       }
 
       static propTypes = {
-          filter_category: PropTypes.array.isRequired,
-          getFilterCategory:PropTypes.func.isRequired,
+          getChildCategory:PropTypes.func.isRequired,
           images: PropTypes.array.isRequired,
           getProductImages:PropTypes.func.isRequired
       }
@@ -62,7 +61,8 @@ const productslider = {
                   }
               }
           }
-          this.props.getFilterCategory()
+          this.props.getChildCategory()
+          this.props.getParentCategory()
       }
 
     changePreviewImage(image) {
@@ -160,12 +160,12 @@ const productslider = {
     render() {
         const { photoIndex, isOpen  } = this.state;
         const qty=this.state.qty;
-        const {product, images, filter_categories} = this.props;
+        const {product, images, child_categories,parent_categories} = this.props;
         const sekiller=[];
         {product.images.map((pic)=>
             images.map((photo) => {
                 if (pic == photo.id) {
-                    sekiller.push(photo.image)
+                    sekiller.push(`http://127.0.0.1:8000${photo.image}`)
                     
                 }
             })
@@ -199,7 +199,7 @@ const productslider = {
                             <div className="ciyashop-product-gallery ciyashop-product-gallery--with-images slick-carousel">
                             <Slider {...settings} className="ciyashop-product-gallery__wrapper popup-gallery">
                                 <div className="ciyashop-product-gallery__image">
-                                        <img src={this.state.newImage}  className="img-fluid" />
+                                        <img src={`http://127.0.0.1:8000${this.state.newImage}`}  className="img-fluid" />
                                 </div>
                             </Slider>
                             <div className="ciyashop-product-gallery_buttons_wrapper">
@@ -218,7 +218,7 @@ const productslider = {
                                                             return photo==cover.id ? 
                                                             <div key={index} className="ciyashop-product-thumbnail__image">
                                                                 <Link onMouseOver={() => this.changePreviewImage(cover.image)} >
-                                                                    <img src={cover.image} className="img-fluid" />
+                                                                    <img src={`http://127.0.0.1:8000${cover.image}`} className="img-fluid" />
                                                                 </Link>
                                                                 </div>
                                                                 : null
@@ -292,35 +292,77 @@ const productslider = {
                         <span className="sku">
                             {product.id} </span>
                                         </span>
-                                        {filter_categories.map((filtered, i) => {
-                                            return filtered.parent == null ? <span className="size">
+                                        {/* {filter_categories.map((parentCategory, i) => {
+                                            return parentCategory.parent == null ? <span key={i} className="size">
                                             
-                        <label key={i}>{filtered.name}:</label>
-                            {product.filter_category.map((category,index)=>
+                                            {parentCategory.parent == null ? <label >{parentCategory.name}: </label> : null }    
+                            {product.filter_category.map((productCategory,index)=>
 
                             
                                 <span key={index} itemProp="size">
-                                    {filter_categories.map((filtercat, i) => {
-                                       return filtercat.id == category && filtercat.parent == filtered.id ?<Link to="#" rel="tag">{filtercat.name}</Link>:null
+                                    {filter_categories.map((childCategory, i) => {
+                                       return childCategory.id == productCategory && childCategory.parent == parentCategory.id?<Link key={i} to="#" rel="tag" style={{marginRight:"10px"}}>{childCategory.name}</Link>:null
                                     })}
                                     
                                
                                  </span>
                             )}
                          </span>: null
-                                        })}
+                                        })} */}
+
                                         
-                      {/*  <span className="posted_in"><label>Kategpriya:</label>
-                            {product.category}
-                        </span>
-                        <span className="brands">
-                        <label>Marka:</label> */}
-                            {/* {product.tags.map((brand,index)=>
-                                <span itemProp="brand">
-                                    <Link to="#" rel="tag">{brand}{index === product.tags.length-1 ?'':','}</Link>
-                                </span>
-                            )} */}
-                        {/* </span> */}
+
+                                        {product.filter_category.map((productCategory, i) => {
+                                            return (
+                                                <div key={i}>
+                                                    {child_categories.map((childCategory, j) => {
+                                                        return (
+                                                            <div key={j}>
+                                                                {productCategory == childCategory.id ? 
+                                                                    <div>
+                                                                        {parent_categories.map((parentCategory, z) => {
+                                                                            return (
+                                                                                <span className='size' key={z} style={{display:'flex'}}>
+                                                                                    {childCategory.parent == parentCategory.id ? <label> {parentCategory.name} </label> : null}
+                                                                                    <span itemProp='size' >
+                                                                                        <Link to="#" rel="tag" style={{ marginLeft: "10px"}}>{childCategory.name}</Link>
+                                                                                    </span>
+                                                                                </span>
+                                                                            )
+                                                                        })}
+                                                                </div>
+                                                                : null}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            )
+                                        })}
+
+{/* 
+                                        {parent_categories.map((parentt, i) => {
+                                            return (
+                                                <p key={i}> {parentt.name} </p>
+                                            )
+                                        })}
+                                    ---------------------------------------------------
+                                        {child_categories.map((childd, i) => {
+                                            return (
+                                                <p key={i}> {childd.name} </p>
+                                            )
+                                        })}
+
+                                        --------------------------------------------
+
+                                        {child_categories.map((chilCat, i) => {
+                                            return (
+                                                <div key={i}>
+                                                    {parent_categories.map((parCat, index) => {
+                                                        return chilCat.parent == parCat.id ? <h1 key={index}> {parCat.name} == {chilCat.name }</h1> :null
+                                                    })}
+                                                </div>
+                                            )
+                                        })} */}
                     </div>
                     <div className="social-profiles">
                         <span className="share-label">Paylaş :</span>
@@ -427,7 +469,8 @@ const productslider = {
 
 const mapStateToProps = state => ({
     images: state.user.images,
-    filter_categories:state.user.filter_category    
+    child_categories: state.user.child_category,
+    parent_categories: state.user.parent_category
 })
-export default connect(mapStateToProps, {getProductImages,getFilterCategory})(PostDetail)
+export default connect(mapStateToProps, {getProductImages,getChildCategory, getParentCategory})(PostDetail)
 

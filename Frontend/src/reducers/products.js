@@ -1,10 +1,39 @@
+/***
+ *  Products Reducers
+ ***/
+// export default (state = { products: [] }, action) => {
+//     // if(action.type === "ACTUAL_PRODUCTS")
+//     // {
+//     //     return { ...state,
+//     //         products: action.products };
+//     // }
+//     // else
+//     // {
+//     //     return state;
+//     // }
+//     switch (action.type) {
+//         case "ACTUAL_PRODUCTS":
+//             return {
+//                 ...state,
+//                 products: action.payload
+//             };
+//         // case "GET_PRODUCTS":
+//         //     return {
+//         //         ...state,
+//         //         products: action.payload
+//         //     };
+//         default:
+//             return state
+//     }
+// };
 
+////////////////////////////////////////////////////////////////////////////
 
 
 const initialState = {
     products: [],
-    category: [],
-    filter_category: [],
+    parent_category: [],
+    child_category: [],
     about_context: [],
     mission_context: [],
     ourshop: [],
@@ -63,35 +92,35 @@ export default function (state = initialState, action) {
                 logo:[...state.logo, action.payloaf]
             }
         
-        case "GET_CATEGORY":
+        case "GET_PARENT_CATEGORY":
             return {
                 ...state,
-                category:action.payload
+                parent_category:action.payload
             };
-        case "ADD_CATEGORY":
+        case "ADD_PARENT_CATEGORY":
             return {
                 ...state,
-                category: [...state.category, action.payload]
+                parent_category: [...state.parent_category, action.payload]
             };
-        case "DELETE_CATEGORY":
+        case "DELETE_PARENT_CATEGORY":
             return {
                 ...state,
-                category: state.category.filter(cat=>cat.id!==action.payload)
+                parent_category: state.parent_category.filter(cat=>cat.id!==action.payload)
             }
-        case "GET_FILTER_CATEGORY":
+        case "GET_CHILD_CATEGORY":
             return {
                 ...state,
-                filter_category:action.payload
+                child_category:action.payload
             };
-        case "ADD_FILTER_CATEGORY":
+        case "ADD_CHILD_CATEGORY":
             return {
                 ...state,
-                filter_category: [...state.filter_category, action.payload]
+                child_category: [...state.child_category, action.payload]
             };
-        case "DELETE_FILTER_CATEGORY":
+        case "DELETE_CHILD_CATEGORY":
             return {
                 ...state,
-                filter_category:state.filter_category.filter(fil=>fil.id !== action.payload)
+                child_category:state.child_category.filter(fil=>fil.id !== action.payload)
             }
         case "DELETE_INVOICE":
             return {

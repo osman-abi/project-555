@@ -4,11 +4,12 @@ const PRODUCT_GET_URL = 'https://1klikle.az/api/products/'
 const PRODUCT_POST_URL = 'https://1klikle.az/api/products/'
 
 
-const CATEGORY_GET_URL = 'https://1klikle.az/api/category/categories/'
-const CATEGORY_POST_URL = 'https://1klikle.az/api/category/categories/'
+const PARENT_CATEGORY_GET_URL = 'https://1klikle.az/api/category/parent/'
+const PARENT_CATEGORY_POST_URL = 'https://1klikle.az/api/category/parent/'
 
-const FILTER_CATEGORY_GET_URL = 'https://1klikle.az/api/category/filter/'
-const FILTER_CATEGORY_POST_URL = 'https://1klikle.az/api/category/filter/'
+const CHILD_CATEGORY_GET_URL = 'https://1klikle.az/api/category/child/'
+const CHILD_CATEGORY_POST_URL = 'https://1klikle.az/api/category/child/'
+
 
 const GET_ABOUT_URL = 'https://1klikle.az/api/about/abouts/'
 const POST_ABOUT_URL = 'https://1klikle.az/api/about/abouts/'
@@ -170,21 +171,21 @@ export const deleteCategory = id => dispatch => {
 }
 
 
-export const getCategory = () => dispatch => {
-    fetch(CATEGORY_GET_URL, {
+export const getParentCategory = () => dispatch => {
+    fetch(PARENT_CATEGORY_GET_URL, {
         method: "GET",
         
     }).then(response => response.json()).then(data => {
         dispatch({
-            type: "GET_CATEGORY",
+            type: "GET_PARENT_CATEGORY",
             payload: data
         })
     })
 }
 
 
-export const addCategory = (category) => dispatch => {
-    fetch(CATEGORY_POST_URL, {
+export const addParentCategory = (category) => dispatch => {
+    fetch(PARENT_CATEGORY_POST_URL, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -192,7 +193,7 @@ export const addCategory = (category) => dispatch => {
         body:JSON.stringify(category)
     }).then(response => response.json()).then(data => {
         dispatch({
-            type: "ADD_CATEGORY",
+            type: "ADD_PARENT_CATEGORY",
             payload:data
         })
     })
@@ -218,21 +219,21 @@ export const deleteFilterCategory = id => dispatch => {
 
 
 
-export const getFilterCategory = () => dispatch => {
-    fetch(FILTER_CATEGORY_GET_URL, {
+export const getChildCategory = () => dispatch => {
+    fetch(CHILD_CATEGORY_GET_URL, {
         method: "GET",
         
     }).then(response => response.json()).then(data => {
         dispatch({
-            type: "GET_FILTER_CATEGORY",
+            type: "GET_CHILD_CATEGORY",
             payload: data
         })
     })
 }
 
 
-export const addFilterCategory = (category) => dispatch => {
-    fetch(FILTER_CATEGORY_POST_URL, {
+export const addChildCategory = (category) => dispatch => {
+    fetch(CHILD_CATEGORY_POST_URL, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -240,7 +241,7 @@ export const addFilterCategory = (category) => dispatch => {
         body:JSON.stringify(category)
     }).then(response => response.json()).then(data => {
         dispatch({
-            type: "ADD_FILTER_CATEGORY",
+            type: "ADD_CHILD_CATEGORY",
             payload:data
         })
     })

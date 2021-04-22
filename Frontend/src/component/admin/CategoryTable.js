@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getCategory } from "../../actions/index";
+import { getParentCategory } from "../../actions/index";
 
 export class CategoryTable extends Component {
     static propTypes = {
         category: PropTypes.array.isRequired,
-        getCategory: PropTypes.func.isRequired,
+        getParentCategory: PropTypes.func.isRequired,
     }
   
   
     componentDidMount() {
-      this.props.getCategory();
+      this.props.getParentCategory();
       // console.log('=============',this.props.category)
     }
 
@@ -80,5 +80,5 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, {getCategory})(CategoryTable)
+export default connect(mapStateToProps, {getParentCategory})(CategoryTable)
 
