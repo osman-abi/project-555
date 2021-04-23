@@ -292,77 +292,28 @@ const productslider = {
                         <span className="sku">
                             {product.id} </span>
                                         </span>
-                                        {/* {filter_categories.map((parentCategory, i) => {
-                                            return parentCategory.parent == null ? <span key={i} className="size">
+                                        
+
+                                        
+
+                                        {product.parent_category.map((parentCategory, i) => {
+                                            return(
+                                            <span key={i} className="size">
                                             
-                                            {parentCategory.parent == null ? <label >{parentCategory.name}: </label> : null }    
+                                                { <label>{parentCategory.name}: </label> }
                             {product.filter_category.map((productCategory,index)=>
 
                             
                                 <span key={index} itemProp="size">
-                                    {filter_categories.map((childCategory, i) => {
-                                       return childCategory.id == productCategory && childCategory.parent == parentCategory.id?<Link key={i} to="#" rel="tag" style={{marginRight:"10px"}}>{childCategory.name}</Link>:null
-                                    })}
+                                    
+                                    {productCategory.parent.id == parentCategory.id ? <Link key={i} to="#" rel="tag" style={{ marginRight: "10px" }}>{productCategory.name}</Link> : null}
+                                    
                                     
                                
                                  </span>
                             )}
-                         </span>: null
-                                        })} */}
-
-                                        
-
-                                        {product.filter_category.map((productCategory, i) => {
-                                            return (
-                                                <div key={i}>
-                                                    {child_categories.map((childCategory, j) => {
-                                                        return (
-                                                            <div key={j}>
-                                                                {productCategory == childCategory.id ? 
-                                                                    <div>
-                                                                        {parent_categories.map((parentCategory, z) => {
-                                                                            return (
-                                                                                <span className='size' key={z} style={{display:'flex'}}>
-                                                                                    {childCategory.parent == parentCategory.id ? <label> {parentCategory.name} </label> : null}
-                                                                                    <span itemProp='size' >
-                                                                                        <Link to="#" rel="tag" style={{ marginLeft: "10px"}}>{childCategory.name}</Link>
-                                                                                    </span>
-                                                                                </span>
-                                                                            )
-                                                                        })}
-                                                                </div>
-                                                                : null}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            )
+                         </span>)
                                         })}
-
-{/* 
-                                        {parent_categories.map((parentt, i) => {
-                                            return (
-                                                <p key={i}> {parentt.name} </p>
-                                            )
-                                        })}
-                                    ---------------------------------------------------
-                                        {child_categories.map((childd, i) => {
-                                            return (
-                                                <p key={i}> {childd.name} </p>
-                                            )
-                                        })}
-
-                                        --------------------------------------------
-
-                                        {child_categories.map((chilCat, i) => {
-                                            return (
-                                                <div key={i}>
-                                                    {parent_categories.map((parCat, index) => {
-                                                        return chilCat.parent == parCat.id ? <h1 key={index}> {parCat.name} == {chilCat.name }</h1> :null
-                                                    })}
-                                                </div>
-                                            )
-                                        })} */}
                     </div>
                     <div className="social-profiles">
                         <span className="share-label">Paylaş :</span>

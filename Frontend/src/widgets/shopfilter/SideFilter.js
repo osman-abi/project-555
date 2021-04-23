@@ -231,11 +231,6 @@ class SideFilter extends Component {
                         placeholder="axtar..." />
                 </div>
                 
-                {/* {child_categories.map((child, i) => {
-                    parent_categories.map((Parent, i) => {
-                        return child.parent === Parent.id ? <p key={i}> {Parent.name} </p>:null
-                    })
-                })} */}
 
                 {parent_categories.map((parentCategory, i) => {
                     
@@ -257,10 +252,10 @@ class SideFilter extends Component {
                                                 <input type="checkbox" onClick={(e) => this.onClickCategoryFilter(e, categoryFilterValues)} value={category} defaultChecked={categoryFilterValues.includes(category) ? true : false} className="form-check-input" id={category} />
                                                 
                                                 {child_categories.map((childCategory, index) => {
-                                                    return childCategory.id === category && childCategory.parent === parentCategory.id ?
+                                                    return childCategory.id === category.id && childCategory.parent.id === parentCategory.id ?
                                                     
                                                         <label className="form-check-label"
-                                                            key={index} htmlFor={category}>{childCategory.name}</label>
+                                                            key={index} htmlFor={childCategory}>{childCategory.name}</label>
                                                         :
                                                         null
                                             

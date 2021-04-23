@@ -128,7 +128,7 @@ rating(productrat)
               <ToastContainer autoClose={1000} />
 
             {products.map((product, index) =>
-              (index < 8) && product.best_seller == true && product.stock_status == true?
+              (index < 8)?
 
 
               <Col sm={6} lg={3}>

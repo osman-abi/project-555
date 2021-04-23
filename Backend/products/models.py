@@ -1,5 +1,5 @@
 from django.db import models
-from categories.models import ChildCategory
+from categories.models import ChildCategory, ParentCategory
 
 
 # Create your models here.
@@ -11,8 +11,9 @@ class Product(models.Model):
     description = models.TextField(verbose_name='mehsulun xususiyyetleri')
     images = models.ManyToManyField('images.ProductImage', blank=True)
     filter_category = models.ManyToManyField(
-        ChildCategory, blank=True, verbose_name='filter')
-
+        ChildCategory, blank=True, verbose_name='Alt kateqoriya')
+    parent_category = models.ManyToManyField(
+        ParentCategory, blank=True, verbose_name='Ust kateqoriya')
     stock_status = models.BooleanField(default=False)
     best_seller = models.BooleanField(default=False)
     publish_date = models.DateTimeField(
@@ -27,3 +28,9 @@ class Comment(models.Model):
     firstname = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True)
     commentt = models.TextField()
+
+    class Meta:
+        verbose_name_plural = 'Mehsul haqqinda reyler'
+
+    def __str__(self):
+        return self.commentt

@@ -12,6 +12,7 @@ class ParentCategorySerializer(serializers.ModelSerializer):
 
 
 class ChildCategorySerializer(serializers.ModelSerializer):
+    parent = ParentCategorySerializer()
 
     class Meta:
         model = ChildCategory

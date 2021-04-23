@@ -1,14 +1,17 @@
 from rest_framework import serializers
 from .models import Product, Comment
 from images.serializers import ProductImageSerializer
-# from categories.serializers import ProductCategorySerializer, FilterCategorySerializer
+from categories.serializers import ChildCategorySerializer, ParentCategorySerializer
 
 """ I """
-    # category = ProductCategorySerializer( many=True)
-    # filter_category = FilterCategorySerializer( many=True)
+# category = ProductCategorySerializer( many=True)
+# filter_category = FilterCategorySerializer( many=True)
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    parent_category = ParentCategorySerializer(many=True)
+    filter_category = ChildCategorySerializer(many=True)
+
     class Meta:
         model = Product
         fields = [
@@ -17,6 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'description',
             'filter_category',
+            'parent_category',
             'images',
             'stock_status',
             'best_seller',
