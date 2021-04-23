@@ -10,8 +10,8 @@ RUN pip install virtualenvwrapper
 RUN python3 -m venv /venv
 RUN /venv/bin/pip install -U pip
 RUN /venv/bin/pip install --no-cache-dir -r requirements.txt
-RUN /venv/bin/python manage.py makemigrations --noinput
-RUN /venv/bin/python manage.py migrate
+#RUN /venv/bin/python manage.py makemigrations --noinput
+#RUN /venv/bin/python manage.py migrate
 RUN if [ -f manage.py ]; then /venv/bin/python manage.py collectstatic --noinput; fi
 
 EXPOSE 8000
