@@ -164,9 +164,7 @@ class ProductDetail extends Component {
                                 <TabPane tabId="1">
                                         <div className="tab-content" id="myTabContent">
                                                 <div className="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="home-tab">
-                                                <h2>What is Lorem Ipsum?</h2>
-                                                <p><strong>Lorem Ipsum</strong> {Productedit.description} </p>
-                                                Link
+                                                
                                                 <div className="product-info-box border-top border-bottom mt-5  pt-4 pt-lg-0 pb-2 pb-sm-0">
                                                     <Row>
                                                     <Col sm={6} md={4}>

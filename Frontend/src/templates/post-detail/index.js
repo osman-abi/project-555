@@ -105,10 +105,10 @@ const productslider = {
               localStorage.removeItem("LocalWishListItems");
               localStorage.setItem("LocalWishListItems",JSON.stringify(Cart));
 
-              toast.success("Item Added to WishList");
+              toast.success("Seçilmişlərə əlavə edildi");
            }
            else {
-              toast.warning("Item is already in WishList");
+              toast.warning("Bu məhsludan seçilmişlərdə var");
            }
 
 
