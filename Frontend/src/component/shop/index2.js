@@ -24,6 +24,8 @@ class ShopPage2 extends Component {
         this.state = {
             minValue: 0,
             maxValue: 12,
+            currentPage: 1,
+            postPerPage: 10
             
         }
     }
@@ -60,10 +62,21 @@ class ShopPage2 extends Component {
     refreshPage = () => {
         window.location.reload(false);
     }
+
+    paginate = (pageNumber) => {
+        this.setState({
+            currentPage: pageNumber
+        })
+    }
+
     render() {
         let { products, images } = this.props;
         let layoutstyle = localStorage.getItem('setLayoutStyle')
 
+        const indexOfLastProduct = this.state.currentPage * this.state.postPerPage
+        const indexOfFirstProduct = indexOfLastProduct - this.state.postPerPage
+        const currentProduct = products.slice(indexOfFirstProduct, indexOfLastProduct)
+        
         if (layoutstyle == null) {
             layoutstyle = localStorage.setItem('setLayoutStyle', 'col-sm-6 col-md-4')
         }
@@ -114,16 +127,15 @@ class ShopPage2 extends Component {
                                 </div>
                                 {products.length > 0 ?
                                     <Row className="products products-loop grid ciyashop-products-shortcode pgs-product-list">
-                                        {products.map((product,index) => (
+                                        {currentProduct.map((product,index) => (
                                                 <ProductList product={product} key={index} layoutstyle={layoutstyle} />
                                         ))}
                                         
                                         <div className="text-center col-12">
                                             <Pagination
-                                                defaultCurrent={1}
-                                                defaultPageSize={numEachPage} //default size of page
-                                                onChange={this.handleChange}
-                                                total={this.props.products.length} //total number of card data available
+                                                postPerPage={this.state.postPerPage}
+                                                totalPost={products.length}
+                                                paginate={this.paginate}
                                             />
                                             {/* <Pagination
                                             totalRecords={products.length}
