@@ -229,27 +229,7 @@ class ProductList extends Component {
                                 </div>
                                 : null}
                             <div>
-                                {/* {
-                                    this.props.images.map((image, index) => {
-                                        return(
-                                            <img key={index} src={`http://127.0.0.1:8000${image.image}`}/>
-                                        )
-                                    })
-                                } */}
-                                {/* {
-                                    product.images.map((image, index) => {
-                                        return (
-                                            <div className='product-thumbnail-main' key={index}>
-                                                {images.map((all_images, ind) => {
-                                                    return image == all_images.id ?
-                                                        <img key={ind} src={`http://127.0.0.1:8000${all_images.image}`} />
-                                                        :
-                                                        <img className="img-fluid" />
-                                                })}
-                                            </div>
-                                        )
-                                    })
-                                } */}
+                                
                             </div>
                         </div>
                     </div>

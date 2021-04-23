@@ -165,7 +165,7 @@ const productslider = {
         {product.images.map((pic)=>
             images.map((photo) => {
                 if (pic == photo.id) {
-                    sekiller.push(`http://127.0.0.1:8000${photo.image}`)
+                    sekiller.push(photo.image)
                     
                 }
             })
@@ -218,7 +218,7 @@ const productslider = {
                                                             return photo==cover.id ? 
                                                             <div key={index} className="ciyashop-product-thumbnail__image">
                                                                 <Link onMouseOver={() => this.changePreviewImage(cover.image)} >
-                                                                    <img src={`http://127.0.0.1:8000${cover.image}`} className="img-fluid" />
+                                                                    <img src={cover.image} className="img-fluid" />
                                                                 </Link>
                                                                 </div>
                                                                 : null
