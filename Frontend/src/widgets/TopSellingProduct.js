@@ -165,7 +165,7 @@ rating(productrat)
                                  {!this.CheckCardItem(product.id) ?
                                        <Link onClick={()=>this.AddToCart(product.id,product.name,product.images[0],1,product.price,"var")}  className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                  :
-                                       <Link  to="/ShopingCart"  className="button add_to_cart_button" rel="nofollow">Səbəti göstər</Link>
+                                       <Link  to="/sebet"  className="button add_to_cart_button" rel="nofollow">Səbəti göstər</Link>
                                  }
 
                               </div>

@@ -267,7 +267,7 @@ const productslider = {
                         {!this.CheckCardItem(product.id) ?
                                        <Link onClick={()=>this.AddToCart(product.id,product.name,product.images[0],product.price,"var")}  className="button single_add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                  :
-                                       <Link  to="/ShopingCart"  className="button single_add_to_cart_button" rel="nofollow">Səbətə keçid et</Link>
+                                       <Link  to="/sebet"  className="button single_add_to_cart_button" rel="nofollow">Səbətə keçid et</Link>
                                  }
                         <div className="clearfix" />
                     </form>

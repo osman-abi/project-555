@@ -164,7 +164,7 @@ class ProductList extends Component {
                                         {!this.CheckCardItem(product.id) ?
                                             <Link onClick={() => this.AddToCart(product.id, product.name, product.images[0], 1, product.price, "var")} className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                             :
-                                            <Link to="/ShopingCart" className="button add_to_cart_button" rel="nofollow">Səbətə keç</Link>
+                                            <Link to="/sebet" className="button add_to_cart_button" rel="nofollow">Səbətə keç</Link>
                                         }
                                     </div>
                                     <div className="product-action product-action-wishlist">
@@ -210,7 +210,7 @@ class ProductList extends Component {
                                         {!this.CheckCardItem(product.id) ?
                                             <Link onClick={() => this.AddToCart(product.id, product.name, product.pictures[0], 1, product.price, "var")} className="button add_to_cart_button" rel="nofollow">Səbətə əlavə et</Link>
                                             :
-                                            <Link to="/ShopingCart" className="button add_to_cart_button" rel="nofollow">Səbətə keç</Link>
+                                            <Link to="/sebet" className="button add_to_cart_button" rel="nofollow">Səbətə keç</Link>
                                         }
                                     </div>
                                     <div className="product-action product-action-wishlist">

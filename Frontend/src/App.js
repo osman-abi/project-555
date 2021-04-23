@@ -97,7 +97,7 @@ class App extends React.Component {
                     
                     <Route exact path="/magaza" component={ShopPage2} />
                    
-                    <Route exact path="/ShopingCart" component={ShopingCart} />
+                    <Route exact path="/sebet" component={ShopingCart} />
                     <Route exact path="/MyAccount" component={MyAccount} />
                     <Route exact path="/BlogSinglePage" component={BlogSinglePage} />
                     <Route exact path="/BlogFullWidth" component={BlogFullWidth} />

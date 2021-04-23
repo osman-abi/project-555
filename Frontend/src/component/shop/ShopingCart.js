@@ -284,12 +284,7 @@ class ShopingCart extends Component {
                                                 </tr>
  */}
 
-                                                <tr className="shipping-totals shipping">
-                                                    <th>Çatdırılacaq ünvan</th>
-                                                    <td data-title="Shipping">
-                                                        {this.state.Adress1}
-                                                    </td>
-                                                </tr>
+                                                
                                                 <tr className="order-total">
                                                     <th>Cəmi</th>
                                                     <td data-title="Total"><strong><span className="special_price_code"><span className="Price-amount amount"><span className="Price-currencySymbol"></span> {parseFloat(parseFloat(this.ReadCartItems().reduce((fr, CartItem) => fr + (CartItem.Qty * CartItem.Rate), 0)))} AZN   </span></span></strong>
