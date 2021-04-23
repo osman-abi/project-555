@@ -108,7 +108,7 @@ const productslider = {
               toast.success("Seçilmişlərə əlavə edildi");
            }
            else {
-              toast.warning("Bu məhsludan seçilmişlərdə var");
+              toast.warning("Bu məhsuldan seçilmişlərdə var");
            }
 
 
@@ -199,7 +199,7 @@ const productslider = {
                             <div className="ciyashop-product-gallery ciyashop-product-gallery--with-images slick-carousel">
                             <Slider {...settings} className="ciyashop-product-gallery__wrapper popup-gallery">
                                 <div className="ciyashop-product-gallery__image">
-                                        <img src={`http://127.0.0.1:8000${this.state.newImage}`}  className="img-fluid" />
+                                        <img src={this.state.newImage}  className="img-fluid" />
                                 </div>
                             </Slider>
                             <div className="ciyashop-product-gallery_buttons_wrapper">
