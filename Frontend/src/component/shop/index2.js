@@ -2,7 +2,7 @@
 /**
  *  Shop Main Page
  */
-import { Pagination } from 'antd';
+import Pagination from '../../services/Pagination';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
