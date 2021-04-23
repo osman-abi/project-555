@@ -29,8 +29,8 @@ class TopFilter extends Component {
             else if(layoutstyle == 'col-sm-12')
             {
                 document.querySelector(".gridlist-toggle-list").classList.add("active");
-                document.querySelector(".pgs-product-list").classList.remove("grid");
-                document.querySelector(".pgs-product-list").classList.add("list");
+                // document.querySelector(".pgs-product-list").classList.remove("grid");
+                // document.querySelector(".pgs-product-list").classList.add("list");
             }
             else
             {
