@@ -212,7 +212,7 @@ class Footer extends React.Component {
                                 <div className="section-field">
                                     <form onSubmit={this.subscribe} className="newsletter_form">
                                     <div className="input-area">
-                                        <input type="email" onChange={this.changeEmail} className="placeholder newsletter-email" name="newsletter_email" placeholder="Emailinizi daxil edin" />
+                                        <input type="email" onChange={this.changeEmail} value={email} className="placeholder newsletter-email" name="newsletter_email" placeholder="Emailinizi daxil edin" />
                                     </div>
                                     <div className="button-area">
                                         <span className="input-group-btn">

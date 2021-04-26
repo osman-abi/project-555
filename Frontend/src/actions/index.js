@@ -428,7 +428,7 @@ export const getTechniqueSupport = () => dispatch => {
         }
     }).then(response => response.json()).then(data => {
         dispatch({
-            type: "GET_TECHNIQUE_SUPPPORT",
+            type: "GET_TECHNIQUE_SUPPORT",
             payload:data
         })
     })

@@ -26,12 +26,15 @@ class ShopAddress(models.Model):
         return f"unvan = {self.address}"
 
 class WorkingDuration(models.Model):
-    duration_d_from = models.CharField(max_length=100)
-    duration_d_to = models.CharField(max_length=100)
-    duration_t_from = models.CharField(max_length=100)
-    duration_t_to = models.CharField(max_length=100)
-    saturday_from = models.CharField(max_length=100, blank=True)
-    saturday_to = models.CharField(max_length=100, blank=True)
+    duration_d_from = models.CharField(max_length=100, verbose_name='Heftenin necenci gununden')
+    duration_d_to = models.CharField(max_length=100, verbose_name='Heftenin necenci gunune')
+    duration_t_from = models.CharField(max_length=100, verbose_name='Saat neceden')
+    duration_t_to = models.CharField(max_length=100, verbose_name='Saat neceye')
+    saturday_from = models.CharField(max_length=100, blank=True, verbose_name='Şənbə günü saat neçədən')
+    saturday_to = models.CharField(max_length=100, blank=True, verbose_name='Şənbə günü saat neçəyə')
+
+    def __str__(self):
+        return "Is intervali"
 
     class Meta:
         verbose_name_plural = "İş intervalı"
@@ -49,3 +52,6 @@ class TechniqueSupport(models.Model):
 class CopyRigth(models.Model):
     year = models.CharField(max_length=10,blank=True)
     context = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f"{self.year} -> {self.context}"

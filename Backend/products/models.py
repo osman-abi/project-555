@@ -1,11 +1,15 @@
 from django.db import models
 from categories.models import ChildCategory, ParentCategory
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+import string
+import random
 
 
 # Create your models here.
 
 class Product(models.Model):
-
+    artikul = models.CharField(max_length=200, blank=True)
     name = models.CharField(max_length=300, verbose_name='mehsulun adi')
     price = models.IntegerField(verbose_name='mehsulun qiymeti')
     description = models.TextField(verbose_name='mehsulun xususiyyetleri')
@@ -20,7 +24,7 @@ class Product(models.Model):
         auto_now=True, verbose_name='Əlavə edilmə tarixi')
 
     def __str__(self):
-        return f"mehsul = {self.name}"
+        return self.artikul
 
 
 class Comment(models.Model):
@@ -34,3 +38,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.commentt
+
+
+@receiver(pre_save, sender=Product)
+def generate_artikul(sender, instance, **kwargs):
+    instance.artikul = ''.join(
+        random.choice(string.digits) for _ in range(10))
+    return instance.artikul

@@ -40,6 +40,8 @@ export class ContactForm extends Component {
     }
 
     submitForm = e => {
+        e.preventDefault()
+        alert('messajiniz ugurla yerine catdi')
         var url = 'https://1klikle.az/api/about/message/'
         const { name, email, title, message } = this.state
         const data = { name, email, title, message }
