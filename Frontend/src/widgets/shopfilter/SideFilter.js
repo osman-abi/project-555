@@ -39,7 +39,6 @@ class SideFilter extends Component {
         this.props.getChildCategory();
         this.props.getParentCategory();
         
-        // console.log('==>',this.props.prices)
     }
     showfilter() {
         this.setState(prevState => ({
@@ -232,10 +231,7 @@ class SideFilter extends Component {
                 </div>
                 
 
-                {parent_categories.map((parentCategory, i) => {
-                    
-                        
-                    
+                {parent_categories.map((parentCategory, i) => { 
                    return(
                     <div key={i} className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
                             <div className="d-flex align-items-center justify-content-between" >
@@ -246,39 +242,22 @@ class SideFilter extends Component {
                             </div>
                             <div className="pgs-widget-layered-nav-list-container has-scrollbar" style={{ height: '215px' }}>
                                 <Scrollbars>
-                                    {this.props.categorys.map((category, index) => {
+
+                                    {this.props.categorys.map((category,index)=>{
                                         return (
                                             <div className="form-check pgs-filter-checkbox" key={index}>
                                                 <input type="checkbox" onClick={(e) => this.onClickCategoryFilter(e, categoryFilterValues)} value={category} defaultChecked={categoryFilterValues.includes(category) ? true : false} className="form-check-input" id={category} />
-                                                
-                                                {child_categories.map((childCategory, index) => {
-                                                    return childCategory.id === category.id && childCategory.parent.id === parentCategory.id ?
-                                                    
-                                                        <label className="form-check-label"
-                                                            key={index} htmlFor={childCategory}>{childCategory.name}</label>
-                                                        :
-                                                        null
-                                            
-                                                })}
-                                        
+                                                {category.parent.id === parentCategory.id ? <label className="form-check-label" key={index} htmlFor={category}>{category.name}</label>:null}
                                             </div>
                                         )
                                     })}
+                                    
                                 </Scrollbars>
                             </div>
                             </div>
                    )
                         
             })}
-
-
-
-
-
-
-
-
-
                
             </div>
         )

@@ -13,15 +13,6 @@ export const uniqueCategory = (products) => {
                     
                 }
             }
-            
-            // product.filter_category.map((categorys) => {
-            //     if(categorys && categorys.length > 0)
-            //     {
-            //         if (uniqueCategorys.indexOf(categorys) === -1) {
-            //             uniqueCategorys.push(categorys);
-            //         }
-            //     }
-            // })
         }
     })
     return uniqueCategorys;
