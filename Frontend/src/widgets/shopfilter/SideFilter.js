@@ -231,7 +231,7 @@ class SideFilter extends Component {
                 </div>
                 
 
-                {parent_categories.map((parentCategory, i) => { 
+                {parent_categories.map((parentCategory, i) => {
                    return(
                     <div key={i} className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
                             <div className="d-flex align-items-center justify-content-between" >
@@ -245,13 +245,21 @@ class SideFilter extends Component {
 
                                     {this.props.categorys.map((category,index)=>{
                                         return (
-                                            <div className="form-check pgs-filter-checkbox" key={index}>
+                                            <div>
+                                            {child_categories.map((child,i)=>{
+                                                return (
+                                                <div className="form-check pgs-filter-checkbox" key={index}>
+
                                                 <input type="checkbox" onClick={(e) => this.onClickCategoryFilter(e, categoryFilterValues)} value={category} defaultChecked={categoryFilterValues.includes(category) ? true : false} className="form-check-input" id={category} />
-                                                {category.parent.id === parentCategory.id ? <label className="form-check-label" key={index} htmlFor={category}>{category.name}</label>:null}
+                                                {category === child.id && child.parent.id === parentCategory.id ? <label className="form-check-label" key={index} htmlFor={category}>{child.name}</label>:null}
+                                            </div> )
+                                                })}
                                             </div>
+
+
                                         )
                                     })}
-                                    
+
                                 </Scrollbars>
                             </div>
                             </div>

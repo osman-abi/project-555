@@ -10,7 +10,6 @@ from categories.serializers import ChildCategorySerializer, ParentCategorySerial
 
 class ProductSerializer(serializers.ModelSerializer):
     parent_category = ParentCategorySerializer(many=True)
-    filter_category = ChildCategorySerializer(many=True)
 
     class Meta:
         model = Product
