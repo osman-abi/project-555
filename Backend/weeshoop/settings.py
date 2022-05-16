@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'b4qe9m-amp3ty-%x19zsa0kwnmu#w70jo_df68y@+6%a&97n=7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['http://167.172.107.236/', 'https://1klikle.az/']
 ALLOWED_HOSTS = ['*']
@@ -190,3 +190,5 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
